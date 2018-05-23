@@ -26,6 +26,9 @@ const webpackConfig = merge(baseWebpackConfig, {
     path: config.build.assetsRoot,
     filename: 'cg.js',
   },
+  entry: {
+    app: './src/cgCommon.js'
+  },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({

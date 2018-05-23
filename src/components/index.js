@@ -8,12 +8,4 @@ const CgUI = {
   }
 }
 
-let result = null
-try {
-  if (Vue) {
-    result = CgUI.install(Vue)
-  }
-} catch (err) {
-  result = CgUI
-}
-export default result
+export default CgUI
