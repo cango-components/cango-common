@@ -1,0 +1,21 @@
+@import './base/variable/variable.less';
+
+.cg-input {
+  background: @main-color;
+  & > .cg-input__content {
+    width: 100%;
+    display: block;
+  }
+  &.cg-component-size__large {
+    height: @large;
+  }
+  &.cg-component-size__default {
+    height: @default;
+  }
+  &.cg-component-size__small {
+    height: @small;
+  }
+  &.cg-component-size__mini {
+    height: @mini;
+  }
+}
