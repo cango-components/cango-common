@@ -2,6 +2,7 @@
   <div>
     <cg-input v-model="val" maxlength="4"></cg-input>
     <cg-switch v-model="switchVal"></cg-switch>
+    <cg-custom></cg-custom>
   </div>
 </template>
 
