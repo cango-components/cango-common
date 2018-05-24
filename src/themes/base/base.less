@@ -1,0 +1,42 @@
+@import './variable/variable.less';
+
+/** border */
+.cg-base__border(@color, @width: 1px) {
+  border: @width solid @color;
+}
+.cg-base__radius(@radius: 4px) {
+  border-radius: @radius;
+}
+
+/** disabled */
+.cg-base__disabled(@color: @bg-normal-color) {
+  cursor: not-allowed;
+  background-color: @color;
+}
+
+/** 取消内外边距 */
+.cg-base__box {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border-style: none;
+}
+
+/** 字体 */
+.cg-base__font(@size: @font-samll-size) {
+  font-family: @font-main-family;
+  font-size: @size;
+  color: @font-samll-color;
+}
+
+/** icon */
+.cg-base-icon {
+  display: inline-block;
+}
+.cg-icon__del {  // 删除按钮
+  width: 10px;
+  height: 10px;
+  background-color: #f00;
+  border-radius: 100%;
+  cursor: pointer;
+}

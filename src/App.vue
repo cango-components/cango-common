@@ -1,6 +1,6 @@
 <template>
   <div>
-    <cg-input></cg-input>
+    <cg-input v-model="val" maxlength="4"></cg-input>
   </div>
 </template>
 
@@ -9,9 +9,14 @@
 export default {
   name: 'App',
   data () {
-    return {}
+    return {
+      val: ''
+    }
   },
-  components: {
+  watch: {
+    val (newVal, oldVal) {
+      console.log(newVal)
+    }
   }
 }
 </script>
