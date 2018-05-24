@@ -1,0 +1,33 @@
+@import './base/base.less';
+@base-border-width: 3px;
+@base-height: @current - 2*@base-border-width;
+@base-width: 2*@base-height;
+
+.cg-switch {
+  .cg-base__box;
+  .cg-base__border(@line-main-color, @base-border-width);
+  .cg-base-box;
+  .cg-base-circle;
+  height: @base-height;
+  width: @base-width;
+  background-color: @bg-main-color;
+  transition: 0.3s;
+  box-sizing: content-box;
+  cursor: pointer;
+  & > .cg-switch__btn {
+    .cg-base-circle;
+    transition: 0.3s;
+    height: @base-height;
+    width: @base-height;
+    background-color: @bg-light-color;
+    box-sizing: border-box;
+  }
+  &.selected {
+    @padding-left: @base-width - @base-height;
+    padding-left: @padding-left;
+    width: @base-width - @padding-left;
+    & > .cg-switch__btn {
+      background-color: @main-color;
+    }
+  }
+}

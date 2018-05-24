@@ -1,6 +1,7 @@
 <template>
   <div>
     <cg-input v-model="val" maxlength="4"></cg-input>
+    <cg-switch v-model="switchVal"></cg-switch>
   </div>
 </template>
 
@@ -10,11 +11,15 @@ export default {
   name: 'App',
   data () {
     return {
-      val: ''
+      val: '',
+      switchVal: true
     }
   },
   watch: {
     val (newVal, oldVal) {
+      console.log(newVal)
+    },
+    switchVal (newVal, oldVal) {
       console.log(newVal)
     }
   }
