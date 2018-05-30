@@ -9,6 +9,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const SpritesmithPlugin = require('webpack-spritesmith')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -64,7 +65,26 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         to: config.dev.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+    new SpritesmithPlugin({
+      // 目标小图标
+      src: {
+        cwd: path.resolve(__dirname, '../src/assets/images/icons'),
+        glob: '*.png'
+      },
+      // 输出雪碧图文件及样式文件
+      target: {
+          image: path.resolve(__dirname, '../src/assets/images/sprites/sprite.png'),
+          css: path.resolve(__dirname, '../src/assets/css/sprite.css')
+      },
+      // 样式文件中调用雪碧图地址写法
+      apiOptions: {
+          cssImageRef: '../images/sprites/sprite.png'
+      },
+      spritesmithOptions: {
+          algorithm: 'top-down'
+      }
+    })
   ]
 })
 
