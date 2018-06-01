@@ -100,7 +100,7 @@ export default {
   margin-left: 5px;
 }
 .cg-input {
-  width: 100px;
+  width: 100%;
   .base_box;
 }
 .cg-icon__del {

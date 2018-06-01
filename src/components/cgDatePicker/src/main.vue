@@ -1,9 +1,9 @@
 <template>
   <div class="cg-date-picker">
     <div class="cg-date-picker__input" @click.stop="showPicker">
-      <cg-input v-model="date" :readonly="true"></cg-input>
+      <cg-input v-model="date" :readonly="true" class="cg-date-picker__input-content"></cg-input>
     </div>
-    <div class="cg-date-picker__picker" v-if="showFlag">
+    <div class="cg-date-picker__picker" v-if="showFlag" @click.stop="() => {}">
       <div class="cg-date-picker-nav">
         <span class="nav-item nav-prev-year" @click.stop="curYear--">&lt;&lt;</span>
         <span class="nav-item nav-prev-month" @click.stop="curMonth--">&lt;</span>
@@ -50,9 +50,14 @@ export default {
     }
   },
   props: {
-    defaultVal: {
+    /**
+     * 后续还需要扩展
+     *  时间格式化
+     *  选择时间范围
+     */
+    value: { // 默认值
       type: String,
-      default: '2018/5/2'
+      default: ''
     }
   },
   created () {
@@ -62,7 +67,7 @@ export default {
     }, false)
   },
   mounted () {
-    this.date = this.defaultVal
+    this.date = this.value
   },
   components: {
     CgInput
@@ -90,6 +95,10 @@ export default {
         this.curYear++
         this.curMonth = 1
       }
+    },
+    date (newVal, oldVal) {
+      if (newVal === oldVal) return
+      this.$emit('input', newVal)
     }
   },
   computed: {
@@ -154,8 +163,8 @@ export default {
     },
     showPicker () { // 打开时间面板
       this.showFlag = true
-      if (this.defaultVal.trim()) {
-        let date = new Date(this.defaultVal)
+      if (this.date.trim()) {
+        let date = new Date(this.date)
         this.curYear = date.getFullYear()
         this.curMonth = date.getMonth() + 1
       }

@@ -3,7 +3,7 @@
     <cg-input v-model="val" maxlength="4"></cg-input>
     <cg-switch v-model="switchVal"></cg-switch>{{switchVal?'开':'关'}}
     <cg-custom></cg-custom>
-    <cg-date-picker></cg-date-picker>
+    <cg-date-picker v-model="date"></cg-date-picker>
   </div>
 </template>
 
@@ -14,7 +14,8 @@ export default {
   data () {
     return {
       val: '',
-      switchVal: true
+      switchVal: true,
+      date: '2018/1/2'
     }
   },
   watch: {
@@ -22,6 +23,9 @@ export default {
       console.log(newVal)
     },
     switchVal (newVal, oldVal) {
+      console.log(newVal)
+    },
+    date (newVal, oldVal) {
       console.log(newVal)
     }
   }

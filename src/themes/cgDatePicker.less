@@ -6,6 +6,12 @@
 
 .cg-date-picker {
   .cg-base__radius();
+  .cg-date-picker__input {
+    display: inline-block;
+    .cg-date-picker__input-content {
+      width: @base-date-picker-width / 2;
+    }
+  }
   .cg-date-picker__picker {
     .cg-base__border(@line-main-color);
     left: 0;
