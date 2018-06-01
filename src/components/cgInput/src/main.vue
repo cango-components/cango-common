@@ -2,6 +2,7 @@
   <div>
     <div v-if="type==='text'" class="cg-input" :class="inputClass">
       <input v-if="disabled" class="cg-input__content" disabled />
+      <input v-else-if="readonly" class="cg-input__content" @input="inpHandle" v-model="inpVal" :maxlength="maxlength" readonly />
       <input v-else class="cg-input__content" @input="inpHandle" v-model="inpVal" :maxlength="maxlength" />
       <i v-if="clearable" class="cg-base-icon cg-icon__del" @click="del"></i>
     </div>
@@ -54,6 +55,18 @@ export default {
     rows: { // textarea 行数
       type: [String, Number],
       default: 2
+    },
+    readonly: {
+      type: Boolean,
+      default: false
+    }
+  },
+  mounted () {
+    this.inpVal = this.inpVal
+  },
+  watch: {
+    value () {
+      this.inpVal = this.value
     }
   },
   computed: {

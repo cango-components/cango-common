@@ -16,4 +16,5 @@ const CgUI = {
   }
 }
 
+console.log(CgUI)
 export default CgUI

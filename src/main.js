@@ -7,6 +7,7 @@ import './themes/index.less'
 
 Vue.config.productionTip = false
 Vue.use(CgUI)
+console.log(123)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
