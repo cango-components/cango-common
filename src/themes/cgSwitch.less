@@ -1,15 +1,16 @@
 @import './base/base.less';
-@base-border-width: 3px;
-@base-height: @current - 2*@base-border-width;
-@base-width: 2*@base-height;
+@base-switch-border-width: 3px;
+@base-switch-height: @current - 2*@base-switch-border-width;
+@base-switch-width: 2*@base-switch-height;
 
 .cg-switch {
   .cg-base__box;
-  .cg-base__border(@line-main-color, @base-border-width);
+  .cg-base__border(@line-main-color, @base-switch-border-width);
   .cg-base-box;
   .cg-base-circle;
-  height: @base-height;
-  width: @base-width;
+  display: inline-block;
+  height: @base-switch-height;
+  width: @base-switch-width;
   background-color: @bg-main-color;
   transition: 0.3s;
   box-sizing: content-box;
@@ -17,15 +18,15 @@
   & > .cg-switch__btn {
     .cg-base-circle;
     transition: 0.3s;
-    height: @base-height;
-    width: @base-height;
+    height: @base-switch-height;
+    width: @base-switch-height;
     background-color: @bg-light-color;
     box-sizing: border-box;
   }
   &.selected {
-    @padding-left: @base-width - @base-height;
+    @padding-left: @base-switch-width - @base-switch-height;
     padding-left: @padding-left;
-    width: @base-width - @padding-left;
+    width: @base-switch-width - @padding-left;
     & > .cg-switch__btn {
       background-color: @main-color;
     }

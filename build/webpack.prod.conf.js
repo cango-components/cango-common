@@ -10,6 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const SpritesmithPlugin = require('webpack-spritesmith')
 
 const env = require('../config/prod.env')
 
@@ -117,7 +118,26 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+    new SpritesmithPlugin({
+      // 目标小图标
+      src: {
+        cwd: path.resolve(__dirname, '../src/assets/images/icons'),
+        glob: '*.png'
+      },
+      // 输出雪碧图文件及样式文件
+      target: {
+          image: path.resolve(__dirname, '../src/assets/images/sprites/sprite.png'),
+          css: path.resolve(__dirname, '../src/assets/css/sprite.css')
+      },
+      // 样式文件中调用雪碧图地址写法
+      apiOptions: {
+          cssImageRef: '../images/sprites/sprite.png'
+      },
+      spritesmithOptions: {
+          algorithm: 'top-down'
+      }
+    })
   ]
 })
 

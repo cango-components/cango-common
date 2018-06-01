@@ -1,0 +1,45 @@
+@import './base/base.less';
+
+/* 定义变量 */
+@base-date-picker-width: 600px;
+@base-date-picker-height: 400px; 
+
+.cg-date-picker {
+  .cg-base__radius();
+  .cg-base__border(@line-main-color);
+  width: @base-date-picker-width;
+  // height: @base-date-picker-height;
+  .cg-date-picker__header {
+    .cg-base-box;
+    height: 0.1 * @base-date-picker-height;
+    line-height: 0.1 * @base-date-picker-height;
+    border-bottom: 1px solid @line-main-color;
+  }
+  .cg-date-picker-nav {
+    .cg-base-box;
+    justify-content: center;
+    .nav-item {
+      .cg-base-center;
+      flex-basis: 40px;
+    }
+  }
+  .cg-date-picker__header-item {
+    .cg-base-center;
+    flex: 1;
+  }
+  .cg-date-picker__content {
+    .cg-base-box;
+    flex-wrap: wrap;
+  }
+  .cg-date-picker__content-item {
+    .cg-base-center;
+    @content-item-height: (@base-date-picker-height - 0.1*@base-date-picker-height)/5;
+    flex-basis: @base-date-picker-width / 7;
+    height: @content-item-height;
+    line-height: @content-item-height;
+    cursor: pointer;
+  }
+  .cg-date-picker__content-disabled {
+    color: @font-light-color;
+  }
+}

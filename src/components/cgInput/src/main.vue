@@ -31,7 +31,7 @@ export default {
     },
     type: { // 输入框的type类型
       type: String,
-      default: 'textarea'
+      default: 'text'
     },
     clearable: { // 是否有清空按钮
       type: Boolean,
