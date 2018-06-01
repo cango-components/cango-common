@@ -21,7 +21,7 @@ npm run build --report
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 ## 项目结构
-
+```
   |—— src
     |—— assets        ......  静态资源文件夹
     |—— components    ......  组件
@@ -37,7 +37,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
     |—— Constants.js  ......  常量库
     |—— main.js       ......  demo 主入口
     |—— App.vue       ......  demo 根组件
-
+```
 ## 项目初始化
 
   进入项目根目录，执行 npm install 或 npm i 命令，安装相关依赖
