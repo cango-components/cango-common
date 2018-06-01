@@ -3,7 +3,6 @@
 import Vue from 'vue'
 import App from './App'
 import CgUI from './cgCommon'
-import './themes/index.less'
 
 Vue.config.productionTip = false
 Vue.use(CgUI)
