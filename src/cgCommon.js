@@ -1,10 +1,11 @@
-import CgUI from './components'
+import Cg from './components'
 import { PACKAGE_TYPE } from './Constants'
 
 let result = null
 if (PACKAGE_TYPE) {
-  result = CgUI.install
+  result = Cg.install
+  window.Cg = Cg
 } else {
-  window.CG = CgUI
+  window.Cg = Cg
 }
 export default result

@@ -1,6 +1,9 @@
 <template>
-  <div class = "cg-button__base" @click="click()" v-bind:class=" readOnly ? 'cango-button__readOnly' : ''" >
-    {{ label }}
+  <div
+    :class = 'getClassName()'
+    @click= 'click()'
+  >
+    <slot> {{ label }} </slot>
   </div>
 </template>
 
@@ -8,29 +11,41 @@
 export default {
   name: 'cg-button',
   props: {
-    // 下拉框标题
-    'label'         : {
-      type    : String,
-      default : ""
+    // 按钮文字
+    'className': {
+      type: String,
+      default: 'cg-button__base'
+    },
+    // 按钮文字
+    'label': {
+      type: String,
+      default: ''
     },
     // 是否readonly
-    'readOnly'      : {
-      type    : Boolean,
-      default : false
+    'readOnly': {
+      type: Boolean,
+      default: false
     },
-    // 下拉框最多选中数量(0:为不限制;1:为单选;)
-    'buttonClick'     : {
-      type    : Function
-    },
+    // 点击事件
+    'buttonClick': {
+      type: Function
+    }
   },
   computed: {
   },
-  methods : {
-    click : function(){
-      if(!this.readOnly && this.buttonClick){
-        this.buttonClick();
+  methods: {
+    click: function () {
+      if (!this.readOnly && this.buttonClick) {
+        this.buttonClick()
       }
     },
+    getClassName: function () {
+      let clsName = this.className
+      if (this.readOnly) {
+        clsName += ' ' + 'cango-button__readOnly'
+      }
+      return clsName
+    }
   }
 }
 </script>

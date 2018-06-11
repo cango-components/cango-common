@@ -1,19 +1,61 @@
-// Browser environment sniffing
-var inBrowser = typeof window !== 'undefined';
-var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
-var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
-var UA = inBrowser && window.navigator.userAgent.toLowerCase();
-var isIE = UA && /msie|trident/.test(UA);
-var isIE9 = UA && UA.indexOf('msie 9.0') > 0;
-var isEdge = UA && UA.indexOf('edge/') > 0;
-var isAndroid = (UA && UA.indexOf('android') > 0) || (weexPlatform === 'android');
-var isIOS = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
-var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
-// TODO
-var isWechat = "";
-// TODO
-var isWxwork = "";
-// TODO
-var isAndroidApp = false;
-// TODO
-var isIosApp     = false;
+export default {
+  // Browser environment sniffing
+  inBrowser: function () {
+    return typeof window !== 'undefined'
+  },
+  inWeex: function () {
+    return typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform
+  },
+  weexPlatform: function () {
+    return this.inWeex() && WXEnvironment.platform.toLowerCase()
+  },
+  UA: function () {
+    return this.inBrowser() && window.navigator.userAgent.toLowerCase()
+  },
+  isIE: function () {
+    return this.UA() && /msie|trident/.test(this.UA())
+  },
+  isIE9: function () {
+    return this.UA() && this.UA().indexOf('msie 9.0') > 0
+  },
+  isEdge: function () {
+    return this.UA() && this.UA().indexOf('edge/') > 0
+  },
+  isAndroid: function () {
+    return (this.UA() && this.UA().indexOf('android') > 0) || (this.weexPlatform === 'android')
+  },
+  isIOS: function () {
+    return (this.UA() && /iphone|ipad|ipod|ios/.test(this.UA())) || (this.weexPlatform === 'ios')
+  },
+  isChrome: function () {
+    return (this.UA() && /chrome\/\d+/.test(this.UA())) && !this.isEdge()
+  },
+  isPC: function () {
+    let userAgentInfo = navigator.userAgent
+    let Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod']
+    let flag = true
+    for (let v = 0; v < Agents.length; v++) {
+      if (userAgentInfo.indexOf(Agents[v]) > 0) {
+        flag = false
+        break
+      }
+    }
+    return flag
+  },
+  // TODO
+  isWechat: function () {
+    return false
+  },
+  // TODO
+  isWxwork: function () {
+    return false
+  },
+  // TODO
+  isAndroidApp: function () {
+    return false
+  },
+  // TODO
+  isIosApp: function () {
+    return false
+  }
+}

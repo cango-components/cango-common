@@ -12,26 +12,40 @@ import CgSelect from './cgSelect'
 import CgTab from './cgTab'
 import CgTree from './cgTree'
 import CgUploadify from './cgUploadify'
-import CgDatePicker from './cgDatePicker'
+import CgDatePicker from './CgDatePicker'
+import BrowseUtils from '../utils/BrowseUtils'
+import DateUtils from '../utils/DateUtils'
+import NumberUtils from '../utils/NumberUtils'
+import StrUtils from '../utils/StrUtils'
+import Utils from '../utils/Utils'
+import FileUtils from '../utils/FileUtils'
 
-const CgUI = {
+const Cg = {
+  Utils,
+  FileUtils,
+  StrUtils,
+  DateUtils,
+  NumberUtils,
+  BrowseUtils,
   install (Vue) {
     config.forEach(item => {
       Vue.use(CgInput)
       Vue.use(CgSwitch)
-      Vue.use(CgCustom)
-      Vue.use(CgButton)
+      Vue.use(CgDatePicker)
       Vue.use(CgCheckbox)
-      Vue.use(CgForm)
+      Vue.use(CgSelect)
+      Vue.use(CgButton)
       Vue.use(CgPagelist)
       Vue.use(CgScolllist)
-      Vue.use(CgSelect)
       Vue.use(CgTab)
       Vue.use(CgTree)
+      Vue.use(CgForm)
+      /*
       Vue.use(CgUploadify)
-      Vue.use(CgDatePicker)
+      Vue.use(CgCustom)
+      */
     })
   }
 }
 
-export default CgUI
+export default Cg
