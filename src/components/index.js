@@ -40,8 +40,8 @@ const Cg = {
       Vue.use(CgTab)
       Vue.use(CgTree)
       Vue.use(CgForm)
-      /*
       Vue.use(CgUploadify)
+      /*
       Vue.use(CgCustom)
       */
     })

@@ -1,6 +1,25 @@
 <template>
   <div>
     <div v-if='show' id = 'testdemo' >
+      <div v-if="showUploadify" >
+        <cg-uploadify
+          :type = "uploadify.type"
+          :id = "uploadify.id"
+          :read-only = "uploadify.readOnly"
+          :can-delete = "uploadify.canDelete"
+
+          :required = "uploadify.required"
+          :empty-is-null = "uploadify.emptyIsNull"
+          :prefix = "uploadify.prefix"
+          :file-num = "uploadify.fileNum"
+          :max-size = "uploadify.maxSize"
+          :error-image = "uploadify.errorImage"
+          :default-image = "uploadify.defaultImage"
+          :loading-image = "uploadify.loadingImage"
+          v-model = "data.uploadify"
+        >
+        </cg-uploadify>
+      </div>
       <div v-if="showTree" >
         <cg-tree
           :show-name="tree.showName"
@@ -106,12 +125,12 @@
         <div class="sidebar-inner">
           <div class="list">
             <ul class="menu-root">
-              <template v-for='item in apiDoc' >
-                <li>
+              <template v-for='(item, index) in apiDoc' >
+                <li :key='"li"+index' >
                   <a class="section-link" v-bind:href='"#"+item.name'>{{ item.name }}</a>
                 </li>
-                <ul class="menu-sub">
-                  <li v-for="child in item.child" ><a class="section-link" v-bind:href='"#"+child.name'>{{ child.name }}</a></li>
+                <ul :key='"ul"+index' class="menu-sub">
+                  <li v-for="(child, childIndex) in item.child" :key='"ulChild"+childIndex' ><a class="section-link" v-bind:href='"#"+child.name'>{{ child.name }}</a></li>
                 </ul>
               </template>
             </ul>
@@ -119,20 +138,20 @@
         </div>
       </div>
       <div class="content api with-sidebar ">
-        <template v-for='item in apiDoc' >
-          <template v-for='child in item.child' >
-            <h3 :id='child.name' >
+        <template v-for='(item, index) in apiDoc' >
+          <template v-for='(child, childIndex) in item.child' >
+            <h3 :id='child.name' :key='"item"+index+"h3child"+childIndex'>
               <a :href='"#"+child.name' class="headerlink" >{{ child.name }}</a>
             </h3>
-            <ul v-for='func in child.child'>
+            <ul v-for='(func, funcIndex) in child.child' :key='"item"+index+"h3child"+childIndex+"func"+funcIndex'>
               <li>
                 <p><strong>方法名</strong>：<code>{{ func.name }}</code></p>
               </li>
               <li>
                 <p><strong>参数</strong>：</p>
                 <template v-if='func.param' >
-                  <template v-for='param in func.param' >
-                    <p>
+                  <template v-for='(param, paramIndex) in func.param' >
+                    <p :key='"param"+paramIndex'>
                       <span style="color: #FF0000;">{{param.name}}</span>：<b>{{ param.type }}</b> <template v-if='param.default' >默认值: <b>{{ param.default }} </b></template><br>
                       说明：{{ param.detail }}
                     </p>
@@ -186,6 +205,18 @@ export default {
       showScolllist: false,
       showTab: false,
       showTree: false,
+      showUploadify: false,
+      uploadify: {
+        id: 'uploadifyId',
+        type: 'image',
+        prefix: 'Test',
+        fileNum: 0,
+        maxSize: 0,
+        required: false,
+        readOnly: false,
+        canDelete: true,
+        emptyIsNull: true
+      },
       tree: {
         showName: 'name',
         childName: 'child',
@@ -262,7 +293,8 @@ export default {
       },
       data: {
         checkbox: null,
-        select: null
+        select: null,
+        uploadify: null
       },
       apiDoc: [
         {
@@ -1329,7 +1361,6 @@ export default {
                 }
               ]
             },
-
             {
               name: 'SELECT',
               child: [
@@ -1492,118 +1523,106 @@ export default {
                 }
               ]
             },
+
             {
               name: 'UPLOADIFY',
               child: [
                 {
-                  name: 'type',
+                  name: '<cg-uploadify></cg-uploadify>',
                   param: [
                     {
+                      name: 'type',
                       type: 'String',
                       default: 'file',
                       detail: '展示类型(file文件类型，image图片类型)'
-                    }
-                  ]
-                },
-                {
-                  name: 'id',
-                  param: [
+                    },
                     {
+                      name: 'id',
                       type: 'String',
                       default: '""',
                       detail: '唯一标志符'
-                    }
-                  ]
-                },
-                {
-                  name: 'prefix',
-                  param: [
+                    },
                     {
+                      name: 'prefix',
                       type: 'String',
                       default: 'Test',
-                      detail: '文件类型前缀(业务属性对应腾讯云的文件夹)'
-                    }
-                  ]
-                },
-                {
-                  name: 'fileNum',
-                  param: [
+                      detail: '文件类型前缀'
+                    },
                     {
+                      name: 'fileNum',
                       type: 'Number',
                       default: '1',
                       detail: '文件数量'
-                    }
-                  ]
-                },
-                {
-                  name: 'errorImage',
-                  param: [
+                    },
                     {
+                      name: 'maxSize',
+                      type: 'Number',
+                      default: 'true',
+                      detail: '最大KB数(图片类型的时候会压缩，其他类型的会忽略该字段)'
+                    },
+                    {
+                      name: 'errorImage',
                       type: 'String',
-                      default: 'TODO',
+                      default: '""',
                       detail: '错误时的图片展示'
-                    }
-                  ]
-                },
-                {
-                  name: 'defaultImage',
-                  param: [
+                    },
                     {
+                      name: 'defaultImage',
                       type: 'String',
-                      default: 'TODO',
+                      default: '""',
                       detail: '默认的图片展示'
-                    }
-                  ]
-                },
-                {
-                  name: 'loadingImage',
-                  param: [
+                    },
                     {
+                      name: 'loadingImage',
                       type: 'String',
-                      default: '"TODO"',
+                      default: '""',
                       detail: '加载图片展示'
-                    }
-                  ]
-                },
-                {
-                  name: 'required',
-                  param: [
+                    },
                     {
+                      name: 'required',
                       type: 'Boolean',
                       default: 'false',
                       detail: '是否必填'
-                    }
-                  ]
-                },
-                {
-                  name: 'readOnly',
-                  param: [
+                    },
                     {
+                      name: 'readOnly',
                       type: 'Boolean',
                       default: 'false',
-                      detail: '是否可以编辑'
-                    }
-                  ]
-                },
-                {
-                  name: 'emptyIsNull',
-                  param: [
+                      detail: '不可编辑'
+                    },
                     {
+                      name: 'canDelete',
+                      type: 'Boolean',
+                      default: 'false',
+                      detail: '是否可以删除'
+                    },
+                    {
+                      name: 'emptyIsNull',
                       type: 'Boolean',
                       default: 'true',
                       detail: '选项为空时转换成null'
                     }
-                  ]
-                },
-                {
-                  name: 'value',
-                  param: [
-                    {
-                      type: 'String',
-                      default: 'null',
-                      detail: '文件组数值'
-                    }
-                  ]
+                  ],
+                  demo: `{
+  type: "image",
+  prefix: "Test",
+  fileNum : 0,
+  maxSize : 0
+ }`,
+                  template: `<cg-uploadify
+  :type = "uploadify.type"
+  :id = "uploadify.id"
+  :read-only = "uploadify.readOnly"
+  :can-delete = "uploadify.canDelete"
+  :required = "uploadify.required"
+  :empty-is-null = "uploadify.emptyIsNull"
+  :prefix = "uploadify.prefix"
+  :file-num = "uploadify.fileNum"
+  :max-size = "uploadify.maxSize"
+  v-model = "data.uploadify"
+>
+</cg-uploadify>`,
+                  detail: 'uploadify组件'
                 }
               ]
             },
@@ -1940,6 +1959,9 @@ export default {
       } else if (type === 'TREE') {
         this.showTree = true
         Utils.mergeObject(this.tree, eval('(' + data + ')'), 'outer')
+      } else if (type === 'UPLOADIFY') {
+        this.showUploadify = true
+        Utils.mergeObject(this.uploadify, eval('(' + data + ')'), 'outer')
       }
     },
     returnMain: function () {
@@ -1951,6 +1973,7 @@ export default {
       this.showScolllist = false
       this.showTab = false
       this.showTree = false
+      this.showUploadify = false
     }
   }
 }

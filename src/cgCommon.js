@@ -13,10 +13,10 @@ if (PACKAGE_TYPE) {
 (() => {
   if (window.Vue) {
     console.log('项目中已经有了全局vue，组件无需注册可以直接使用')
-    CgUI.install(Vue)
+    Cg.install(Vue)
   } else {
     console.info('需要通过 Vue.use(CG) 的方式进行组件注册')
-    window.CG = CgUI
+    window.CG = Cg
   }
 })()
 

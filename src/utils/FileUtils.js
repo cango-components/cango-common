@@ -3,6 +3,7 @@ import axios from 'axios'
 var COS = require('cos-js-sdk-v5')
 export default {
   uploadFile: function (fileList, result, funcCallback, prefix, num) {
+    let self = this
     // 替换成用户的 Bucket
     let Bucket = 'image-1256119235'
     // TODO 这里理论上根据客户端的位置进行切换 替换成用户的 Region
@@ -46,7 +47,7 @@ export default {
         result[num - 1]['filePath'] = fileName
         result[num - 1]['url'] = ''
         result[num - 1]['errorImg'] = ''
-        this.uploadFile(fileList, result, funcCallback, prefix, num + 1)
+        self.uploadFile(fileList, result, funcCallback, prefix, num + 1)
       }
     })
   },
@@ -87,6 +88,7 @@ export default {
     })
   },
   getFileList: function (fileGroupId, callback) {
+    let self = this
     axios({
       method: 'post',
       url: 'http://10.43.22.82:8888/pinkiepie/mFileSave/findByGroupId',
@@ -98,7 +100,7 @@ export default {
       }
     }).then(function (response) {
       if (response && response.data && response.data.code === 200) {
-        this.getTCloudFile(response.data.result, callback)
+        self.getTCloudFile(response.data.result, callback)
       } else {
         // TODO 失败的操作
         console.log(response)
@@ -109,6 +111,7 @@ export default {
     })
   },
   getTCloudFile: function (list, funcCallback, num) {
+    let self = this
     if (!num) num = 1
     if (!list && list.length === 0) {
       funcCallback()
@@ -149,11 +152,12 @@ export default {
       if (!err) {
         list[num - 1]['url'] = data.Url
         list[num - 1]['errorImg'] = ''
-        this.getTCloudFile(list, funcCallback, num + 1)
+        self.getTCloudFile(list, funcCallback, num + 1)
       }
     })
   },
   resizeFile: function (files, maxSize, callback, fileList, i) {
+    let self = this
     if (!i) i = 0
     if (!fileList) fileList = []
     if (typeof (FileReader) === 'undefined') {
@@ -176,7 +180,7 @@ export default {
     if (file.size < maxSize) {
       fileList[i] = file
       i++
-      this.resizeFile(files, maxSize, callback, fileList, i)
+      self.resizeFile(files, maxSize, callback, fileList, i)
       return
     }
     let ready = new FileReader()
@@ -205,11 +209,11 @@ export default {
         ctx.drawImage(self2, 0, 0, w, h)
         // quality值越小，所绘制出的图像越模糊
         let base64 = canvas.toDataURL('image/jpeg', quality)
-        let blob = this.base64ToBlob(base64, file.type)
+        let blob = self.base64ToBlob(base64, file.type)
         let finalFile = new File([blob], file.name, {type: file.type})
         fileList[i] = finalFile
         i++
-        this.resizeFile(files, maxSize, callback, fileList, i)
+        self.resizeFile(files, maxSize, callback, fileList, i)
       }
     }
   },
@@ -229,8 +233,8 @@ export default {
       window.BlobBuilder = window.BlobBuilder ||
         window.WebKitBlobBuilder ||
         window.MozBlobBuilder ||
-        window.MSBlobBuilder;
-      if (e.name === 'TypeError' && window.BlobBuilder){
+        window.MSBlobBuilder
+      if (e.name === 'TypeError' && window.BlobBuilder) {
         var bb = new window.BlobBuilder()
         bb.append(uBuffer.buffer)
         blob = bb.getBlob(filetype)

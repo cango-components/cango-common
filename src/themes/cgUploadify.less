@@ -1,0 +1,354 @@
+@import './base/base.less';
+
+
+.cg-uploadify__base{
+  width:100%;
+  height:15rem;
+  position:relative;
+
+}
+.cg-uploadify__upload{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  padding-top:9.5rem;
+  border:0.05em dashed #ddd;
+  text-align:center;
+  background:url(../assets/images/upload.png) center 2rem no-repeat;
+  background-size:6rem 6rem;
+  cursor:pointer;
+  border-radius:0.5rem;
+}
+.cg-uploadify__upload input{
+  display:none;
+}
+.cango-uploadify__main{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:5;
+}
+.cango-uploadify__main .cango-uploadify__main_title{
+  position: absolute;
+  width: 3rem;
+  right: 2rem;
+  bottom: 2rem;
+  color: #666;
+}
+.cango-uploadify__showImg{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:1;
+  vertical-align: middle;
+  overflow: hidden;
+}
+.cango-uploadify__showImg img.showImg{
+  position:absolute;
+  top:50%;
+  transform: translateY(-50%);
+  width:100%;
+}
+.cango-uploadify__main .delete{
+  position: absolute;
+  bottom: 3rem;
+  width: 15rem;
+  height: 3.6rem;
+  line-height: 3.6rem;
+  color: #fff;
+  z-index: 4;
+  left: 50%;
+  border-radius: 0.5rem;
+  margin-left: -7.5rem;
+  cursor: pointer;
+  background: #777;
+}
+.cango-uploadify__preview{
+  position:absolute;
+  bottom:1rem;
+  right:1rem;
+  width:5.5rem;
+  height:2.3rem;
+  z-index:1;
+  line-height:2.3rem;
+  border:0.05rem solid #409eff;
+  background:#409eff;
+  color:#fff;
+  text-align:center;
+  border-radius:0.2rem;
+  cursor:pointer;
+}
+.cango-uploadify__preview:hover{
+  background:#409eff;
+}
+.cango-uploadify__preview img{
+  width:1.5rem;
+  vertical-align: middle;
+}
+.cango-uploadify__preview span{
+  vertical-align: middle;
+}
+
+.cango-uploadify__background{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:#000;
+  opacity:0.5;
+  filter:Alpha(opacity=50);
+  z-index:1;
+}
+.cango-uploadify__main .cango-uploadify__file{
+  position:absolute;
+  top:0;
+  width:100%;
+  height:100%;
+  text-align:center;
+  display:block;
+}
+.cango-uploadify__main .cango-uploadify__file_active{
+  display:block;
+}
+.cango-uploadify__file img.cango-uploadify__file_imgCon{
+  display:inline-block;
+  min-width:28rem;
+  max-width:90%;
+  max-height:100%;
+  vertical-align: middle;
+}
+.cango-uploadify__file span{
+  width:0px;
+  height:100%;
+  display:inline-block;
+  vertical-align: middle;
+}
+.cango-uploadify__main:hover .cango-uploadify__file_prev,.cango-uploadify__main:hover  .cango-uploadify__file_next{
+  display:block;
+}
+.cango-uploadify__main .cango-uploadify__main_close{
+  position:absolute;
+  right:1rem;
+  top:1rem;
+  width:3rem;
+  height:3rem;
+  color:#ddd;
+  text-align:center;
+  line-height:3rem;
+  background:#777;
+  border-radius:50%;
+  font-size:2rem;
+  cursor:pointer;
+  z-index:3;
+}
+@media screen and (min-width: 1200px) {
+  .cango-uploadify__main{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 90rem;
+    height: 60rem;
+    margin-top: -32rem;
+    margin-left: -45rem;
+    background: #aaa;
+    border-radius: 1rem;
+    z-index: 2;
+  }
+  .cango-uploadify__main .cango-uploadify__main_close{
+    position:absolute;
+    right:1rem;
+    top:1rem;
+    width:3rem;
+    height:3rem;
+    color:#777;
+    text-align:center;
+    line-height:3rem;
+    background:#ccc;
+    border-radius:50%;
+    font-size:2rem;
+    cursor:pointer;
+    z-index:3;
+  }
+  .cango-uploadify__file_prev,.cango-uploadify__file_next{
+    display:none;
+    position: absolute;
+    top: 50%;
+    height: 10rem;
+    line-height: 10rem;
+    margin-top: -5rem;
+    font-size: 5rem;
+    color: #ccc;
+    z-index: 3;
+    background: #777;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .cango-uploadify__file_prev:hover,.cango-uploadify__file_next:hover{
+    background: #555;
+  }
+
+  .cango-uploadify__file_prev{
+    left:1rem;
+    border-radius:0.5rem 0 0 0.5rem;
+  }
+  .cango-uploadify__file_next{
+    right:1rem;
+    border-radius:0 0.5rem 0.5rem 0;
+  }
+}
+/*平板电脑与小屏电脑之间的分辨率*/
+@media screen and (min-width: 979px) and (max-width:1200px) {
+  .cango-uploadify__main{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80rem;
+    height: 55rem;
+    margin-top: -29rem;
+    margin-left: -40rem;
+    background: #aaa;
+    border-radius: 1rem;
+    z-index: 2;
+  }
+  .cango-uploadify__main .cango-uploadify__main_close{
+    position:absolute;
+    right:1rem;
+    top:1rem;
+    width:3rem;
+    height:3rem;
+    color:#777;
+    text-align:center;
+    line-height:3rem;
+    background:#ccc;
+    border-radius:50%;
+    font-size:2rem;
+    cursor:pointer;
+    z-index:3;
+  }
+  .cango-uploadify__file_prev,.cango-uploadify__file_next{
+    display:none;
+    position: absolute;
+    top: 50%;
+    height: 10rem;
+    line-height: 10rem;
+    margin-top: -5rem;
+    font-size: 5rem;
+    color: #ccc;
+    z-index: 3;
+    background: #777;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius:0 0.5rem 0.5rem 0;
+  }
+  .cango-uploadify__file_prev:hover,.cango-uploadify__file_next:hover{
+    background: #555;
+  }
+  .cango-uploadify__file_prev{
+    left:1rem;
+  }
+  .cango-uploadify__file_next{
+    right:1rem;
+  }
+}
+/*平板电脑与小屏电脑之间的分辨率*/
+@media screen and (min-width: 768px) and (max-width:979px) {
+  .cango-uploadify__main{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 64rem;
+    height: 45rem;
+    margin-top: -23rem;
+    margin-left: -32rem;
+    background: #aaa;
+    border-radius: 1rem;
+    z-index: 2;
+  }
+  .cango-uploadify__main .cango-uploadify__main_close{
+    position:absolute;
+    right:1rem;
+    top:1rem;
+    width:3rem;
+    height:3rem;
+    color:#777;
+    text-align:center;
+    line-height:3rem;
+    background:#ccc;
+    border-radius:50%;
+    font-size:2rem;
+    cursor:pointer;
+    z-index:3;
+  }
+  .cango-uploadify__file_prev,.cango-uploadify__file_next{
+    display:none;
+    position: absolute;
+    top: 50%;
+    height: 10rem;
+    line-height: 10rem;
+    margin-top: -5rem;
+    font-size: 5rem;
+    color: #ccc;
+    z-index: 3;
+    background: #777;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius:0 0.5rem 0.5rem 0;
+  }
+  .cango-uploadify__file_prev:hover,.cango-uploadify__file_next:hover{
+    background: #555;
+  }
+  .cango-uploadify__file_prev{
+    left:1rem;
+  }
+  .cango-uploadify__file_next{
+    right:1rem;
+  }
+}
+/*横向放置的手机和竖向放置的平板之间的分辨率*/
+@media screen and (max-width:767px) {
+  .cango-uploadify__main .cango-uploadify__main_close{
+    position:absolute;
+    right:1rem;
+    top:1rem;
+    width:3rem;
+    height:3rem;
+    color:#777;
+    text-align:center;
+    line-height:3rem;
+    background:#ccc;
+    border-radius:50%;
+    font-size:2rem;
+    cursor:pointer;
+    z-index:3;
+  }
+  .cango-uploadify__file_prev,.cango-uploadify__file_next{
+    display:none;
+  }
+}
+
+/*竖向放置的手机以及分别率*/
+@media screen and (max-width: 480px) {
+  .cango-uploadify__main .cango-uploadify__main_close{
+    position:absolute;
+    right:1rem;
+    top:1rem;
+    width:3rem;
+    height:3rem;
+    color:#777;
+    text-align:center;
+    line-height:3rem;
+    background:#ccc;
+    border-radius:50%;
+    font-size:2rem;
+    cursor:pointer;
+    z-index:3;
+  }
+  .cango-uploadify__file_prev,.cango-uploadify__file_next{
+    display:none;
+  }
+}
