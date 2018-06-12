@@ -1,6 +1,6 @@
 <template>
   <div class = 'cg-checkbox__main'
-       :class='errorMsg != "" ? "cg-checkbox__error" : ""'
+    :class='getClass()'
   >
     <div v-if='label'
          :class='titleStyle==0 ? "cg-checkbox__label_transverse": "cg-checkbox__label_vertical"'
@@ -109,36 +109,19 @@ export default {
     }
   },
   computed: {
-    showText: function () {
-      let text = ''
-      if (this.value == null || this.value === undefined) {
-        return ''
-      }
-      if (Utils.isArray(this.value)) {
-        for (let i = 0; i < this.value.length; i++) {
-          for (let k = 0; k < this.list.length; k++) {
-            if (this.value[i] === this.list[k][this.keyName]) {
-              if (text === '') {
-                text = this.showRecordName(this.list[k])
-              } else {
-                text += this.separator + this.showRecordName(this.list[k])
-              }
-              break
-            }
-          }
-        }
-      } else {
-        for (let i = 0; i < this.list.length; i++) {
-          if (this.value === this.list[i][this.keyName]) {
-            text = this.showRecordName(this.list[i])
-            break
-          }
-        }
-      }
-      return text
-    }
   },
   methods: {
+    getClass: function () {
+      let className = ''
+      if (this.errorMsg !== '') {
+        className += ' cg-checkbox__error'
+      }
+      if (this.readOnly) {
+        className += ' cg-checkbox__readonly'
+      }
+      console.log(className)
+      return className
+    },
     valid: function () {
       if (this.required) {
         if (this.selectNum === 1) {
