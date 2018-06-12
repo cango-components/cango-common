@@ -5,6 +5,10 @@
 @import './cgSelect.less';
 @import './cgPagelist.less';
 @import './cgScolllist.less';
+/*
+@import './cgTab.less';
+@import './cgUploadify.less';
+*/
 
 .gutter pre {
   color: #999;
@@ -863,7 +867,7 @@ ul.demo li {
   position: absolute;
   z-index: 10;
   left: 0;
-  bottom: 0;
+  top: 0;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -882,8 +886,9 @@ ul.demo li {
   margin-top: 0.5em;
 }
 .sidebar .sidebar-inner {
-  width: 260px;
-  padding: 40px 20px 60px 60px;
+  width: 240px;
+  padding: 40px 10px 40px 30px;
+  border: 1px solid #ddd;
 }
 .sidebar .version-select {
   vertical-align: middle;
@@ -1294,10 +1299,10 @@ ul.demo li {
 }
 .content {
   position: relative;
-  padding: 2.2em 0;
-  max-width: 600px;
+  padding: 1em 0;
+  max-width: 700px;
   margin: 0 auto;
-  padding-left: 50px;
+  padding-left: 30px;
 }
 .content.api > a:first-of-type > h2 {
   margin-top: 0;

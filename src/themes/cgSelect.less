@@ -26,6 +26,9 @@
   height:4rem;
   line-height:4rem;
   padding-left:1rem;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 .cg-select__value{
   position:relative;
@@ -126,7 +129,9 @@
 }
 .cg-select__pop_content:hover,.cg-select__pop_selected{
   background-color: #f5f7fa;
+  border-top:1px solid #fff;
 }
+
 .cg-select__select_pop_filter{
   padding:0.4rem 0.2rem;
 }
