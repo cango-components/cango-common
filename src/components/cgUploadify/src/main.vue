@@ -1,20 +1,31 @@
 <template>
   <div class = 'cg-uploadify__base' >
-    <div  v-if='fileList' class = 'cg-uploadify__main'>
-      <div v-for='(file, index) in fileList'
-           :key='"file" + index'
-           @click='remove(file)'
-           class = 'cg-uploadify__file'>
-        <img v-if='type === "image" ' :src = 'file.errorImg || file.url || loadingImage' @error='onError(file)' width = 100 >
-        <div v-else>
-          {{ file.filePath }} </br>
-          {{ file.url }} </br></br>
-        </div>
-      </div>
+    <div class = 'cg-uploadify__upload' @click='openFile()' >
+      <input :id="uniqueId" v-if='fileNum == 1' type = 'file' @change='onUpload' />
+      <input :id="uniqueId" v-else type = 'file' @change='onUpload' multiple='multiple' :size='fileNum' />
+      <p>上传文件</p>
     </div>
-    <div  class = 'cg-uploadify__upload'>
-      <input v-if='fileNum == 1 && !readOnly && !lock' type = 'file' @change='onUpload' />
-      <input v-else-if='!readOnly && !lock' type = 'file' @change='onUpload' multiple='multiple' :size='fileNum' />
+    <div class='cango-uploadify__showImg' >
+      <div class='cango-uploadify__preview' @click='openPreview()'>
+        <img src='../../../assets/images/preview.png' id='showImg'/><span>预览</span>
+      </div>
+      <img :src = 'showFile ? showFile : ""' class='showImg'  @click='openFile()'/>
+    </div>
+    <div v-if='previewShow' class='cango-uploadify__background'></div>
+    <div v-if='previewShow' class = 'cango-uploadify__main' >
+      <div class='cango-uploadify__main_close' @click='closePreview()'>×</div>
+      <div class='cango-uploadify__main_title'>{{previewNum+1}}/{{fileList.length}}</div>
+      <i v-if='previewNum>0' class='cango-uploadify__file_iconfont cango-uploadify__file_icon_previous cango-uploadify__file_prev' @click='prev()'></i>
+      <i v-if='previewNum<fileList.length-1' class='cango-uploadify__file_iconfont cango-uploadify__file_icon_next cango-uploadify__file_next' @click='next()'></i>
+      <div v-for="(file,index) in fileList" :key="index"  :class="index == previewNum? 'cango-uploadify__file_active cango-uploadify__file' : 'cango-uploadify__file'">
+        <span></span>
+        <!-- 背景loading -->
+        <img v-if="type == 'image' " class="cango-uploadify__file_imgCon" :src = "file.errorImg || file.url " @error="onError(file)" >
+        <div v-else>
+          {{ file.filePath }} </br> {{ file.url }} </br></br>
+        </div>
+        <div v-if='!readOnly && canDelete' class="delete" @click='remove(file)'>删除</div>
+      </div>
     </div>
   </div>
 </template>
@@ -51,20 +62,20 @@ export default {
       type: Number,
       default: 0
     },
-    // TODO 错误时的图片展示
+    // 错误时的图片展示
     'errorImage': {
       type: String,
-      default: 'https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/home/img/qrcode/zbios_efde696.png'
+      default: '/static/images/error.png'
     },
-    // TODO 默认的图片展示
+    // 默认的图片展示
     'defaultImage': {
       type: String,
-      default: 'file'
+      default: '/static/images/upload.png'
     },
-    // TODO 加载图片展示
+    // 加载图片展示
     'loadingImage': {
       type: String,
-      default: 'https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=3560742891,752665825&fm=85&s=4D91AC50A822FC88CAE60458030080F2'
+      default: '/static/images/loading.gif'
     },
     // 是否必填
     'required': {
@@ -75,6 +86,11 @@ export default {
     'readOnly': {
       type: Boolean,
       default: false
+    },
+    // 可以删除
+    'canDelete': {
+      type: Boolean,
+      default: true
     },
     // 选项为空时转换成null
     'emptyIsNull': {
@@ -99,7 +115,11 @@ export default {
     return {
       fileList: [],
       lock: false,
-      errorMsg: ''
+      errorMsg: '',
+      showFile: this.defaultImage,
+      previewShow: false,
+      previewNum: 0,
+      uniqueId: Utils.guid()
     }
   },
   computed: {
@@ -139,11 +159,18 @@ export default {
           }
           // 加锁防止异步错乱
           self.lock = false
+          if (self.fileList && self.fileList.length > 0) {
+            self.showFile = self.fileList[self.fileList.length - 1].url
+          } else {
+            self.showFile = this.defaultImage
+          }
+          console.log(self.showFile)
         })
       } else {
         self.fileList = []
         // 加锁防止异步错乱
         self.lock = false
+        self.showFile = this.defaultImage
       }
     },
     onError: function (file) {
@@ -193,6 +220,16 @@ export default {
     },
     resizeValue: function () {
       var self = this
+      if (self.fileList && self.fileList.length > 0) {
+        self.showFile = self.fileList[self.fileList.length - 1].url
+        if (self.previewNum >= self.fileList.length) {
+          self.previewNum = self.fileList.length - 1
+        }
+      } else {
+        self.showFile = self.defaultImage
+        self.previewShow = false
+        self.previewNum = 0
+      }
       if (!self.fileList || self.fileList.length === 0) {
         self.$emit('input', null)
         return
@@ -201,6 +238,46 @@ export default {
         self.$emit('input', groupId)
       }
       FileUtils.createGroupId(self.fileList, func)
+    },
+    openFile: function () {
+      if (this.readOnly || this.lock) {
+        return
+      }
+      var upload = document.getElementById(this.uniqueId)
+      upload.click()
+    },
+    openPreview: function () {
+      let self = this
+      if (self.fileList && self.fileList.length > 0) {
+        self.previewShow = true
+      }
+    },
+    closePreview: function () {
+      let self = this
+      self.previewShow = false
+    },
+    prev: function () {
+      var self = this
+      self.previewNum = self.previewNum - 1
+      if (self.previewNum < 0) {
+        self.previewNum = 0
+      }
+    },
+    next: function () {
+      var self = this
+      self.previewNum = self.previewNum + 1
+      if (self.fileList) {
+        let totalNum = self.fileList.length
+        if (totalNum > 0) {
+          if (self.previewNum >= totalNum) {
+            self.previewNum = totalNum - 1
+          }
+        } else {
+          self.previewNum = 0
+        }
+      } else {
+        self.previewNum = 0
+      }
     }
   },
   watch: {

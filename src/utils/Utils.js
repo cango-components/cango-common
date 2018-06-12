@@ -130,7 +130,7 @@ export default {
           this.mergeObject(to[k], from[k], 'right')
         }
       }
-      return to;
+      return to
     }
     let key
     let toKeys = Object.keys(to)
