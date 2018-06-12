@@ -1,5 +1,6 @@
 <template>
-  <div class = 'cg-select__base' v-bind:class='errorMsg != "" ? "cg-select__error" : ""' >
+  <div class = 'cg-select__base'
+    :class='getClass()' >
     <div class = 'cg-select__main' >
       <div
         v-if='label'
@@ -48,6 +49,7 @@
 <script>
 import Utils from '../../../utils/Utils.js'
 import StrUtils from '../../../utils/StrUtils.js'
+import BrowseUtils from '../../../utils/BrowseUtils.js'
 export default {
   name: 'cg-select',
   props: {
@@ -212,6 +214,19 @@ export default {
     }
   },
   methods: {
+    getClass: function () {
+      let className = ''
+      if (this.errorMsg !== '') {
+        className += ' cg-select__error'
+      }
+      if (this.readOnly) {
+        className += ' cg-select__readonly'
+      }
+      if (!BrowseUtils.isPC()) {
+        className += ' cg-select__mobile'
+      }
+      return className
+    },
     valid: function () {
       if (this.required) {
         if (this.selectNum === 1) {

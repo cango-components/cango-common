@@ -65,7 +65,7 @@ export default {
   unescapeHTML: function (str) {
     if (str == null) return ''
     let self = this
-    return String(str).replace(/\&([^;]+);/g, function (entity, entityCode) {
+    return String(str).replace(/&([^;]+);/g, function (entity, entityCode) {
       var match
       if (entityCode in self.escapeChars) {
         return self.escapeChars[entityCode]
