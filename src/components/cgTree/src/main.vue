@@ -8,7 +8,8 @@
            :key='"node" + nodeIndex'
            @click='treeNodeSelect(node)'
            class = 'cg-tree__node'>
-        {{ node.level }} {{ showRecordName(node.record) }}
+        <span v-for="index in node.level">&nbsp;&nbsp;</span>
+        {{ showRecordName(node.record) }}
       </div>
     </div>
   </div>
