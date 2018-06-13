@@ -9,13 +9,18 @@
       <div class='cango-uploadify__preview' @click='openPreview()'>
         <img src='../../../assets/images/preview.png' id='showImg'/><span>预览</span>
       </div>
-      <img :src = 'showFile ? showFile : ""' class='showImg'  @click='openFile()'/>
-    </div>
-    <!--<div v-else class='cango-uploadify__showImg'>
-      <div v-for="(file,index) in fileList">
-          {{ file.filePath }}&nbsp;{{ file.url }} <a :href="file.url">查看</a><br/>
+      <div class="openbtn"  @click='openFile()'>
+       <img :src = 'showFile ? showFile : ""' class='showImg' />
       </div>
-    </div>-->
+    </div>
+    <div v-else-if="type == 'file'"  v-show="fileList.length>0" class='cango-uploadify__showfile'>
+      <ul>
+        <li v-for="(file,index) in fileList">
+            {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a><br/>
+        </li>
+      </ul>
+      <div class="openbtn"  @click='openFile()'></div>
+    </div>
     <div v-if='previewShow' class='cango-uploadify__background'></div>
     <v-touch tag="div"  v-if='previewShow' class = 'cango-uploadify__main'  v-on:swipeleft="prev()" v-on:swiperight="next()">
       <div class='cango-uploadify__main_close' @click='closePreview()'>×</div>

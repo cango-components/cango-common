@@ -67,7 +67,12 @@
   bottom: 2rem;
   color: #666;
 }
-.cango-uploadify__showImg{
+.cango-uploadify__showImg .openbtn,.cango-uploadify__showfile .openbtn{
+  width:100%;
+  height:100%;
+}
+
+.cango-uploadify__showImg,.cango-uploadify__showfile{
   position:absolute;
   top:0;
   left:0;
@@ -78,6 +83,10 @@
   border:0.05em dashed #ddd;
   border-radius:0.5rem;
   overflow: hidden;
+}
+.cango-uploadify__showfile li {
+  line-height: 3rem;
+  padding: 0 1rem;
 }
 .cango-uploadify__showImg img.showImg{
   position:absolute;
