@@ -1,6 +1,30 @@
 <template>
   <div>
     <div v-if='show' id = 'testdemo' >
+      <div v-if="showInput" >
+        <cg-input
+          :label = "input.label"
+          :id = "input.id"
+          :type = "input.type"
+          :readonly = "input.readonly"
+          :size = "input.size"
+          :cols = "input.cols"
+          :rows = "input.rows"
+          :placeholder = "input.placeholder"
+          :emptyisnull = "input.emptyisnull"
+          :required = "input.required"
+          :validparam = "input.validparam"
+        >
+        </cg-input>
+      </div>
+      <div v-if="showSwitch" >
+        <cg-switch
+          :label = 'switchConfig.label'
+          :read-only = 'switchConfig.readOnly'
+          v-model = 'data.switch'
+        >
+        </cg-switch>
+      </div>
       <div v-if="showUploadify" >
         <cg-uploadify
           :type = "uploadify.type"
@@ -208,8 +232,35 @@ export default {
       showTab: false,
       showTree: false,
       showUploadify: false,
+      showSwitch: false,
+      showInput: false,
+      input: {
+        label: 'input',
+        id: 'input',
+        type: 'text',
+        readonly: false,
+        size: 'default',
+        cols: null,
+        rows: 2,
+        placeholder: '',
+        emptyisnull: false,
+        required: false,
+        validparam: {
+          min: null,
+          max: null,
+          minlength: null,
+          maxlength: null,
+          validFunc: null,
+          errorMsg: ''
+        }
+      },
+      switchConfig: {
+        label: 'switch',
+        readOnly: false
+      },
       uploadify: {
         id: 'uploadifyId',
+        label: 'uploadify',
         type: 'image',
         prefix: 'Test',
         fileNum: 0,
@@ -298,7 +349,8 @@ export default {
       data: {
         checkbox: null,
         select: null,
-        uploadify: null
+        uploadify: null,
+        switch: false
       },
       apiDoc: [
         {
@@ -1235,16 +1287,165 @@ export default {
           name: '视图',
           child: [
             {
-              name: 'TEXT',
-              child: []
+              name: 'INPUT',
+              child: [
+                {
+                  name: '<cg-input></cg-input>',
+                  param: [
+                    {
+                      name: 'label',
+                      type: 'String',
+                      default: '""',
+                      detail: '标题'
+                    },
+                    {
+                      name: 'id',
+                      type: 'String',
+                      default: '""',
+                      detail: '唯一标志符'
+                    },
+                    {
+                      name: 'type',
+                      type: 'String',
+                      default: 'text',
+                      detail: '类型(text,textarea,password)'
+                    },
+                    {
+                      name: 'readonly',
+                      type: 'boolean',
+                      default: 'false',
+                      detail: '是否可编辑'
+                    },
+                    {
+                      name: 'size',
+                      type: 'String',
+                      default: 'default',
+                      detail: '尺寸大小'
+                    },
+                    {
+                      name: 'cols',
+                      type: 'Number',
+                      default: 'null',
+                      detail: 'textarea 列数'
+                    },
+                    {
+                      name: 'rows',
+                      type: 'Number',
+                      default: '2',
+                      detail: 'textarea 行数'
+                    },
+                    {
+                      name: 'placeholder',
+                      type: 'String',
+                      default: '""',
+                      detail: 'placeholder'
+                    },
+                    {
+                      name: 'emptyisnull',
+                      type: 'boolean',
+                      default: 'false',
+                      detail: '是否转成NULL值提交'
+                    },
+                    {
+                      name: 'required',
+                      type: 'boolean',
+                      default: 'false',
+                      detail: '是否必填'
+                    },
+                    {
+                      name: 'validparam',
+                      type: 'Object',
+                      default: '{min: null,max: null,minlength: null,maxlength: null,validFunc: null,errorMsg: null}',
+                      detail: '校验规则'
+                    },
+                    {
+                      name: 'value',
+                      type: 'String',
+                      default: '""',
+                      detail: '数值'
+                    }
+                  ],
+                  demo: `{
+  label: "input",
+  id: "input",
+  type: "text",
+  readonly: false,
+  size: "default",
+  cols: null,
+  rows: 2,
+  placeholder: "",
+  emptyisnull: false,
+  required: false,
+  validparam: {
+    min: null,
+    max: null,
+    minlength: null,
+    maxlength: null,
+    validFunc: null,
+    errorMsg: ''
+  }
+ }`,
+                  template: `<cg-input
+  :label = "input.label"
+  :id = "input.id"
+  :type = "input.type"
+  :readonly = "input.readonly"
+  :size = "input.size"
+  :cols = "input.cols"
+  :rows = "input.rows"
+  :placeholder = "input.placeholder"
+  :emptyisnull = "input.emptyisnull"
+  :required = "input.required"
+  :validparam = "input.validparam"
+>
+</cg-input>`,
+                  detail: 'input组件'
+                }
+              ]
             },
             {
-              name: 'TEXTAREA',
-              child: []
-            },
-            {
-              name: 'Switch',
-              child: []
+              name: 'SWITCH',
+              child: [
+                {
+                  name: '<cg-switch></cg-switch>',
+                  param: [
+                    {
+                      name: 'label',
+                      type: 'String',
+                      default: '""',
+                      detail: '标题'
+                    },
+                    {
+                      name: 'id',
+                      type: 'String',
+                      default: '""',
+                      detail: '唯一标志符'
+                    },
+                    {
+                      name: 'readOnly',
+                      type: 'boolean',
+                      default: 'false',
+                      detail: '是否可编辑'
+                    },
+                    {
+                      name: 'value',
+                      type: 'Boolean',
+                      default: 'false',
+                      detail: '数值'
+                    }
+                  ],
+                  demo: `{
+  label: "switch",
+  readOnly: false
+ }`,
+                  template: `<cg-switch
+  :label = "switch.label"
+  :read-only = "switch.readOnly"
+>
+</cg-switch>`,
+                  detail: 'switch组件'
+                }
+              ]
             },
             {
               name: 'DATE',
@@ -1918,7 +2119,7 @@ export default {
 >
 </cg-tree>
 `,
-                  detail: 'tree组件'
+                  detail: 'tree组件，支持节点数据slot'
                 }
               ]
             },
@@ -1973,6 +2174,12 @@ export default {
       } else if (type === 'UPLOADIFY') {
         this.showUploadify = true
         Utils.mergeObject(this.uploadify, eval('(' + data + ')'), 'outer')
+      } else if (type === 'SWITCH') {
+        this.showSwitch = true
+        Utils.mergeObject(this.switchConfig, eval('(' + data + ')'), 'outer')
+      } else if (type === 'INPUT') {
+        this.showInput = true
+        Utils.mergeObject(this.input, eval('(' + data + ')'), 'outer')
       }
     },
     returnMain: function () {
@@ -1985,6 +2192,8 @@ export default {
       this.showTab = false
       this.showTree = false
       this.showUploadify = false
+      this.showSwitch = false
+      this.showInput = false
     }
   }
 }

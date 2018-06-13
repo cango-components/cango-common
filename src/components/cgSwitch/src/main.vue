@@ -1,35 +1,50 @@
 <template>
-  <div class="cg-switch" :class="switchClass" @click="clickHandle">
-    <div class="cg-switch__btn"></div>
+  <div class='cg-switch' :class='switchClass' @click='clickHandle' >
+    <div v-if='label' class = 'cg-switch__label'>
+      {{ label }}
+    </div>
+    <div :class='label ? "cg-switch__btn cg-switch__have_label" : "cg-switch__btn"'></div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'cg-switch',
-  data () {
-    return {
-      selected: false
-    }
-  },
   props: {
+    // 标题
+    'label': {
+      type: String,
+      default: ''
+    },
+    // ID
+    'id': {
+      type: String,
+      default: ''
+    },
+    // 是否readonly
+    'readOnly': {
+      type: Boolean,
+      default: false
+    },
+    // 开关(true/false)
     value: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
-  mounted () {
-    this.selected = this.value || false
+  data: function () {
+    return {}
   },
   computed: {
     switchClass () {
-      return [this.selected ? 'selected' : '']
+      return [this.value ? 'selected' : '', this.readOnly ? 'readonly' : '']
     }
   },
   methods: {
     clickHandle () {
-      this.selected = !this.selected
-      this.$emit('input', this.selected)
+      if (!this.readOnly) {
+        this.$emit('input', !this.value)
+      }
     }
   }
 }
