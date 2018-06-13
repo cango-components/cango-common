@@ -1,18 +1,28 @@
 <template>
   <div class = 'cg-uploadify__base' >
-    <div class = 'cg-uploadify__upload' @click='openFile()' >
+    <div v-show="fileList.length==0" class = 'cg-uploadify__upload' @click='openFile()' >
       <input :id="uniqueId" v-if='fileNum == 1 && !lock' type = 'file' @change='onUpload' />
       <input :id="uniqueId" v-else-if='!lock' type = 'file' @change='onUpload' multiple='multiple' :size='fileNum' />
       <p>上传文件</p>
     </div>
-    <div class='cango-uploadify__showImg' >
+    <div v-if="type == 'image'" v-show="fileList.length>0" class='cango-uploadify__showImg' >
       <div class='cango-uploadify__preview' @click='openPreview()'>
         <img src='../../../assets/images/preview.png' id='showImg'/><span>预览</span>
       </div>
-      <img :src = 'showFile ? showFile : ""' class='showImg'  @click='openFile()'/>
+      <div class="openbtn"  @click='openFile()'>
+       <img :src = 'showFile ? showFile : ""' class='showImg' />
+      </div>
+    </div>
+    <div v-else-if="type == 'file'"  v-show="fileList.length>0" class='cango-uploadify__showfile'>
+      <ul>
+        <li v-for="(file,index) in fileList">
+            {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a><br/>
+        </li>
+      </ul>
+      <div class="openbtn"  @click='openFile()'></div>
     </div>
     <div v-if='previewShow' class='cango-uploadify__background'></div>
-    <div v-if='previewShow' class = 'cango-uploadify__main' >
+    <v-touch tag="div"  v-if='previewShow' class = 'cango-uploadify__main'  v-on:swipeleft="prev()" v-on:swiperight="next()">
       <div class='cango-uploadify__main_close' @click='closePreview()'>×</div>
       <div class='cango-uploadify__main_title'>{{previewNum+1}}/{{fileList.length}}</div>
       <i v-if='previewNum>0' class='cango-uploadify__file_iconfont cango-uploadify__file_icon_previous cango-uploadify__file_prev' @click='prev()'></i>
@@ -24,11 +34,11 @@
         <div v-else>
           {{ file.filePath }} </br> {{ file.url }} </br></br>
         </div>
-        <div class="left"  @click='left(file)'>左旋转</div>
-        <div v-if='!readOnly && canDelete' class="delete" @click='remove(file)'>删除</div>
-        <div class="right" @click='right(file)'>右旋转</div>
+        <div class="left"  @click='left(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-zuoxuanzhuan'></i>&nbsp;左旋转</div>
+        <div v-if='!readOnly && canDelete' class="delete" @click='remove(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-shanchu'></i>&nbsp;删除</div>
+        <div class="right" @click='right(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-youxuanzhuan'></i>&nbsp;右旋转</div>
       </div>
-    </div>
+    </v-touch>
   </div>
 </template>
 
@@ -57,7 +67,7 @@ export default {
     // 文件数量
     'fileNum': {
       type: Number,
-      default: 1
+      default: 3
     },
     // 最大KB数
     'maxSize': {
@@ -72,7 +82,7 @@ export default {
     // 默认的图片展示
     'defaultImage': {
       type: String,
-      default: '/static/images/upload.png'
+      default: ''
     },
     // 加载图片展示
     'loadingImage': {

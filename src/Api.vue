@@ -138,6 +138,7 @@
 
       <div v-if="showButton" >
         <cg-button
+          :className = "button.className"
           :label = "button.label"
           :read-only = "button.readOnly"
           :button-click = "button.buttonClick"
@@ -285,7 +286,7 @@ export default {
         tabConfig: []
       },
       button: {
-        className: 'cg-button__base',
+        className: '',
         label: 'button',
         readOnly: false,
         buttonClick: null
@@ -1846,8 +1847,8 @@ export default {
                     {
                       name: 'className',
                       type: 'String',
-                      default: 'cg-button__base',
-                      detail: '默认样式'
+                      default: 'cg-button__primary',
+                      detail: '颜色样式有cg-button__default/cg-button__primary/cg-button__success/cg-button__info/cg-button__warning/cg-button__danger，圆角样式 round，朴素样式 plain，颜色样式、圆角样式、朴素样式可搭配使用'
                     },
                     {
                       name: 'readOnly',
@@ -1863,11 +1864,13 @@ export default {
                     }
                   ],
                   demo: `{
+  className: "cg-button__primary"
   label: "button",
   readOnly: false,
   buttonClick : function(){console.log(123);}
  }`,
                   template: `<cg-button
+  :className = "button.className"
   :label = "button.label"
   :read-only = "button.readOnly"
   :button-click = "button.buttonClick"

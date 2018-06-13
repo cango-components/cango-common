@@ -7,6 +7,9 @@ import Cg from './cgCommon'
 import './themes/index.less'
 Vue.config.productionTip = false
 Vue.use(Cg)
+
+var VueTouch = require('vue-touch')
+Vue.use(VueTouch, {name: 'v-touch'})
 /* eslint-disable no-new */
 new Vue({
   el: '#api',
