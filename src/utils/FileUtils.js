@@ -17,7 +17,9 @@ export default {
       funcCallback(result)
       return
     }
-    let fileName = prefix + '/' + Utils.guid() + fileList[num - 1].name
+    let time = new Date().getTime()
+    // 增加时间戳和数字用于排序
+    let fileName = prefix + '/' + time + '-' + num + '-' + Utils.guid() + fileList[num - 1].name
     // 初始化实例
     var cos = new COS({
       getAuthorization: function (options, callback) {
@@ -46,6 +48,7 @@ export default {
         result[num - 1] = {}
         result[num - 1]['filePath'] = fileName
         result[num - 1]['url'] = ''
+        result[num - 1]['angle'] = 0
         result[num - 1]['errorImg'] = ''
         self.uploadFile(fileList, result, funcCallback, prefix, num + 1)
       }
@@ -75,8 +78,11 @@ export default {
       }
     }).then(function (response) {
       if (response && response.data && response.data.code === 200) {
-        if (callback && response.data.result[0]) {
+        if (callback && response.data.result && response.data.result[0]) {
           callback(response.data.result[0].groupId)
+        } else {
+          // TODO 失败的操作
+          console.log(response)
         }
       } else {
         // TODO 失败的操作
@@ -152,6 +158,7 @@ export default {
       if (!err) {
         list[num - 1]['url'] = data.Url
         list[num - 1]['errorImg'] = ''
+        list[num - 1]['angle'] = 0
         self.getTCloudFile(list, funcCallback, num + 1)
       }
     })

@@ -2,7 +2,7 @@
   <table class = 'cg-pageList__base' >
     <tr class = 'cg-pageList__title' >
       <th v-if='showCheckBox' class = 'cg-pageList__label cg-pageList__label_checkall' >
-        <input type="checkbox" @click="checkall()" >
+        <input type="checkbox" v-model="checkallValue" @change="checkall()" >
       </th>
       <th v-for='(title, index) in titleConfig'
           :key='"title"+index'
@@ -23,7 +23,9 @@
             :key='"recTitle"+recTitleIndex'
             class = 'cg-pageList__record'
             @click='rowClick(record)' >
+          <slot v-bind:option='{record: record, title: title}' >
             {{ showRecordName(record, title) }}
+          </slot>
         </td>
       </tr>
     </tbody>
@@ -91,7 +93,8 @@ export default {
       order: {
         keyName: this.initOrder.keyName,
         orderBy: this.initOrder.orderBy
-      }
+      },
+      checkallValue: false
     }
   },
   computed: {
@@ -100,9 +103,11 @@ export default {
   methods: {
     checkall: function () {
       let value = []
-      if (this.list) {
-        for (let i = 0; i < this.list.length; i++) {
-          value.push(this.list[i])
+      if (this.checkallValue) {
+        if (this.list) {
+          for (let i = 0; i < this.list.length; i++) {
+            value.push(this.list[i])
+          }
         }
       }
       this.resizeValue(value)
@@ -172,7 +177,6 @@ export default {
       }
     },
     isChecked: function (record) {
-      console.log(record)
       if (this.value) {
         for (let i = 0; i < this.value.length; i++) {
           if (record === this.value[i]) {

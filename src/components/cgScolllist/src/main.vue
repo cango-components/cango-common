@@ -10,7 +10,9 @@
           :key='"title"+titleIndex'
           class = 'cg-scollList__record'
           @click='rowClick(record)' >
-        {{ showRecordName(record, title) }}
+        <slot v-bind:option='{record: record, title: title}' >
+          {{ showRecordName(record, title) }}
+        </slot>
       </td>
     </tr>
     <tr v-if='hasMore' class = 'cg-scollList__page' @click='showMore()' >

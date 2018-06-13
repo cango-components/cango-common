@@ -6,10 +6,17 @@
     <div  class = 'cg-tree__main'>
       <div v-for='(node, nodeIndex) in getList'
            :key='"node" + nodeIndex'
-           @click='treeNodeSelect(node)'
            class = 'cg-tree__node'>
         <span v-for="index in node.level">&nbsp;&nbsp;</span>
         {{ showRecordName(node.record) }}
+        <div @click='treeNodeExtend(node)'>
+          展开事件
+        </div>
+        <div @click='treeNodeSelect(node)'>
+          <slot v-bind:option='node' >
+            选中事件 {{ node.level }} {{ showRecordName(node.record) }}
+          </slot>
+        </div>
       </div>
     </div>
   </div>
@@ -42,6 +49,10 @@ export default {
     },
     // 选中事件
     'onSelected': {
+      type: Function
+    },
+    // 展开事件
+    'onExtend': {
       type: Function
     },
     // 是否显示筛选器(在已知的节点范围内进行检索，最好配合list一次性加载，否则只检索已知数据)
@@ -115,10 +126,15 @@ export default {
         return record[this.showName]
       }
     },
-    treeNodeSelect: function (record) {
+    treeNodeExtend: function (record) {
       record.showChild = !record.showChild
+      if (this.onExtend) {
+        this.onExtend(record.record, record.showChild)
+      }
+    },
+    treeNodeSelect: function (record) {
       if (this.onSelected) {
-        this.onSelected(record.record, record.showChild)
+        this.onSelected(record.record)
       }
     },
     resizeRecordList: function (list, level, parentIsOk) {

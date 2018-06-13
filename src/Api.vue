@@ -27,6 +27,7 @@
           :show-func="tree.showFunc"
           :list="tree.list"
           :on-selected="tree.onSelected"
+          :on-extend="tree.onExtend"
           :filter="tree.filter"
           :filter-ignore="tree.filterIgnore"
           :filter-placeholder="tree.filterPlaceholder"
@@ -65,6 +66,7 @@
           :show-check-box = "pagelist.showCheckBox"
           :load-function = "pagelist.loadFunction"
           :row-click-function = "pagelist.rowClickFunction"
+          v-model= "data.pagelist"
         >
         </cg-pagelist>
       </div>
@@ -224,6 +226,7 @@ export default {
         showFunc: null,
         list: [],
         onSelected: null,
+        onExtend: null,
         filter: false,
         filterIgnore: true,
         filterPlaceholder: '请选择'
@@ -290,7 +293,8 @@ export default {
         titleConfig: [],
         showCheckBox: true,
         loadFunction: null,
-        rowClickFunction: null
+        rowClickFunction: null,
+        pagelist: []
       },
       data: {
         checkbox: null,
@@ -1870,6 +1874,12 @@ export default {
                       detail: '选中树图节点事件'
                     },
                     {
+                      name: 'onExtend',
+                      type: 'Function',
+                      default: 'null',
+                      detail: '展开树图节点事件'
+                    },
+                    {
                       name: 'filter',
                       type: 'Boolean',
                       default: 'false',
@@ -1893,6 +1903,7 @@ export default {
   childName: "child",
   list: [{"name":"父一","child":[{"name":"子一"}]}, {"name":"父二"}, {"name":"父三"}],
   onSelected: function(record){console.log(record);},
+  onExtend: function(record, showChild){console.log(record);console.log(showChild);},
   filter: true,
   filterIgnore: true,
   filterPlaceholder: "请选择"

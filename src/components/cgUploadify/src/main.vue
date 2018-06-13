@@ -1,8 +1,8 @@
 <template>
   <div class = 'cg-uploadify__base' >
     <div class = 'cg-uploadify__upload' @click='openFile()' >
-      <input :id="uniqueId" v-if='fileNum == 1' type = 'file' @change='onUpload' />
-      <input :id="uniqueId" v-else type = 'file' @change='onUpload' multiple='multiple' :size='fileNum' />
+      <input :id="uniqueId" v-if='fileNum == 1 && !lock' type = 'file' @change='onUpload' />
+      <input :id="uniqueId" v-else-if='!lock' type = 'file' @change='onUpload' multiple='multiple' :size='fileNum' />
       <p>上传文件</p>
     </div>
     <div class='cango-uploadify__showImg' >
@@ -17,14 +17,16 @@
       <div class='cango-uploadify__main_title'>{{previewNum+1}}/{{fileList.length}}</div>
       <i v-if='previewNum>0' class='cango-uploadify__file_iconfont cango-uploadify__file_icon_previous cango-uploadify__file_prev' @click='prev()'></i>
       <i v-if='previewNum<fileList.length-1' class='cango-uploadify__file_iconfont cango-uploadify__file_icon_next cango-uploadify__file_next' @click='next()'></i>
-      <div v-for="(file,index) in fileList" :key="index"  :class="index == previewNum? 'cango-uploadify__file_active cango-uploadify__file' : 'cango-uploadify__file'">
+      <div v-for="(file,index) in fileList" :key="index"  :class='index === previewNum? "cango-uploadify__file_active cango-uploadify__file" : "cango-uploadify__file"'>
         <span></span>
         <!-- 背景loading -->
-        <img v-if="type == 'image' " class="cango-uploadify__file_imgCon" :src = "file.errorImg || file.url " @error="onError(file)" >
+        <img v-if="type == 'image' " :style='getStyle(file)' class="cango-uploadify__file_imgCon" :src = "file.errorImg || file.url " @error="onError(file)" >
         <div v-else>
           {{ file.filePath }} </br> {{ file.url }} </br></br>
         </div>
+        <div class="left"  @click='left(file)'>左旋转</div>
         <div v-if='!readOnly && canDelete' class="delete" @click='remove(file)'>删除</div>
+        <div class="right" @click='right(file)'>右旋转</div>
       </div>
     </div>
   </div>
@@ -125,6 +127,23 @@ export default {
   computed: {
   },
   methods: {
+    getStyle: function (file) {
+      console.log('-------------------getStyle')
+      if (!file['angle']) file['angle'] = 0
+      console.log({transform: file['angle']})
+      return {transform: 'rotate(' + file['angle'] + 'deg)'}
+    },
+    left: function (file) {
+      if (!file['angle']) file['angle'] = 0
+      file['angle'] = (file['angle'] + 90) % 360
+      console.log('-------------------left')
+      console.log(file['angle'])
+    },
+    right: function (file) {
+      file['angle'] = (file['angle'] + 270) % 360
+      console.log('-------------------right')
+      console.log(file['angle'])
+    },
     valid: function () {
       if (this.required) {
         if (StrUtils.isBlank(this.value)) {
@@ -164,7 +183,10 @@ export default {
           } else {
             self.showFile = this.defaultImage
           }
+          console.log('-----------------------------')
+          console.log(self.fileList)
           console.log(self.showFile)
+          console.log('-----------------------------')
         })
       } else {
         self.fileList = []
