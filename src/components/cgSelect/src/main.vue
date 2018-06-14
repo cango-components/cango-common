@@ -21,7 +21,6 @@
       </div>
 
       <div class='clear'></div>
-<<<<<<< HEAD
         <div v-if='showSelectDiv'
              :class='(titleStyle==0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"'
              class = 'cg-select__pop'>
@@ -43,27 +42,6 @@
           </div>
         </div>
         <div v-if="showSelectDiv" class="cg-select-bg"></div>
-=======
-
-      <div v-if='showSelectDiv'
-           :class='(titlestyle==0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"'
-           class = 'cg-select__pop'>
-        <div v-if='filter' class = 'cg-select__select_pop_filter'>
-          <input type = 'text' v-model='filterText' v-bind:placeholder = 'filterplaceholder' >
-        </div>
-        <div v-if='(!required && selectnum == 1)' @click='putValue(emptyItem)' class = 'cg-select__pop_content' >
-          空选项
-        </div>
-        <div v-for='(item, index) in getList' :key='index' @click='putValue(item)' v-bind:class='isSelected(item) ? "cg-select__pop_selected" : ""' class = 'cg-select__pop_content'>
-          <slot v-bind:option='item' >
-            {{ showRecordName(item) }}
-          </slot>
-        </div>
-        <div v-if='selectnum != 1' @click='closeDiv()' class = 'cg-select__select_pop_close'>
-          确定
-        </div>
-      </div>
->>>>>>> eb28a48738707f329735fca9f7f1eb9170067748
     </div>
   </div>
 </template>
