@@ -1667,29 +1667,16 @@ export default {
                       detail: '空选项的时候，默认展示数据'
                     },
                     {
-                      name: 'selectnum',
-                      type: 'Int',
-                      default: '1',
-                      detail: '下拉框最多选中数量(0:为不限制;1:为单选;)'
-                    },
-                    {
                       name: 'separator',
                       type: 'String',
                       default: ',',
                       detail: '分隔符'
                     },
-                    {
-                      name: 'titlestyle',
-                      type: 'Int',
-                      default: '0',
-                      detail: '标题和内容展示方式(0:横向展示;1:竖向展示)'
-                    }
                   ],
                   demo: `{
   label: "select",
   readOnly: true,
   titleStyle : 0,
-  showStyle : 0,
   list: [
     {"id":"id1", "name":"名称1"},
     {"id":"id2", "name":"名称2"}

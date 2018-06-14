@@ -67,17 +67,19 @@
   bottom: 2rem;
   color: #666;
 }
-.cango-uploadify__showImg .openbtn,.cango-uploadify__showfile .openbtn{
-  width:100%;
-  height:100%;
-}
 
+.cango-uploadify__showfile ul{
+  height:100%;
+  width:100%;
+  overflow-y:auto;
+}
 .cango-uploadify__showImg,.cango-uploadify__showfile{
   position:absolute;
   top:0;
   left:0;
   width:100%;
   height:100%;
+  overflow-y:auto;
   z-index:1;
   vertical-align: middle;
   border:0.05em dashed #ddd;
@@ -85,8 +87,12 @@
   overflow: hidden;
 }
 .cango-uploadify__showfile li {
-  line-height: 3rem;
-  padding: 0 1rem;
+  line-height: 1.8rem;
+  padding: 0.5rem 1rem;
+}
+.cango-uploadify__showfile li a{
+  position:relative;
+  z-index:6;
 }
 .cango-uploadify__showImg img.showImg{
   position:absolute;

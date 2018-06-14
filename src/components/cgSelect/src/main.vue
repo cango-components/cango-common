@@ -1,7 +1,7 @@
 <template>
   <div class = 'cg-select__base'
     :class='getClass()' >
-    <div class = 'cg-select__main' >
+    <div class = 'cg-select__main' :class="(isPhone && showSelectDiv) ? 'cg-select-phone':''">
       <div
         v-if='label'
         class = 'cg-select__label'
@@ -21,25 +21,27 @@
       </div>
 
       <div class='clear'></div>
-
-      <div v-if='showSelectDiv'
-           :class='(titlestyle==0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"'
-           class = 'cg-select__pop'>
-        <div v-if='filter' class = 'cg-select__select_pop_filter'>
-          <input type = 'text' v-model='filterText' v-bind:placeholder = 'filterplaceholder' >
+        <div v-if='showSelectDiv'
+             :class='(titleStyle==0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"'
+             class = 'cg-select__pop'>
+          <div v-if='showSelectAll' class = 'cg-select__pop_selectAll'>
+          </div>
+          <div v-if='filter' class = 'cg-select__select_pop_filter'>
+            <input type = 'text' v-model='filterText' v-bind:placeholder = 'filterPlaceholder' >
+          </div>
+          <div v-if='(!required && selectNum == 1)' @click='putValue(emptyItem)' class = 'cg-select__pop_content' >
+            空选项
+          </div>
+          <div v-for='(item, index) in getList' :key='index' @click='putValue(item)' v-bind:class='isSelected(item) ? "cg-select__pop_selected" : ""' class = 'cg-select__pop_content'>
+            <slot v-bind:option='item' >
+              {{ showRecordName(item) }}
+            </slot>
+          </div>
+          <div v-if='selectNum != 1' @click='closeDiv()' class = 'cg-select__select_pop_close'>
+            确定
+          </div>
         </div>
-        <div v-if='(!required && selectnum == 1)' @click='putValue(emptyItem)' class = 'cg-select__pop_content' >
-          空选项
-        </div>
-        <div v-for='(item, index) in getList' :key='index' @click='putValue(item)' v-bind:class='isSelected(item) ? "cg-select__pop_selected" : ""' class = 'cg-select__pop_content'>
-          <slot v-bind:option='item' >
-            {{ showRecordName(item) }}
-          </slot>
-        </div>
-        <div v-if='selectnum != 1' @click='closeDiv()' class = 'cg-select__select_pop_close'>
-          确定
-        </div>
-      </div>
+        <div v-if="showSelectDiv" class="cg-select-bg"></div>
     </div>
   </div>
 </template>
@@ -144,7 +146,8 @@ export default {
     return {
       showSelectDiv: false,
       filterText: '',
-      errorMsg: ''
+      errorMsg: '',
+      isPhone:false
     }
   },
   computed: {
@@ -208,7 +211,8 @@ export default {
   },
   methods: {
     getClass: function () {
-      let className = ''
+      let className = '';
+      this.isPhone = false;
       if (this.errorMsg !== '') {
         className += ' cg-select__error'
       }
@@ -216,6 +220,7 @@ export default {
         className += ' cg-select__readonly'
       }
       if (!BrowseUtils.isPC()) {
+        this.isPhone = true;
         className += ' cg-select__mobile'
       }
       return className
@@ -263,7 +268,7 @@ export default {
       if (this.readonly) {
         return
       }
-      this.showSelectDiv = !this.showSelectDiv
+      this.showSelectDiv = !this.showSelectDiv;
     },
     isSelected: function (item) {
       if (this.value == null || this.value === undefined) {
