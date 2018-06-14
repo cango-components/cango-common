@@ -1,10 +1,10 @@
 <template>
   <table class = 'cg-pageList__base' >
     <tr class = 'cg-pageList__title' >
-      <th v-if='showCheckBox' class = 'cg-pageList__label cg-pageList__label_checkall' >
+      <th v-if='showcheckbox' class = 'cg-pageList__label cg-pageList__label_checkall' >
         <input type="checkbox" v-model="checkallValue" @change="checkall()" >
       </th>
-      <th v-for='(title, index) in titleConfig'
+      <th v-for='(title, index) in titleconfig'
           :key='"title"+index'
           @click='orderClick(title)'
           class = 'cg-pageList__label'>
@@ -16,10 +16,10 @@
       <tr v-for='(record, recordIndex) in list'
           :key='"record"+recordIndex'
           class = 'cg-pageList__content'>
-        <td v-if='showCheckBox' class = 'cg-pageList__check' >
+        <td v-if='showcheckbox' class = 'cg-pageList__check' >
           <input type='checkbox' @click='check(record)' :checked = 'isChecked(record)'>
         </td>
-        <td v-for='(title, recTitleIndex) in titleConfig'
+        <td v-for='(title, recTitleIndex) in titleconfig'
             :key='"recTitle"+recTitleIndex'
             class = 'cg-pageList__record'
             @click='rowClick(record)' >
@@ -30,7 +30,7 @@
       </tr>
     </tbody>
     <tr class = 'cg-pageList__page'>
-      <td :colspan="showCheckBox ? titleConfig.length+1 : titleConfig.length ">
+      <td :colspan="showcheckbox ? titleconfig.length+1 : titleconfig.length ">
         一共 {{ this.page.totalNum }} 条记录,
         当前 {{ this.page.pageNo }} 页
       </td>
@@ -52,7 +52,7 @@ export default {
       }
     },
     // 排序展示(keyname:排序的主键;orderBy:asc/desc顺序逆序)
-    'initOrder': {
+    'initorder': {
       default: {
         keyName: '',
         orderBy: ''
@@ -64,12 +64,12 @@ export default {
       default: []
     },
     // 标题配置{orderAble:是否可以排序,label:标题名称,keyName:对应的内容(-分割进行深层次访问),showFunction:自定义内容}
-    'titleConfig': {
+    'titleconfig': {
       type: Array,
       default: []
     },
     // 是否显示勾选功能
-    'showCheckBox': {
+    'showcheckbox': {
       type: Boolean,
       default: true
     },
@@ -78,11 +78,11 @@ export default {
       default: null
     },
     // 数据加载方法(排序，分页等都会触发，返回data,page,order对象)
-    'loadFunction': {
+    'loadfunction': {
       type: Function
     },
     // 行点击事件
-    'rowClickFunction': {
+    'rowclickfunction': {
       type: Function
     }
   },
@@ -91,8 +91,8 @@ export default {
   data: function () {
     return {
       order: {
-        keyName: this.initOrder.keyName,
-        orderBy: this.initOrder.orderBy
+        keyName: this.initorder.keyName,
+        orderBy: this.initorder.orderBy
       },
       checkallValue: false
     }
@@ -133,12 +133,12 @@ export default {
       this.$emit('input', value)
     },
     rowClick: function (record) {
-      if (this.rowClickFunction) {
-        this.rowClickFunction(record)
+      if (this.rowclickfunction) {
+        this.rowclickfunction(record)
       }
     },
     orderClick: function (title) {
-      if (this.loadFunction && title.orderAble) {
+      if (this.loadfunction && title.orderAble) {
         let page = Utils.clone(this.page)
         if (title.keyName === this.order.keyName) {
           if (this.order.orderBy === 'desc') {
@@ -150,7 +150,7 @@ export default {
           this.order.keyName = title.keyName
           this.order.orderBy = 'asc'
         }
-        this.loadFunction(page, this.order)
+        this.loadfunction(page, this.order)
       }
     },
     showRecordName: function (record, title) {
@@ -170,10 +170,10 @@ export default {
       return className
     },
     toPage: function (pageNo) {
-      if (this.loadFunction) {
+      if (this.loadfunction) {
         let page = Utils.clone(this.page)
         page.pageNo = pageNo
-        this.loadFunction(page, this.order)
+        this.loadfunction(page, this.order)
       }
     },
     isChecked: function (record) {

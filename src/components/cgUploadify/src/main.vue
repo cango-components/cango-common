@@ -1,8 +1,8 @@
 <template>
   <div class = 'cg-uploadify__base' >
     <div v-show="fileList.length==0" class = 'cg-uploadify__upload' @click='openFile()' >
-      <input :id="uniqueId" v-if='fileNum == 1 && !lock' type = 'file' @change='onUpload' />
-      <input :id="uniqueId" v-else-if='!lock' type = 'file' @change='onUpload' multiple='multiple' :size='fileNum' />
+      <input :id="uniqueId" v-if='filenum == 1 && !lock' type = 'file' @change='onUpload' />
+      <input :id="uniqueId" v-else-if='!lock' type = 'file' @change='onUpload' multiple='multiple' :size='filenum' />
       <p>上传文件</p>
     </div>
     <div v-if="type == 'image'" v-show="fileList.length>0" class='cango-uploadify__showImg' >
@@ -35,7 +35,7 @@
           {{ file.filePath }} </br> {{ file.url }} </br></br>
         </div>
         <div class="left"  @click='left(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-zuoxuanzhuan'></i>&nbsp;左旋转</div>
-        <div v-if='!readOnly && canDelete' class="delete" @click='remove(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-shanchu'></i>&nbsp;删除</div>
+        <div v-if='!readonly && candelete' class="delete" @click='remove(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-shanchu'></i>&nbsp;删除</div>
         <div class="right" @click='right(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-youxuanzhuan'></i>&nbsp;右旋转</div>
       </div>
     </v-touch>
@@ -65,27 +65,27 @@ export default {
       default: 'Test'
     },
     // 文件数量
-    'fileNum': {
+    'filenum': {
       type: Number,
-      default: 3
+      default: 1
     },
     // 最大KB数
-    'maxSize': {
+    'maxsize': {
       type: Number,
       default: 0
     },
     // 错误时的图片展示
-    'errorImage': {
+    'errorimage': {
       type: String,
       default: '/static/images/error.png'
     },
     // 默认的图片展示
-    'defaultImage': {
+    'defaultimage': {
       type: String,
       default: ''
     },
     // 加载图片展示
-    'loadingImage': {
+    'loadingimage': {
       type: String,
       default: '/static/images/loading.gif'
     },
@@ -95,17 +95,17 @@ export default {
       default: false
     },
     // 不可编辑
-    'readOnly': {
+    'readonly': {
       type: Boolean,
       default: false
     },
     // 可以删除
-    'canDelete': {
+    'candelete': {
       type: Boolean,
       default: true
     },
     // 选项为空时转换成null
-    'emptyIsNull': {
+    'emptyisnull': {
       type: Boolean,
       default: true
     },
@@ -118,7 +118,7 @@ export default {
     if (!StrUtils.isBlank(this.value)) {
       this.reloadFile()
     } else {
-      if (this.emptyIsNull) {
+      if (this.emptyisnull) {
         this.$emit('input', null)
       }
     }
@@ -128,7 +128,7 @@ export default {
       fileList: [],
       lock: false,
       errorMsg: '',
-      showFile: this.defaultImage,
+      showFile: this.defaultimage,
       previewShow: false,
       previewNum: 0,
       uniqueId: Utils.guid()
@@ -145,12 +145,12 @@ export default {
     },
     left: function (file) {
       if (!file['angle']) file['angle'] = 0
-      file['angle'] = (file['angle'] + 90) % 360
+      file['angle'] = (file['angle'] + 270) % 360
       console.log('-------------------left')
       console.log(file['angle'])
     },
     right: function (file) {
-      file['angle'] = (file['angle'] + 270) % 360
+      file['angle'] = (file['angle'] + 90) % 360
       console.log('-------------------right')
       console.log(file['angle'])
     },
@@ -191,7 +191,7 @@ export default {
           if (self.fileList && self.fileList.length > 0) {
             self.showFile = self.fileList[self.fileList.length - 1].url
           } else {
-            self.showFile = this.defaultImage
+            self.showFile = this.defaultimage
           }
           console.log('-----------------------------')
           console.log(self.fileList)
@@ -202,17 +202,17 @@ export default {
         self.fileList = []
         // 加锁防止异步错乱
         self.lock = false
-        self.showFile = this.defaultImage
+        self.showFile = this.defaultimage
       }
     },
     onError: function (file) {
-      file.errorImg = this.errorImage
+      file.errorImg = this.errorimage
     },
     onUpload: function (e) {
       if (e && e.target && e.target.files) {
         this.lock = true
         let num = e.target.files.length + this.fileList.length
-        if (this.fileNum > 1 && num > this.fileNum) {
+        if (this.filenum > 1 && num > this.filenum) {
           // TODO 报错
           alert('选择的文件过多')
           return
@@ -225,16 +225,16 @@ export default {
           self.resizeValue()
         }
         let files = e.target.files
-        if (self.type === 'image' && self.maxSize > 0) {
-          FileUtils.resizeFile(files, self.maxSize * 1024, function (fileList) {
-            if (self.fileNum === 1) {
+        if (self.type === 'image' && self.maxsize > 0) {
+          FileUtils.resizeFile(files, self.maxsize * 1024, function (fileList) {
+            if (self.filenum === 1) {
               FileUtils.uploadFile([fileList[0]], [], func, self.prefix)
             } else {
               FileUtils.uploadFile(fileList, [], func, self.prefix)
             }
           })
         } else {
-          if (self.fileNum === 1) {
+          if (self.filenum === 1) {
             FileUtils.uploadFile([files[0]], [], func, self.prefix)
           } else {
             FileUtils.uploadFile(files, [], func, self.prefix)
@@ -258,7 +258,7 @@ export default {
           self.previewNum = self.fileList.length - 1
         }
       } else {
-        self.showFile = self.defaultImage
+        self.showFile = self.defaultimage
         self.previewShow = false
         self.previewNum = 0
       }
@@ -272,7 +272,7 @@ export default {
       FileUtils.createGroupId(self.fileList, func)
     },
     openFile: function () {
-      if (this.readOnly || this.lock) {
+      if (this.readonly || this.lock) {
         return
       }
       var upload = document.getElementById(this.uniqueId)

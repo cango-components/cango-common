@@ -1,7 +1,7 @@
 <template>
   <div class = 'cg-tree__base' >
     <div v-if='filter' class = 'cg-tree__filter' >
-      <input type = 'text' v-model='filterText' v-bind:placeholder = 'filterPlaceholder'>
+      <input type = 'text' v-model='filterText' v-bind:placeholder = 'filterplaceholder'>
     </div>
     <div  class = 'cg-tree__main'>
       <div v-for='(node, nodeIndex) in getList'
@@ -23,18 +23,18 @@
   export default {
     name: 'cg-tree',
     props: {
-      // 和data配合使用，去data里面对应的showName的值作为显示(-做分割进行深层次访问)
-      'showName': {
+      // 和data配合使用，去data里面对应的showname的值作为显示(-做分割进行深层次访问)
+      'showname': {
         type: String,
         default: 'name'
       },
-      // 和data配合使用，去data里面对应的childName的值作为子节点列表(-做分割进行深层次访问)
-      'childName': {
+      // 和data配合使用，去data里面对应的childname的值作为子节点列表(-做分割进行深层次访问)
+      'childname': {
         type: String,
         default: 'child'
       },
-      // 展示的函数，优先级再showName之前，复杂展示方式的时候使用，这里考虑用插槽实现
-      'showFunc': {
+      // 展示的函数，优先级再showname之前，复杂展示方式的时候使用，这里考虑用插槽实现
+      'showfunc': {
         type: Function
       },
       // 候选项
@@ -45,11 +45,11 @@
         }
       },
       // 选中事件
-      'onSelected': {
+      'onselected': {
         type: Function
       },
       // 展开事件
-      'onExtend': {
+      'onextend': {
         type: Function
       },
       // 是否显示筛选器(在已知的节点范围内进行检索，最好配合list一次性加载，否则只检索已知数据)
@@ -58,12 +58,12 @@
         default: false
       },
       // 是否忽略大小写
-      'filterIgnore': {
+      'filterignore': {
         type: Boolean,
         default: true
       },
       // 筛选器默认文字
-      'filterPlaceholder': {
+      'filterplaceholder': {
         type: String,
         default: '请选择'
       }
@@ -105,7 +105,7 @@
         if (this.filterText === '') return true
         let filterText = this.filterText + ''
         let text = this.showRecordName(record) + ''
-        if (this.filterIgnore) {
+        if (this.filterignore) {
           filterText = filterText.toLowerCase()
           text = text.toLowerCase()
         }
@@ -117,21 +117,21 @@
       },
 
       showRecordName: function (record) {
-        if (this.showFunc) {
-          return this.showFunc(record)
+        if (this.showfunc) {
+          return this.showfunc(record)
         } else {
-          return record[this.showName]
+          return record[this.showname]
         }
       },
       treeNodeExtend: function (record) {
         record.showChild = !record.showChild
-        if (this.onExtend) {
-          this.onExtend(record.record, record.showChild)
+        if (this.onextend) {
+          this.onextend(record.record, record.showChild)
         }
       },
       treeNodeSelect: function (record) {
-        if (this.onSelected) {
-          this.onSelected(record.record)
+        if (this.onselected) {
+          this.onselected(record.record)
         }
       },
       resizeRecordList: function (list, level, parentIsOk) {
@@ -141,15 +141,15 @@
           for (let i = 0; i < list.length; i++) {
             if (parentIsOk || this.filterLike(list[i])) {
               result.push({record: list[i], level: level, showChild: this.searchShowChild(list[i])})
-              if (list[i][this.childName]) {
-                let res = this.resizeRecordList(list[i][this.childName], level + 1, true)
+              if (list[i][this.childname]) {
+                let res = this.resizeRecordList(list[i][this.childname], level + 1, true)
                 if (res != null && res.length > 0) {
                   result = result.concat(res)
                 }
               }
             } else {
-              if (list[i][this.childName]) {
-                let res = this.resizeRecordList(list[i][this.childName], level + 1, false)
+              if (list[i][this.childname]) {
+                let res = this.resizeRecordList(list[i][this.childname], level + 1, false)
                 if (res != null && res.length > 0) {
                   result.push({record: list[i], level: level, showChild: true})
                   result = result.concat(res)
@@ -169,15 +169,15 @@
           for (let i = 0; i < list.length; i++) {
             if (parentIsOk || this.filterLike(list[i])) {
               result.push({record: list[i], level: level, showChild: false})
-              if (list[i][this.childName]) {
-                let res = this.resetRecordList(list[i][this.childName], level + 1, true)
+              if (list[i][this.childname]) {
+                let res = this.resetRecordList(list[i][this.childname], level + 1, true)
                 if (res != null && res.length > 0) {
                   result = result.concat(res)
                 }
               }
             } else {
-              if (list[i][this.childName]) {
-                let res = this.resetRecordList(list[i][this.childName], level + 1, false)
+              if (list[i][this.childname]) {
+                let res = this.resetRecordList(list[i][this.childname], level + 1, false)
                 if (res != null && res.length > 0) {
                   result.push({record: list[i], level: level, showChild: true})
                   result = result.concat(res)

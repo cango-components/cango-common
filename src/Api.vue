@@ -29,38 +29,37 @@
         <cg-uploadify
           :type = "uploadify.type"
           :id = "uploadify.id"
-          :read-only = "uploadify.readOnly"
-          :can-delete = "uploadify.canDelete"
-
+          :readonly = "uploadify.readOnly"
+          :candelete = "uploadify.canDelete"
           :required = "uploadify.required"
-          :empty-is-null = "uploadify.emptyIsNull"
+          :emptyisnull = "uploadify.emptyIsNull"
           :prefix = "uploadify.prefix"
-          :file-num = "uploadify.fileNum"
-          :max-size = "uploadify.maxSize"
-          :error-image = "uploadify.errorImage"
-          :default-image = "uploadify.defaultImage"
-          :loading-image = "uploadify.loadingImage"
+          :filenum = "uploadify.fileNum"
+          :maxsize = "uploadify.maxSize"
+          :errorimage = "uploadify.errorImage"
+          :defaultimage = "uploadify.defaultImage"
+          :loadingimage = "uploadify.loadingImage"
           v-model = "data.uploadify"
         >
         </cg-uploadify>
       </div>
       <div v-if="showTree" >
         <cg-tree
-          :show-name="tree.showName"
-          :child-name="tree.childName"
-          :show-func="tree.showFunc"
+          :showname="tree.showName"
+          :childname="tree.childName"
+          :showfunc="tree.showFunc"
           :list="tree.list"
-          :on-selected="tree.onSelected"
-          :on-extend="tree.onExtend"
+          :onselected="tree.onSelected"
+          :onextend="tree.onExtend"
           :filter="tree.filter"
-          :filter-ignore="tree.filterIgnore"
-          :filter-placeholder="tree.filterPlaceholder"
+          :filterignore="tree.filterIgnore"
+          :filterplaceholder="tree.filterPlaceholder"
         >
         </cg-tree>
       </div>
       <div v-if="showTab" >
         <cg-tab
-          :tab-config="tab.tabConfig"
+          :tabconfig="tab.tabConfig"
         >
           <template slot-scope="slotProps">
             <span v-if='slotProps.activeTab.id==1'>
@@ -75,21 +74,21 @@
       <div v-if="showScolllist" >
         <cg-scolllist
           :list = "scolllist.list"
-          :title-config = "scolllist.titleConfig"
-          :load-function = "scolllist.loadFunction"
-          :row-click-function = "scolllist.rowClickFunction"
+          :titleconfig = "scolllist.titleConfig"
+          :loadfunction = "scolllist.loadFunction"
+          :rowclickfunction = "scolllist.rowClickFunction"
         >
         </cg-scolllist>
       </div>
       <div v-if="showPagelist" >
         <cg-pagelist
           :page = "pagelist.page"
-          :init-order = "pagelist.initOrder"
+          :initorder = "pagelist.initOrder"
           :list = "pagelist.list"
-          :title-config = "pagelist.titleConfig"
-          :show-check-box = "pagelist.showCheckBox"
-          :load-function = "pagelist.loadFunction"
-          :row-click-function = "pagelist.rowClickFunction"
+          :titleconfig = "pagelist.titleConfig"
+          :showcheckbox = "pagelist.showCheckBox"
+          :loadfunction = "pagelist.loadFunction"
+          :rowclickfunction = "pagelist.rowClickFunction"
           v-model= "data.pagelist"
         >
         </cg-pagelist>
@@ -98,16 +97,16 @@
         <cg-checkbox
           :label = "checkbox.label"
           :id = "checkbox.id"
-          :read-only = "checkbox.readOnly"
+          :readonly = "checkbox.readOnly"
           :required = "checkbox.required"
-          :empty-is-null = "checkbox.emptyIsNull"
-          :key-name = "checkbox.keyName"
-          :show-name = "checkbox.showName"
+          :emptyisnull = "checkbox.emptyIsNull"
+          :keyname = "checkbox.keyName"
+          :showname = "checkbox.showName"
           :list = "checkbox.list"
-          :show-func = "checkbox.showFunc"
-          :select-num = "checkbox.selectNum"
-          :title-style = "checkbox.titleStyle"
-          :show-style = "checkbox.showStyle"
+          :showfunc = "checkbox.showFunc"
+          :selectnum = "checkbox.selectNum"
+          :titlestyle = "checkbox.titleStyle"
+          :showstyle = "checkbox.showStyle"
           v-model = "data.checkbox"
         >
         </cg-checkbox>
@@ -116,21 +115,20 @@
         <cg-select
           :label = "select.label"
           :id = "select.id"
-          :read-only = "select.readOnly"
+          :readonly = "select.readOnly"
           :required = "select.required"
-          :empty-is-null = "select.emptyIsNull"
-          :key-name = "select.keyName"
-          :show-name = "select.showName"
+          :emptyisnull = "select.emptyIsNull"
+          :keyname = "select.keyName"
+          :showname = "select.showName"
           :list = "select.list"
-          :show-func = "select.showFunc"
+          :showfunc = "select.showFunc"
           :filter = "select.filter"
-          :filter-ignore = "select.filterIgnore"
-          :filter-placeholder = "select.filterPlaceholder"
-          :show-select-all = "select.showSelectAll"
-          :empty-label = "select.emptyLabel"
-          :select-num = "select.selectNum"
+          :filterignore = "select.filterIgnore"
+          :filterplaceholder = "select.filterPlaceholder"
+          :emptylabel = "select.emptyLabel"
+          :selectnum = "select.selectNum"
           :separator = "select.separator"
-          :title-style = "select.titleStyle"
+          :titlestyle = "select.titleStyle"
           v-model = "data.select"
         >
         </cg-select>
@@ -140,8 +138,8 @@
         <cg-button
           :className = "button.className"
           :label = "button.label"
-          :read-only = "button.readOnly"
-          :button-click = "button.buttonClick"
+          :readonly = "button.readOnly"
+          :buttonclick = "button.buttonClick"
         >
         </cg-button>
       </div>
@@ -318,7 +316,6 @@ export default {
         filter: false,
         filterIgnore: true,
         filterPlaceholder: '请输入关键字',
-        showSelectAll: false,
         emptyLabel: '请选择',
         separator: ',',
         selectNum: 1,
@@ -1471,7 +1468,7 @@ export default {
                       detail: '唯一标志符'
                     },
                     {
-                      name: 'readOnly',
+                      name: 'readonly',
                       type: 'boolean',
                       default: 'false',
                       detail: '是否可编辑'
@@ -1483,25 +1480,25 @@ export default {
                       detail: '是否必填'
                     },
                     {
-                      name: 'emptyIsNull',
+                      name: 'emptyisnull',
                       type: 'boolean',
                       default: 'true',
                       detail: '选项为空时转换成null'
                     },
                     {
-                      name: 'keyName',
+                      name: 'keyname',
                       type: 'String',
                       default: 'id',
                       detail: '和data配合使用，取data里面对应的keyName的值作为id'
                     },
                     {
-                      name: 'showName',
+                      name: 'showname',
                       type: 'String',
                       default: 'name',
                       detail: '和data配合使用，取data里面对应的showName的值作为显示'
                     },
                     {
-                      name: 'showFunc',
+                      name: 'showfunc',
                       type: 'Function',
                       default: 'null',
                       detail: '展示的函数，优先级在showName之前，复杂展示方式的时候使用，这里考虑用插槽实现'
@@ -1513,7 +1510,7 @@ export default {
                       detail: '候选项'
                     },
                     {
-                      name: 'selectNum',
+                      name: 'selectnum',
                       type: 'Number',
                       default: '1',
                       detail: '最多选中数量(0:为不限制;1:为单选;)'
@@ -1525,13 +1522,13 @@ export default {
                       detail: '下拉框值'
                     },
                     {
-                      name: 'titleStyle',
+                      name: 'titlestyle',
                       type: 'Int',
                       default: '0',
                       detail: '标题和内容展示方式(0:横向展示;1:竖向展示)'
                     },
                     {
-                      name: 'showStyle',
+                      name: 'showstyle',
                       type: 'Int',
                       default: '0',
                       detail: '选项展示方式(0:横向展示;1:竖向展示)'
@@ -1550,16 +1547,16 @@ export default {
                   template: `<cg-checkbox
   :label = "checkbox.label"
   :id = "checkbox.id"
-  :read-only = "checkbox.readOnly"
+  :readonly = "checkbox.readOnly"
   :required = "checkbox.required"
-  :empty-is-null = "checkbox.emptyIsNull"
-  :key-name = "checkbox.keyName"
-  :show-name = "checkbox.showName"
+  :emptyisnull = "checkbox.emptyIsNull"
+  :keyname = "checkbox.keyName"
+  :showname = "checkbox.showName"
   :list = "checkbox.list"
-  :show-func = "checkbox.showFunc"
-  :select-num = "checkbox.selectNum"
-  :title-style = "checkbox.titleStyle"
-  :show-style = "checkbox.showStyle"
+  :showfunc = "checkbox.showFunc"
+  :selectnum = "checkbox.selectNum"
+  :titlestyle = "checkbox.titleStyle"
+  :showstyle = "checkbox.showStyle"
   v-model = "data.checkbox"
 >
 </cg-checkbox>`,
@@ -1586,7 +1583,7 @@ export default {
                       detail: '唯一标志符'
                     },
                     {
-                      name: 'readOnly',
+                      name: 'readonly',
                       type: 'boolean',
                       default: 'false',
                       detail: '是否可编辑'
@@ -1598,25 +1595,25 @@ export default {
                       detail: '是否必填'
                     },
                     {
-                      name: 'emptyIsNull',
+                      name: 'emptyisnull',
                       type: 'boolean',
                       default: 'true',
                       detail: '选项为空时转换成null'
                     },
                     {
-                      name: 'keyName',
+                      name: 'keyname',
                       type: 'String',
                       default: 'id',
                       detail: '和data配合使用，取data里面对应的keyName的值作为id'
                     },
                     {
-                      name: 'showName',
+                      name: 'showname',
                       type: 'String',
                       default: 'name',
                       detail: '和data配合使用，取data里面对应的showName的值作为显示'
                     },
                     {
-                      name: 'showFunc',
+                      name: 'showfunc',
                       type: 'Function',
                       default: 'null',
                       detail: '展示的函数，优先级在showName之前，复杂展示方式的时候使用，这里考虑用插槽实现'
@@ -1628,7 +1625,7 @@ export default {
                       detail: '候选项'
                     },
                     {
-                      name: 'selectNum',
+                      name: 'selectnum',
                       type: 'Number',
                       default: '1',
                       detail: '最多选中数量(0:为不限制;1:为单选;)'
@@ -1640,7 +1637,7 @@ export default {
                       detail: '下拉框值'
                     },
                     {
-                      name: 'titleStyle',
+                      name: 'titlestyle',
                       type: 'Int',
                       default: '0',
                       detail: '标题和内容展示方式(0:横向展示;1:竖向展示)'
@@ -1652,31 +1649,25 @@ export default {
                       detail: '是否显示筛选器'
                     },
                     {
-                      name: 'filterIgnore',
+                      name: 'filterignore',
                       type: 'Boolean',
                       default: 'false',
                       detail: '筛选器是否忽略大小写'
                     },
                     {
-                      name: 'filterPlaceholder',
+                      name: 'filterplaceholder',
                       type: 'String',
                       default: '请输入关键字',
                       detail: '筛选器默认文字'
                     },
                     {
-                      name: 'showSelectAll',
-                      type: 'Boolean',
-                      default: 'false',
-                      detail: '是否显示全选按钮(selectNum为0时才有意义)'
-                    },
-                    {
-                      name: 'emptyLabel',
+                      name: 'emptylabel',
                       type: 'String',
                       default: '请选择',
                       detail: '空选项的时候，默认展示数据'
                     },
                     {
-                      name: 'selectNum',
+                      name: 'selectnum',
                       type: 'Int',
                       default: '1',
                       detail: '下拉框最多选中数量(0:为不限制;1:为单选;)'
@@ -1688,7 +1679,7 @@ export default {
                       detail: '分隔符'
                     },
                     {
-                      name: 'titleStyle',
+                      name: 'titlestyle',
                       type: 'Int',
                       default: '0',
                       detail: '标题和内容展示方式(0:横向展示;1:竖向展示)'
@@ -1707,21 +1698,20 @@ export default {
                   template: `<cg-select
   :label = "select.label"
   :id = "select.id"
-  :read-only = "select.readOnly"
+  :readonly = "select.readOnly"
   :required = "select.required"
-  :empty-is-null = "select.emptyIsNull"
-  :key-name = "select.keyName"
-  :show-name = "select.showName"
+  :emptyisnull = "select.emptyIsNull"
+  :keyname = "select.keyName"
+  :showname = "select.showName"
   :list = "select.list"
-  :show-func = "select.showFunc"
+  :showfunc = "select.showFunc"
   :filter = "select.filter"
-  :filter-ignore = "select.filterIgnore"
-  :filter-placeholder = "select.filterPlaceholder"
-  :show-select-all = "select.showSelectAll"
-  :empty-label = "select.emptyLabel"
-  :select-num = "select.selectNum"
+  :filterignore = "select.filterIgnore"
+  :filterplaceholder = "select.filterPlaceholder"
+  :emptylabel = "select.emptyLabel"
+  :selectnum = "select.selectNum"
   :separator = "select.separator"
-  :title-style = "select.titleStyle"
+  :titlestyle = "select.titleStyle"
   v-model = "data.select"
 >
 </cg-select>`,
@@ -1755,31 +1745,31 @@ export default {
                       detail: '文件类型前缀'
                     },
                     {
-                      name: 'fileNum',
+                      name: 'filenum',
                       type: 'Number',
                       default: '1',
                       detail: '文件数量'
                     },
                     {
-                      name: 'maxSize',
+                      name: 'maxsize',
                       type: 'Number',
                       default: 'true',
                       detail: '最大KB数(图片类型的时候会压缩，其他类型的会忽略该字段)'
                     },
                     {
-                      name: 'errorImage',
+                      name: 'errorimage',
                       type: 'String',
                       default: '""',
                       detail: '错误时的图片展示'
                     },
                     {
-                      name: 'defaultImage',
+                      name: 'defaultimage',
                       type: 'String',
                       default: '""',
                       detail: '默认的图片展示'
                     },
                     {
-                      name: 'loadingImage',
+                      name: 'loadingimage',
                       type: 'String',
                       default: '""',
                       detail: '加载图片展示'
@@ -1791,19 +1781,19 @@ export default {
                       detail: '是否必填'
                     },
                     {
-                      name: 'readOnly',
+                      name: 'readonly',
                       type: 'Boolean',
                       default: 'false',
                       detail: '不可编辑'
                     },
                     {
-                      name: 'canDelete',
+                      name: 'candelete',
                       type: 'Boolean',
                       default: 'false',
                       detail: '是否可以删除'
                     },
                     {
-                      name: 'emptyIsNull',
+                      name: 'emptyisnull',
                       type: 'Boolean',
                       default: 'true',
                       detail: '选项为空时转换成null'
@@ -1818,13 +1808,13 @@ export default {
                   template: `<cg-uploadify
   :type = "uploadify.type"
   :id = "uploadify.id"
-  :read-only = "uploadify.readOnly"
-  :can-delete = "uploadify.canDelete"
+  :readonly = "uploadify.readOnly"
+  :candelete = "uploadify.canDelete"
   :required = "uploadify.required"
-  :empty-is-null = "uploadify.emptyIsNull"
+  :emptyisnull = "uploadify.emptyIsNull"
   :prefix = "uploadify.prefix"
-  :file-num = "uploadify.fileNum"
-  :max-size = "uploadify.maxSize"
+  :filenum = "uploadify.fileNum"
+  :maxsize = "uploadify.maxSize"
   v-model = "data.uploadify"
 >
 </cg-uploadify>`,
@@ -1845,19 +1835,19 @@ export default {
                       detail: '按钮文字'
                     },
                     {
-                      name: 'className',
+                      name: 'classname',
                       type: 'String',
                       default: 'cg-button__primary',
                       detail: '颜色样式有cg-button__default/cg-button__primary/cg-button__success/cg-button__info/cg-button__warning/cg-button__danger，圆角样式 round，朴素样式 plain，颜色样式、圆角样式、朴素样式可搭配使用'
                     },
                     {
-                      name: 'readOnly',
+                      name: 'readonly',
                       type: 'boolean',
                       default: 'false',
                       detail: '是否可点击'
                     },
                     {
-                      name: 'buttonClick',
+                      name: 'buttonclick',
                       type: 'Function',
                       default: 'null',
                       detail: '点击事件'
@@ -1870,10 +1860,10 @@ export default {
   buttonClick : function(){console.log(123);}
  }`,
                   template: `<cg-button
-  :className = "button.className"
+  :classname = "button.className"
   :label = "button.label"
-  :read-only = "button.readOnly"
-  :button-click = "button.buttonClick"
+  :readonly = "button.readOnly"
+  :buttonclick = "button.buttonClick"
 >
 </cg-button>`,
                   detail: 'button组件，支持按钮slot'
@@ -1893,7 +1883,7 @@ export default {
                       detail: '分页信息'
                     },
                     {
-                      name: 'initOrder',
+                      name: 'initorder',
                       type: 'Object',
                       default: '{keyName: "", orderBy: ""}',
                       detail: '排序展示(keyname:排序的主键;orderBy:asc/desc顺序逆序)'
@@ -1905,25 +1895,25 @@ export default {
                       detail: '数据'
                     },
                     {
-                      name: 'titleConfig',
+                      name: 'titleconfig',
                       type: 'Array',
                       default: '[]',
                       detail: '标题配置{orderAble:是否可以排序,label:标题名称,keyName:对应的内容(-分割进行深层次访问),showFunction:自定义内容}'
                     },
                     {
-                      name: 'showCheckBox',
+                      name: 'showcheckbox',
                       type: 'Boolean',
                       default: 'true',
                       detail: '是否显示勾选功能'
                     },
                     {
-                      name: 'loadFunction',
+                      name: 'loadfunction',
                       type: 'Function',
                       default: 'null',
                       detail: '数据加载方法(排序，分页等都会触发，返回data,page,order对象)'
                     },
                     {
-                      name: 'rowClickFunction',
+                      name: 'rowclickfunction',
                       type: 'Function',
                       default: 'null',
                       detail: '行点击事件'
@@ -1940,12 +1930,12 @@ export default {
  }`,
                   template: `<cg-pagelist
   :page = "pagelist.page"
-  :init-order = "pagelist.initOrder"
+  :initorder = "pagelist.initOrder"
   :list = "pagelist.list"
-  :title-config = "pagelist.titleConfig"
-  :show-check-box = "pagelist.showCheckBox"
-  :load-function = "pagelist.loadFunction"
-  :row-click-function = "pagelist.rowClickFunction"
+  :titleconfig = "pagelist.titleConfig"
+  :showcheckbox = "pagelist.showCheckBox"
+  :loadfunction = "pagelist.loadFunction"
+  :rowclickfunction = "pagelist.rowClickFunction"
 >
 </cg-pagelist>`,
                   detail: 'pageList组件，支持按钮slot'
@@ -1966,19 +1956,19 @@ export default {
                       detail: '数据'
                     },
                     {
-                      name: 'titleConfig',
+                      name: 'titleconfig',
                       type: 'Array',
                       default: '[]',
                       detail: '标题配置{orderAble:是否可以排序,label:标题名称,keyName:对应的内容(-分割进行深层次访问),showFunction:自定义内容}'
                     },
                     {
-                      name: 'loadFunction',
+                      name: 'loadfunction',
                       type: 'Function',
                       default: 'null',
                       detail: '数据加载方法(排序，分页等都会触发，返回data,page,order对象)'
                     },
                     {
-                      name: 'rowClickFunction',
+                      name: 'rowclickfunction',
                       type: 'Function',
                       default: 'null',
                       detail: '行点击事件'
@@ -1992,9 +1982,9 @@ export default {
  }`,
                   template: `<cg-scolllist
   :list = "scolllist.list"
-  :title-config = "scolllist.titleConfig"
-  :load-function = "scolllist.loadFunction"
-  :row-click-function = "scolllist.rowClickFunction"
+  :titleconfig = "scolllist.titleConfig"
+  :loadfunction = "scolllist.loadFunction"
+  :rowclickfunction = "scolllist.rowClickFunction"
 >
 </cg-scolllist>`,
                   detail: 'scolllist组件，支持列表数据slot'
@@ -2008,21 +1998,21 @@ export default {
                   name: '<cg-tab></cg-tab>',
                   param: [
                     {
-                      name: 'tabConfig',
+                      name: 'tabconfig',
                       type: 'Array',
                       default: '[]',
                       detail: '配置信息{id:是唯一标志，name是对应名称}'
                     }
                   ],
                   demo: `{
-  tabConfig: [
+  tabconfig: [
     { name: 'checkbox',    id: 1 },
     { name: 'select',      id: 2 }
   ]
  }`,
                   template: `
 <cg-tab
-  :tab-config="tabConfig"
+  :tab-config="tabconfig"
 >
   <template slot-scope="slotProps">
     <span v-if='slotProps.activeTab.id==1'>
@@ -2045,19 +2035,19 @@ export default {
                   name: '<cg-tree></cg-tree>',
                   param: [
                     {
-                      name: 'showName',
+                      name: 'showname',
                       type: 'String',
                       default: 'name',
                       detail: '和data配合使用，去data里面对应的showName的值作为显示(-做分割进行深层次访问)'
                     },
                     {
-                      name: 'childName',
+                      name: 'childname',
                       type: 'String',
                       default: 'child',
                       detail: '和data配合使用，去data里面对应的childName的值作为子节点列表(-做分割进行深层次访问)'
                     },
                     {
-                      name: 'showFunc',
+                      name: 'showfunc',
                       type: 'Function',
                       default: 'null',
                       detail: '展示的函数，优先级再showName之前，复杂展示方式的时候使用，这里考虑用插槽实现'
@@ -2069,13 +2059,13 @@ export default {
                       detail: '树图所有节点'
                     },
                     {
-                      name: 'onSelected',
+                      name: 'onselected',
                       type: 'Function',
                       default: 'null',
                       detail: '选中树图节点事件'
                     },
                     {
-                      name: 'onExtend',
+                      name: 'onextend',
                       type: 'Function',
                       default: 'null',
                       detail: '展开树图节点事件'
@@ -2087,13 +2077,13 @@ export default {
                       detail: '是否显示筛选器(在已知的节点范围内进行检索，最好配合list一次性加载，否则只检索已知数据)'
                     },
                     {
-                      name: 'filterIgnore',
+                      name: 'filterignore',
                       type: 'Boolean',
                       default: 'true',
                       detail: '是否忽略大小写'
                     },
                     {
-                      name: 'filterPlaceholder',
+                      name: 'filterplaceholder',
                       type: 'String',
                       default: '请选择',
                       detail: '筛选器默认文字'
@@ -2111,14 +2101,14 @@ export default {
  }`,
                   template: `
 <cg-tree
-  :show-name="showName"
-  :child-name="childName"
-  :show-func="showFunc"
+  :showname="showName"
+  :childname="childName"
+  :showfunc="showFunc"
   :list="list"
-  :on-selected="onSelected"
+  :onselected="onSelected"
   :filter="filter"
-  :filter-ignore="filterIgnore"
-  :filter-placeholder="filterPlaceholder"
+  :filterignore="filterIgnore"
+  :filterplaceholder="filterPlaceholder"
 >
 </cg-tree>
 `,

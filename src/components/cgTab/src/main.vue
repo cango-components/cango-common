@@ -1,7 +1,7 @@
 <template>
   <div class = 'cg-tab__base' >
     <div class = 'cg-tab__title' >
-      <div v-for='(tab, index) in tabConfig'
+      <div v-for='(tab, index) in tabconfig'
            :key="index"
            @click='active(tab)'
            :class='isActive(tab) ? "cg-tab__active" : ""'
@@ -20,7 +20,7 @@ export default {
   name: 'cg-tab',
   props: {
     // 配置信息{id:是唯一标志，name是对应名称}
-    'tabConfig': {
+    'tabconfig': {
       type: Array,
       default: []
     }
@@ -38,8 +38,8 @@ export default {
   methods: {
     resize: function () {
       let activeTab = null
-      if (this.tabConfig && this.tabConfig.length > 0) {
-        activeTab = this.tabConfig[0]
+      if (this.tabconfig && this.tabconfig.length > 0) {
+        activeTab = this.tabconfig[0]
       }
       this.activeTab = activeTab
     },
