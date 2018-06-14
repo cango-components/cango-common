@@ -1,5 +1,8 @@
 <template>
   <div class = 'cg-uploadify__base' >
+    <div v-if='label' class = 'cg-uploadify__label' >
+      {{ label }}
+    </div>
     <div v-show="fileList.length==0" class = 'cg-uploadify__upload' @click='openFile()' >
       <input :id="uniqueId" v-if='filenum == 1 && !lock' type = 'file' @change='onUpload' />
       <input :id="uniqueId" v-else-if='!lock' type = 'file' @change='onUpload' multiple='multiple' :size='filenum' />
@@ -49,6 +52,11 @@ import FileUtils from '../../../utils/FileUtils.js'
 export default {
   name: 'cg-uploadify',
   props: {
+    // 标题
+    'label': {
+      type: String,
+      default: ''
+    },
     // 展示类型(file文件类型，image图片类型)
     'type': {
       type: String,
