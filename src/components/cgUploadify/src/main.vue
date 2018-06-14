@@ -13,13 +13,12 @@
        <img :src = 'showFile ? showFile : ""' class='showImg' />
       </div>
     </div>
-    <div v-else-if="type == 'file'"  v-show="fileList.length>0" class='cango-uploadify__showfile'>
+    <div v-else-if="type == 'file'"  v-show="fileList.length>0" class='cango-uploadify__showfile' @click='openFile()'>
       <ul>
         <li v-for="(file,index) in fileList">
             {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a><br/>
         </li>
       </ul>
-      <div class="openbtn"  @click='openFile()'></div>
     </div>
     <div v-if='previewShow' class='cango-uploadify__background'></div>
     <v-touch tag="div"  v-if='previewShow' class = 'cango-uploadify__main'  v-on:swipeleft="prev()" v-on:swiperight="next()">
@@ -214,8 +213,8 @@ export default {
         let num = e.target.files.length + this.fileList.length
         if (this.fileNum > 1 && num > this.fileNum) {
           // TODO 报错
-          alert('选择的文件过多')
-          return
+          alert('选择的文件过多');
+          return;
         }
         var self = this
         let func = function (result) {
@@ -275,7 +274,7 @@ export default {
       if (this.readOnly || this.lock) {
         return
       }
-      var upload = document.getElementById(this.uniqueId)
+      var upload = document.getElementById(this.uniqueId);
       upload.click()
     },
     openPreview: function () {
