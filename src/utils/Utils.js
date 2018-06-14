@@ -109,18 +109,21 @@ export default {
       let hasDemo = false
       let demo = null
       // 针对数组的，我们认为第一个数组是demo
-      if (to && to[0]) {
-        demo = this.clone(to[0])
-        hasDemo = true
-        for (let k = 0; k < to.length; k++) {
-          to.pop()
+      if (to) {
+        if (to[0]) {
+          demo = this.clone(to[0])
+          hasDemo = true
+          let length = to.length
+          for (let k = 0; k < length; k++) {
+            to.pop()
+          }
         }
       } else {
         // 这里可能会有指向问题，需要注意
         to = []
       }
       for (let k = 0; k < from.length; k++) {
-        to[k] = {}
+        to.push({})
         if (hasDemo) {
           to[k] = this.clone(demo)
           // 有demo的时候以demo为准
@@ -183,19 +186,25 @@ export default {
               let hasDemo = false
               let demo = null
               // 针对数组的，我们认为第一个数组是demo
-              if (to[key] && to[key][0]) {
-                demo = this.clone(to[key][0])
-                hasDemo = true
+              if (to[key]) {
+                if (to[key][0]) {
+                  demo = this.clone(to[key][0])
+                  hasDemo = true
+                  let length = to[key].length
+                  for (let k = 0; k < length; k++) {
+                    to[key].pop()
+                  }
+                }
+              } else {
+                to[key] = []
               }
-              // 这里可能会有指向问题，需要注意
-              to[key] = []
               for (let k = 0; k < from[key].length; k++) {
-                to[key][k] = {}
                 if (hasDemo) {
-                  to[key][k] = this.clone(demo)
+                  to[key].push(this.clone(demo))
                   // 有demo的时候以demo为准
                   this.mergeObject(to[key][k], from[key][k], mergeType)
                 } else {
+                  to[key].push({})
                   // 没有demo时以right为准
                   this.mergeObject(to[key][k], from[key][k], 'right')
                 }

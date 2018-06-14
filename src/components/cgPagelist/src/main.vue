@@ -45,17 +45,21 @@ export default {
   props: {
     // 分页信息
     'page': {
-      default: {
-        pageSize: 20,
-        pageNo: 1,
-        totalNum: 0
+      default: function () {
+        return {
+          pageSize: 20,
+          pageNo: 1,
+          totalNum: 0
+        }
       }
     },
     // 排序展示(keyname:排序的主键;orderBy:asc/desc顺序逆序)
     'initorder': {
-      default: {
-        keyName: '',
-        orderBy: ''
+      default: function () {
+        return {
+          keyName: '',
+          orderBy: ''
+        }
       }
     },
     // 数据

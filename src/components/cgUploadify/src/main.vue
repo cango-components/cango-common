@@ -18,7 +18,7 @@
     </div>
     <div v-else-if="type == 'file'"  v-show="fileList.length>0" class='cango-uploadify__showfile'>
       <ul>
-        <li v-for="(file,index) in fileList">
+        <li v-for="(file,index) in fileList" :key="'file' + index">
             {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a><br/>
         </li>
       </ul>
@@ -34,9 +34,7 @@
         <span></span>
         <!-- 背景loading -->
         <img v-if="type == 'image' " :style='getStyle(file)' class="cango-uploadify__file_imgCon" :src = "file.errorImg || file.url " @error="onError(file)" >
-        <div v-else>
-          {{ file.filePath }} </br> {{ file.url }} </br></br>
-        </div>
+        <div v-else></div>
         <div class="left"  @click='left(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-zuoxuanzhuan'></i>&nbsp;左旋转</div>
         <div v-if='!readonly && candelete' class="delete" @click='remove(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-shanchu'></i>&nbsp;删除</div>
         <div class="right" @click='right(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-youxuanzhuan'></i>&nbsp;右旋转</div>

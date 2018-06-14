@@ -2012,7 +2012,7 @@ export default {
  }`,
                   template: `
 <cg-tab
-  :tab-config="tabconfig"
+  :tabconfig="tabconfig"
 >
   <template slot-scope="slotProps">
     <span v-if='slotProps.activeTab.id==1'>
