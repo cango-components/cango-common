@@ -5,12 +5,12 @@
       <div
         v-if='label'
         class = 'cg-select__label'
-        :class = 'titleStyle == 0 ? "cg-select__label_transverse" : "cg-select__label_vertical"'>
+        :class = 'titlestyle == 0 ? "cg-select__label_transverse" : "cg-select__label_vertical"'>
         {{ label }}
       </div>
 
       <div
-        :class="(titleStyle==0 && label) ? 'cg-select__box_transverse' : 'cg-select__box_vertical'"
+        :class="(titlestyle==0 && label) ? 'cg-select__box_transverse' : 'cg-select__box_vertical'"
         @click="showHide()" >
         <div
           class = 'cg-select__value'
@@ -21,6 +21,7 @@
       </div>
 
       <div class='clear'></div>
+<<<<<<< HEAD
         <div v-if='showSelectDiv'
              :class='(titleStyle==0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"'
              class = 'cg-select__pop'>
@@ -42,6 +43,27 @@
           </div>
         </div>
         <div v-if="showSelectDiv" class="cg-select-bg"></div>
+=======
+
+      <div v-if='showSelectDiv'
+           :class='(titlestyle==0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"'
+           class = 'cg-select__pop'>
+        <div v-if='filter' class = 'cg-select__select_pop_filter'>
+          <input type = 'text' v-model='filterText' v-bind:placeholder = 'filterplaceholder' >
+        </div>
+        <div v-if='(!required && selectnum == 1)' @click='putValue(emptyItem)' class = 'cg-select__pop_content' >
+          空选项
+        </div>
+        <div v-for='(item, index) in getList' :key='index' @click='putValue(item)' v-bind:class='isSelected(item) ? "cg-select__pop_selected" : ""' class = 'cg-select__pop_content'>
+          <slot v-bind:option='item' >
+            {{ showRecordName(item) }}
+          </slot>
+        </div>
+        <div v-if='selectnum != 1' @click='closeDiv()' class = 'cg-select__select_pop_close'>
+          确定
+        </div>
+      </div>
+>>>>>>> eb28a48738707f329735fca9f7f1eb9170067748
     </div>
   </div>
 </template>
@@ -64,7 +86,7 @@ export default {
       default: ''
     },
     // 是否readonly
-    'readOnly': {
+    'readonly': {
       type: Boolean,
       default: false
     },
@@ -74,17 +96,17 @@ export default {
       default: false
     },
     // 选项为空时转换成null
-    'emptyIsNull': {
+    'emptyisnull': {
       type: Boolean,
       default: true
     },
-    // 和data配合使用，去data里面对应的keyName的值作为id
-    'keyName': {
+    // 和data配合使用，去data里面对应的keyname的值作为id
+    'keyname': {
       type: String,
       default: 'id'
     },
-    // 和data配合使用，去data里面对应的showName的值作为显示
-    'showName': {
+    // 和data配合使用，去data里面对应的showname的值作为显示
+    'showname': {
       type: String,
       default: 'name'
     },
@@ -95,8 +117,8 @@ export default {
         return []
       }
     },
-    // TODO 展示的函数，优先级再showName之前，复杂展示方式的时候使用，这里考虑用插槽实现
-    'showFunc': {
+    // 展示的函数，优先级再showname之前，复杂展示方式的时候使用，这里考虑用插槽实现
+    'showfunc': {
       type: Function
     },
     // 是否显示筛选器
@@ -105,27 +127,22 @@ export default {
       default: false
     },
     // 是否忽略大小写
-    'filterIgnore': {
+    'filterignore': {
       type: Boolean,
       default: true
     },
     // 筛选器默认文字
-    'filterPlaceholder': {
+    'filterplaceholder': {
       type: String,
       default: '请输入关键字'
     },
-    // 是否显示全选按钮(selectNum为0时才有意义)
-    'showSelectAll': {
-      type: Boolean,
-      default: false
-    },
     // 空选项的时候，默认展示数据
-    'emptyLabel': {
+    'emptylabel': {
       type: String,
       default: '请选择'
     },
     // 下拉框最多选中数量(0:为不限制;1:为单选;)
-    'selectNum': {
+    'selectnum': {
       type: Number,
       default: 1
     },
@@ -139,7 +156,7 @@ export default {
       default: ','
     },
     // 标题和内容展示方式(0:横向展示;1:竖向展示)
-    'titleStyle': {
+    'titlestyle': {
       type: Number,
       default: 0
     }
@@ -163,7 +180,7 @@ export default {
           if (this.filterText !== '') {
             let text = this.showRecordName(this.list[i]) + ''
             let filterText = this.filterText + ''
-            if (this.filterIgnore) {
+            if (this.filterignore) {
               filterText = filterText.toLowerCase()
               text = text.toLowerCase()
             }
@@ -179,21 +196,21 @@ export default {
     },
     emptyItem: function () {
       let obj = {}
-      obj[this.keyName] = ''
+      obj[this.keyname] = ''
       return obj
     },
     showText: function () {
       let text = ''
       if (this.value == null || this.value === undefined) {
-        return this.emptyLabel
+        return this.emptylabel
       }
       if (Utils.isArray(this.value)) {
         if (this.value.length === 0) {
-          return this.emptyLabel
+          return this.emptylabel
         }
         for (let i = 0; i < this.value.length; i++) {
           for (let k = 0; k < this.list.length; k++) {
-            if (this.value[i] === this.list[k][this.keyName]) {
+            if (this.value[i] === this.list[k][this.keyname]) {
               if (text === '') {
                 text = this.showRecordName(this.list[k])
               } else {
@@ -205,7 +222,7 @@ export default {
         }
       } else {
         for (let i = 0; i < this.list.length; i++) {
-          if (this.value === this.list[i][this.keyName]) {
+          if (this.value === this.list[i][this.keyname]) {
             text = this.showRecordName(this.list[i])
             break
           }
@@ -221,7 +238,7 @@ export default {
       if (this.errorMsg !== '') {
         className += ' cg-select__error'
       }
-      if (this.readOnly) {
+      if (this.readonly) {
         className += ' cg-select__readonly'
       }
       if (!BrowseUtils.isPC()) {
@@ -232,7 +249,7 @@ export default {
     },
     valid: function () {
       if (this.required) {
-        if (this.selectNum === 1) {
+        if (this.selectnum === 1) {
           if (StrUtils.isBlank(this.value)) {
             // TODO 错误信息，后续考虑规范报错方式
             this.errorMsg = '不能为空'
@@ -252,15 +269,15 @@ export default {
       return this.errorMsg
     },
     resizeValue: function (value) {
-      if (this.selectNum === 1) {
-        if (this.emptyIsNull) {
+      if (this.selectnum === 1) {
+        if (this.emptyisnull) {
           if (StrUtils.isBlank(value)) {
             this.$emit('input', null)
             return
           }
         }
       } else {
-        if (this.emptyIsNull) {
+        if (this.emptyisnull) {
           if (value === undefined || value == null || value.length === 0) {
             this.$emit('input', null)
             return
@@ -270,7 +287,7 @@ export default {
       this.$emit('input', value)
     },
     showHide: function () {
-      if (this.readOnly) {
+      if (this.readonly) {
         return
       }
       this.showSelectDiv = !this.showSelectDiv;
@@ -281,32 +298,32 @@ export default {
       }
       if (Utils.isArray(this.value)) {
         for (let i = 0; i < this.value.length; i++) {
-          if (this.value[i] === item[this.keyName]) {
+          if (this.value[i] === item[this.keyname]) {
             return true
           }
         }
       } else {
-        if (this.value === item[this.keyName]) {
+        if (this.value === item[this.keyname]) {
           return true
         }
       }
       return false
     },
     putValue: function (item) {
-      if (this.readOnly) {
+      if (this.readonly) {
         return
       }
       let add = true
       let value = Utils.clone(this.value)
-      if (this.selectNum === 1) {
-        value = item[this.keyName]
+      if (this.selectnum === 1) {
+        value = item[this.keyname]
         add = false
-      } else if (this.selectNum === 0) {
+      } else if (this.selectnum === 0) {
         if (!value) {
           value = []
         }
         for (let i = 0; i < value.length; i++) {
-          if (value[i] === item[this.keyName]) {
+          if (value[i] === item[this.keyname]) {
             value.splice(i, 1)
             add = false
             break
@@ -317,21 +334,21 @@ export default {
           value = []
         }
         for (let i = 0; i < value.length; i++) {
-          if (value[i] === item[this.keyName]) {
+          if (value[i] === item[this.keyname]) {
             value.splice(i, 1)
             add = false
             break
           }
         }
-        if (value.length >= this.selectNum) {
+        if (value.length >= this.selectnum) {
           add = false
         }
       }
       if (add) {
-        value.push(item[this.keyName])
+        value.push(item[this.keyname])
       }
       this.resizeValue(value)
-      if (this.selectNum === 1) {
+      if (this.selectnum === 1) {
         this.closeDiv()
       }
     },
@@ -339,10 +356,10 @@ export default {
       this.showSelectDiv = false
     },
     showRecordName: function (record) {
-      if (this.showFunc) {
-        return this.showFunc(record)
+      if (this.showfunc) {
+        return this.showfunc(record)
       } else {
-        return record[this.showName]
+        return record[this.showname]
       }
     }
   },

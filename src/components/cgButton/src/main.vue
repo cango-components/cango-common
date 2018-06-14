@@ -12,7 +12,7 @@ export default {
   name: 'cg-button',
   props: {
     // 按钮文字
-    'className': {
+    'classname': {
       type: String,
       default: ''
     },
@@ -22,12 +22,12 @@ export default {
       default: ''
     },
     // 是否readonly
-    'readOnly': {
+    'readonly': {
       type: Boolean,
       default: false
     },
     // 点击事件
-    'buttonClick': {
+    'buttonclick': {
       type: Function
     }
   },
@@ -35,13 +35,13 @@ export default {
   },
   methods: {
     click: function () {
-      if (!this.readOnly && this.buttonClick) {
-        this.buttonClick()
+      if (!this.readonly && this.buttonclick) {
+        this.buttonclick()
       }
     },
     getClassName: function () {
-      let clsName = this.className
-      if (this.readOnly) {
+      let clsName = this.classname
+      if (this.readonly) {
         clsName += ' ' + 'cango-button__readOnly'
       }
       return clsName

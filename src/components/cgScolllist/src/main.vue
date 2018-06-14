@@ -1,12 +1,12 @@
 <template>
   <table class = 'cg-scollList__base' >
     <tr class = 'cg-scollList__title' >
-      <th v-for='(title, thIndex) in titleConfig' :key='"thTitle"+thIndex'  class = 'cg-scollList__label'>
+      <th v-for='(title, thIndex) in titleconfig' :key='"thTitle"+thIndex'  class = 'cg-scollList__label'>
         {{ title.label }}
       </th>
     </tr>
     <tr v-for='(record, index) in list' :key='"list"+index' class = 'cg-scollList__content'>
-      <td v-for='(title, titleIndex) in titleConfig'
+      <td v-for='(title, titleIndex) in titleconfig'
           :key='"title"+titleIndex'
           class = 'cg-scollList__record'
           @click='rowClick(record)' >
@@ -16,7 +16,7 @@
       </td>
     </tr>
     <tr v-if='hasMore' class = 'cg-scollList__page' @click='showMore()' >
-      <td :colspan="titleConfig.length">
+      <td :colspan="titleconfig.length">
         点击显示更多
       </td>
     </tr>
@@ -34,16 +34,16 @@ export default {
       default: []
     },
     // 标题配置{label:标题名称,keyName:对应的内容(-分割进行深层次访问),showFunction:自定义内容}
-    'titleConfig': {
+    'titleconfig': {
       type: Array,
       default: []
     },
     // 数据加载方法(排序，分页等都会触发，返回data,page,order对象)
-    'loadFunction': {
+    'loadfunction': {
       type: Function
     },
     // 行点击事件
-    'rowClickFunction': {
+    'rowclickfunction': {
       type: Function
     }
   },
@@ -64,8 +64,8 @@ export default {
   },
   methods: {
     rowClick: function (record) {
-      if (this.rowClickFunction) {
-        this.rowClickFunction(record)
+      if (this.rowclickfunction) {
+        this.rowclickfunction(record)
       }
     },
     showRecordName: function (record, title) {
@@ -78,11 +78,11 @@ export default {
       }
     },
     showMore: function () {
-      if (this.loadFunction) {
+      if (this.loadfunction) {
         if (this.list) {
-          this.loadFunction(this.list[this.list.length - 1])
+          this.loadfunction(this.list[this.list.length - 1])
         } else {
-          this.loadFunction(null)
+          this.loadfunction(null)
         }
         this.hasMore = false
       }
