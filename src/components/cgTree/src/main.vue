@@ -7,13 +7,14 @@
       <div v-for='(node, nodeIndex) in getList'
            :key='"node" + nodeIndex'
            class = 'cg-tree__node'>
-        <span v-for="i in node.level" :key='"node" + nodeIndex + "span" + i'>&nbsp;&nbsp;</span>
-        <i class='cango-uploadify__file_iconfont icon-zengjia'  @click='treeNodeExtend(node)'></i>
-        <span @click='treeNodeSelect(node)' :class = '(node == selectNode) ? "cg-tree__selected" : ""'>
-          <slot v-bind:option='node' >
-            {{ showRecordName(node.record) }}
-          </slot>
-        </span>
+
+        <div  :class = '(node == selectNode) ? "cg-tree__selected" : ""'   @click='treeNodeExtend(node)'>
+          <span v-for="i in node.level" :key='"node" + nodeIndex + "span" + i'>&nbsp;&nbsp;</span>
+          <i class='cango-uploadify__file_iconfont icon-zengjia'></i>
+            <slot v-bind:option='node' >
+              {{ showRecordName(node.record) }}
+            </slot>
+        </div>
       </div>
     </div>
   </div>
@@ -126,15 +127,16 @@ export default {
     },
     treeNodeExtend: function (record) {
       record.showChild = !record.showChild
+      this.selectNode = record
+      if (this.onselected) {
+        this.onselected(record.record)
+      }
       if (this.onextend) {
         this.onextend(record.record, record.showChild)
       }
     },
     treeNodeSelect: function (record) {
-      this.selectNode = record
-      if (this.onselected) {
-        this.onselected(record.record)
-      }
+
     },
     resizeRecordList: function (list, level, parentIsOk) {
       let result = []
@@ -248,5 +250,9 @@ export default {
   .cg-tree__node{
     line-height: 2.5rem;
     font-size: 3rem;
+    cursor: pointer;
+  }
+  .cg-tree__selected{
+    background:#f1f2f3;
   }
 </style>

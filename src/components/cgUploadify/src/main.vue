@@ -20,7 +20,7 @@
       <div v-else-if="type == 'file'"  v-show="fileList.length>0" class='cango-uploadify__showfile' @click='openFile()'>
         <ul>
           <li v-for="(file,index) in fileList" :key="'file' + index">
-              {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a><br/>
+              {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a>  &nbsp; <span @click="remove(file)" >删除</span><br/>
           </li>
         </ul>
       </div>
@@ -254,6 +254,7 @@ export default {
       if (this.lock) {
         return
       }
+
       this.lock = true
       this.fileList.splice(this.fileList.indexOf(file), 1)
       this.resizeValue()
