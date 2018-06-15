@@ -525,6 +525,7 @@ export default {
         })
         console.log(html)
         console.log(data)
+        console.log(demo)
       } else {
         document.getElementById('html').innerHTML = ''
         document.getElementById('script').innerHTML = ''
