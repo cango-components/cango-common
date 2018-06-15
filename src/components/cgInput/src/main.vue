@@ -163,7 +163,6 @@ export default {
   color: #606266;
   display: inline-block;
   font-size: inherit;
-  height: 3.3rem;
   line-height: 3.3rem;
   outline: none;
   padding: 0 15px;
@@ -192,7 +191,7 @@ export default {
   text-align:right;
   line-height:3.3rem;
 }
-.cg-input {
+.cg-input,.cg-textarea{
   padding-left:0;
   border:none;
   width:80%;
