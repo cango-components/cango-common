@@ -86,7 +86,7 @@ export default {
     },
     // 数值
     value: {
-      type: String
+      type: [String, Number]
     }
   },
   data: function () {

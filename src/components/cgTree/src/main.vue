@@ -9,7 +9,7 @@
            class = 'cg-tree__node'>
         <span v-for="i in node.level" :key='"node" + nodeIndex + "span" + i'>&nbsp;&nbsp;</span>
         <i class='cango-uploadify__file_iconfont icon-zengjia'  @click='treeNodeExtend(node)'></i>
-        <span @click='treeNodeSelect(node)'>
+        <span @click='treeNodeSelect(node)' :class = '(node == selectNode) ? "cg-tree__selected" : ""'>
           <slot v-bind:option='node' >
             {{ showRecordName(node.record) }}
           </slot>
@@ -75,7 +75,8 @@ export default {
   data: function () {
     return {
       recordList: [],
-      filterText: ''
+      filterText: '',
+      selectNode: null
     }
   },
   computed: {
@@ -130,6 +131,7 @@ export default {
       }
     },
     treeNodeSelect: function (record) {
+      this.selectNode = record
       if (this.onselected) {
         this.onselected(record.record)
       }

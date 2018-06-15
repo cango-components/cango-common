@@ -22,7 +22,7 @@ export default {
       default: ''
     },
     // 是否readonly
-    'readOnly': {
+    'readonly': {
       type: Boolean,
       default: false
     },
@@ -37,12 +37,12 @@ export default {
   },
   computed: {
     switchClass () {
-      return [this.value ? 'selected' : '', this.readOnly ? 'readonly' : '']
+      return [this.value ? 'selected' : '', this.readonly ? 'readonly' : '']
     }
   },
   methods: {
     clickHandle () {
-      if (!this.readOnly) {
+      if (!this.readonly) {
         this.$emit('input', !this.value)
       }
     }

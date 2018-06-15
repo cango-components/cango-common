@@ -20,7 +20,7 @@
       <div v-if="showSwitch" >
         <cg-switch
           :label = 'switchConfig.label'
-          :read-only = 'switchConfig.readOnly'
+          :readonly = 'switchConfig.readOnly'
           v-model = 'data.switch'
         >
         </cg-switch>
@@ -1438,7 +1438,7 @@ export default {
  }`,
                   template: `<cg-switch
   :label = "switch.label"
-  :read-only = "switch.readOnly"
+  :readonly = "switch.readOnly"
 >
 </cg-switch>`,
                   detail: 'switch组件'
