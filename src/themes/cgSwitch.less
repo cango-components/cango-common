@@ -2,8 +2,16 @@
 @base-switch-border-width: 3px;
 @base-switch-height: @current - 2*@base-switch-border-width;
 @base-switch-width: 2*@base-switch-height;
-
+.cg-switch__label{
+  width:20%;
+  float:left;
+  padding-right:2%;
+  text-align:right;
+  line-height:24px;
+}
 .cg-switch {
+  width:80%;
+  float:left;
   .cg-base__box;
   .cg-base__border(@line-main-color, @base-switch-border-width);
   .cg-base-box;

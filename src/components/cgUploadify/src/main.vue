@@ -3,42 +3,45 @@
     <div v-if='label' class = 'cg-uploadify__label' >
       {{ label }}
     </div>
-    <div v-show="fileList.length==0" class = 'cg-uploadify__upload' @click='openFile()' >
-      <input :id="uniqueId" v-if='filenum == 1 && !lock' type = 'file' @change='onUpload' />
-      <input :id="uniqueId" v-else-if='!lock' type = 'file' @change='onUpload' multiple='multiple' :size='filenum' />
-      <p>上传文件</p>
-    </div>
-    <div v-if="type == 'image'" v-show="fileList.length>0" class='cango-uploadify__showImg' >
-      <div class='cango-uploadify__preview' @click='openPreview()'>
-        <img src='../../../assets/images/preview.png' id='showImg'/><span>预览</span>
+    <div class="cg-uploadify__content">
+      <div v-show="fileList.length==0" class = 'cg-uploadify__upload' @click='openFile()' >
+        <input :id="uniqueId" v-if='filenum == 1 && !lock' type = 'file' @change='onUpload' />
+        <input :id="uniqueId" v-else-if='!lock' type = 'file' @change='onUpload' multiple='multiple' :size='filenum' />
+        <p>上传文件</p>
       </div>
-      <div class="openbtn"  @click='openFile()'>
-       <img :src = 'showFile ? showFile : ""' class='showImg' />
+      <div v-if="type == 'image'" v-show="fileList.length>0" class='cango-uploadify__showImg' >
+        <div class='cango-uploadify__preview' @click='openPreview()'>
+          <img src='../../../assets/images/preview.png' id='showImg'/><span>预览</span>
+        </div>
+        <div class="openbtn"  @click='openFile()'>
+         <img :src = 'showFile ? showFile : ""' class='showImg' />
+        </div>
       </div>
-    </div>
-    <div v-else-if="type == 'file'"  v-show="fileList.length>0" class='cango-uploadify__showfile' @click='openFile()'>
-      <ul>
-        <li v-for="(file,index) in fileList" :key="'file' + index">
-            {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a><br/>
-        </li>
-      </ul>
-    </div>
-    <div v-if='previewShow' class='cango-uploadify__background'></div>
-    <v-touch tag="div"  v-if='previewShow' class = 'cango-uploadify__main'  v-on:swipeleft="prev()" v-on:swiperight="next()">
-      <div class='cango-uploadify__main_close' @click='closePreview()'>×</div>
-      <div class='cango-uploadify__main_title'>{{previewNum+1}}/{{fileList.length}}</div>
-      <i v-if='previewNum>0' class='cango-uploadify__file_iconfont cango-uploadify__file_icon_previous cango-uploadify__file_prev' @click='prev()'></i>
-      <i v-if='previewNum<fileList.length-1' class='cango-uploadify__file_iconfont cango-uploadify__file_icon_next cango-uploadify__file_next' @click='next()'></i>
-      <div v-for="(file,index) in fileList" :key="index"  :class='index === previewNum? "cango-uploadify__file_active cango-uploadify__file" : "cango-uploadify__file"'>
-        <span></span>
-        <!-- 背景loading -->
-        <img v-if="type == 'image' " :style='getStyle(file)' class="cango-uploadify__file_imgCon" :src = "file.errorImg || file.url " @error="onError(file)" >
-        <div v-else></div>
-        <div class="left"  @click='left(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-zuoxuanzhuan'></i>&nbsp;左旋转</div>
-        <div v-if='!readonly && candelete' class="delete" @click='remove(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-shanchu'></i>&nbsp;删除</div>
-        <div class="right" @click='right(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-youxuanzhuan'></i>&nbsp;右旋转</div>
+      <div v-else-if="type == 'file'"  v-show="fileList.length>0" class='cango-uploadify__showfile' @click='openFile()'>
+        <ul>
+          <li v-for="(file,index) in fileList" :key="'file' + index">
+              {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a><br/>
+          </li>
+        </ul>
       </div>
-    </v-touch>
+      <div v-if='previewShow' class='cango-uploadify__background'></div>
+      <v-touch tag="div"  v-if='previewShow' class = 'cango-uploadify__main'  v-on:swipeleft="prev()" v-on:swiperight="next()">
+        <div class='cango-uploadify__main_close' @click='closePreview()'>×</div>
+        <div class='cango-uploadify__main_title'>{{previewNum+1}}/{{fileList.length}}</div>
+        <i v-if='previewNum>0' class='cango-uploadify__file_iconfont cango-uploadify__file_icon_previous cango-uploadify__file_prev' @click='prev()'></i>
+        <i v-if='previewNum<fileList.length-1' class='cango-uploadify__file_iconfont cango-uploadify__file_icon_next cango-uploadify__file_next' @click='next()'></i>
+        <div v-for="(file,index) in fileList" :key="index"  :class='index === previewNum? "cango-uploadify__file_active cango-uploadify__file" : "cango-uploadify__file"'>
+          <span></span>
+          <!-- 背景loading -->
+          <img v-if="type == 'image' " :style='getStyle(file)' class="cango-uploadify__file_imgCon" :src = "file.errorImg || file.url " @error="onError(file)" >
+          <div v-else></div>
+          <div class="left"  @click='left(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-zuoxuanzhuan'></i>&nbsp;左旋转</div>
+          <div v-if='!readonly && candelete' class="delete" @click='remove(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-shanchu'></i>&nbsp;删除</div>
+          <div class="right" @click='right(file)'><i class='cango-uploadify__file_iconfont  cango-uploadify__file_icon-youxuanzhuan'></i>&nbsp;右旋转</div>
+        </div>
+      </v-touch>
+    </div>
+    <div class="clear"></div>
   </div>
 </template>
 
@@ -52,7 +55,7 @@ export default {
     // 标题
     'label': {
       type: String,
-      default: ''
+      default: '2342'
     },
     // 展示类型(file文件类型，image图片类型)
     'type': {
