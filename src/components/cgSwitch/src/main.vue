@@ -1,9 +1,12 @@
 <template>
-  <div class='cg-switch' :class='switchClass' @click='clickHandle' >
+  <div class="cg-switch__base">
     <div v-if='label' class = 'cg-switch__label'>
       {{ label }}
     </div>
-    <div :class='label ? "cg-switch__btn cg-switch__have_label" : "cg-switch__btn"'></div>
+    <div class='cg-switch' :class='switchClass' @click='clickHandle' >
+      <div :class='label ? "cg-switch__btn cg-switch__have_label" : "cg-switch__btn"'></div>
+    </div>
+    <div class="clear"></div>
   </div>
 </template>
 
