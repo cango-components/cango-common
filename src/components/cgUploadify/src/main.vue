@@ -159,8 +159,6 @@ export default {
     },
     right: function (file) {
       file['angle'] = (file['angle'] + 90) % 360
-      console.log('-------------------right')
-      console.log(file['angle'])
     },
     valid: function () {
       if (this.required) {
@@ -222,8 +220,8 @@ export default {
         let num = e.target.files.length + this.fileList.length
         if (this.filenum > 1 && num > this.filenum) {
           // TODO 报错
-          alert('选择的文件过多');
-          return;
+          alert('选择的文件过多')
+          return
         }
         var self = this
         let func = function (result) {
@@ -284,7 +282,7 @@ export default {
       if (this.readonly || this.lock) {
         return
       }
-      var upload = document.getElementById(this.uniqueId);
+      var upload = document.getElementById(this.uniqueId)
       upload.click()
     },
     openPreview: function () {

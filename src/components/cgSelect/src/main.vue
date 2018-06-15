@@ -269,7 +269,7 @@ export default {
       if (this.readonly) {
         return
       }
-      this.showSelectDiv = !this.showSelectDiv;
+      this.showSelectDiv = !this.showSelectDiv
     },
     isSelected: function (item) {
       if (this.value == null || this.value === undefined) {
