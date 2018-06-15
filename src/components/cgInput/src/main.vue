@@ -14,6 +14,7 @@
       <input type="password" :placeholder="placeholder" class="cg-input__content" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" />
       <i v-if="!readonly && clearable" class="cg-base-icon cg-icon__del" @click="del"></i>
     </div>
+    <div class="clear"></div>
   </div>
 </template>
 
@@ -152,21 +153,51 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.base_box {
-  display: box;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -o-box;
-  display: -ms-box;
-  align-items: center;
+.cg-input__content {
+  -webkit-appearance: none;
+  background-color: #fff;
+  background-image: none;
+  border-radius: 4px;
+
+  box-sizing: border-box;
+  color: #606266;
+  display: inline-block;
+  font-size: inherit;
+  height: 3.3rem;
+  line-height: 3.3rem;
+  outline: none;
+  padding: 0 15px;
+  border: 1px solid #dcdfe6;
+  width: 100%;
+}
+.box-content{
+
+  height: 40px;
+  line-height: 40px;
+
+  transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+ }
+.cg-input__content:focus{
+  outline: none;
+  border-color: #409eff;
 }
 .base_flex {
   flex: 1;
   margin-left: 5px;
 }
+.cg-input__label{
+  width:20%;
+  float:left;
+  padding-right:2%;
+  text-align:right;
+  line-height:3.3rem;
+}
 .cg-input {
-  width: 100%;
-  .base_box;
+  padding-left:0;
+  border:none;
+  width:80%;
+  float:left;
+  .box-content;
 }
 .cg-icon__del {
   .base_flex;
