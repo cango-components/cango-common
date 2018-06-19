@@ -427,7 +427,7 @@ export default {
           if (ele.type === 'blank') {
             html += '<div style="clear:both"></div>\r\n'
           } else {
-            html += `  <div style = "width:` + ele.width + `%">\r\n`
+            html += `  <div style = "width:` + ele.width + `%;float:left;">\r\n`
             if (ele.type === 'text' || ele.type === 'textarea' || ele.type === 'password') {
               html += `  <cg-input :type="'` + ele.type + `'"\r\n`
             } else if (ele.type === 'file' || ele.type === 'image') {
@@ -571,7 +571,33 @@ export default {
       Utils.mergeObject(self.detail, record, 'left')
     },
     deleteDetailLeaf: function () {
-
+      let self = this
+      if (!self.detailList.selectlist || self.detailList.selectlist.length === 0) {
+        alert('未选中记录')
+        return
+      }
+      if (!confirm('是否确认勾选的记录')) {
+        return
+      }
+      // 删除
+      axios({
+        method: 'post',
+        url: 'http://10.43.22.82:8888/pinkiepie/cangoAutoTreeLeafDetail/delete',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          entityList: self.detailList.selectlist
+        }
+      }).then(function (response) {
+        if (response && response.data && response.data.code === 200) {
+          self.freshDetailPageList(self.detailList.page, null)
+        } else {
+          alert('错误')
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
     },
     freshDetailPageList: function (page, order) {
       let self = this
