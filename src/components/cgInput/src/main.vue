@@ -158,22 +158,18 @@ export default {
   background-color: #fff;
   background-image: none;
   border-radius: 4px;
-
   box-sizing: border-box;
   color: #606266;
   display: inline-block;
   font-size: inherit;
-  line-height: 3.3rem;
+  line-height:4rem;
   outline: none;
   padding: 0 15px;
   border: 1px solid #dcdfe6;
   width: 100%;
 }
 .box-content{
-
-  height: 40px;
-  line-height: 40px;
-
+  line-height:4rem;
   transition: border-color .2s cubic-bezier(.645,.045,.355,1);
  }
 .cg-input__content:focus{
@@ -189,7 +185,10 @@ export default {
   float:left;
   padding-right:2%;
   text-align:right;
-  line-height:3.3rem;
+  line-height:4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .cg-input,.cg-textarea{
   padding-left:0;
