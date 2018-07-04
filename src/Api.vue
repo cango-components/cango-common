@@ -1671,7 +1671,7 @@ export default {
                       type: 'String',
                       default: ',',
                       detail: '分隔符'
-                    },
+                    }
                   ],
                   demo: `{
   label: "select",

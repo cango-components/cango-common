@@ -29,6 +29,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   entry: {
     app: './src/cgCommon.js'
+    // app: './src/main.js'
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
@@ -64,7 +65,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
-    /* new HtmlWebpackPlugin({
+    /*new HtmlWebpackPlugin({
       filename: config.build.index,
       template: 'index.html',
       inject: true,
@@ -77,13 +78,13 @@ const webpackConfig = merge(baseWebpackConfig, {
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
-    }), */
+    }),*/
     // keep module.id stable when vendor modules does not change
     new webpack.HashedModuleIdsPlugin(),
     // enable scope hoisting
     new webpack.optimize.ModuleConcatenationPlugin(),
     // split vendor js into its own file
-    /* new webpack.optimize.CommonsChunkPlugin({
+    /*new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks (module) {
         // any required modules inside node_modules are extracted to vendor
@@ -95,7 +96,7 @@ const webpackConfig = merge(baseWebpackConfig, {
           ) === 0
         )
       }
-    }), */
+    }),*/
     // extract webpack runtime and module manifest to its own file in order to
     // prevent vendor hash from being updated whenever app bundle is updated
     /* new webpack.optimize.CommonsChunkPlugin({
