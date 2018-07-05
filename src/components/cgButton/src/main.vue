@@ -1,7 +1,14 @@
 <template>
-  <div
+  <div v-if="stop"
     :class = 'getClassName()' class="cg-button"
-    @click= 'click()'
+    @click = 'click'
+    @click.stop = "click"
+  >
+    <slot> {{ label }} </slot>
+  </div>
+  <div v-else
+       :class = 'getClassName()' class="cg-button"
+       @click = 'click'
   >
     <slot> {{ label }} </slot>
   </div>
@@ -25,6 +32,11 @@ export default {
     'readonly': {
       type: Boolean,
       default: false
+    },
+    // 是否组织冒泡
+    'stop': {
+      type: Boolean,
+      default: true
     },
     // 点击事件
     'buttonclick': {
