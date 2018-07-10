@@ -3,14 +3,14 @@
     <div v-if="label" class="cg-input__label" >
       {{ label }}
     </div>
-    <div v-if="type==='text'" class="cg-input" :class="inputClass">
+    <div v-if="type==='text'" :class="inputClass">
       <input class="cg-input__content" :placeholder="placeholder" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" />
       <i v-if="!readonly && clearable" class="cg-base-icon cg-icon__del" @click="del"></i>
     </div>
-    <div v-if="type==='textarea'" class="cg-textarea">
+    <div v-if="type==='textarea'" :class="inputTextAreaClass">
       <textarea :cols="cols" :rows="rows" :placeholder="placeholder" class="cg-input__content" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" ></textarea>
     </div>
-    <div v-if="type==='password'" class="cg-input" :class="inputClass">
+    <div v-if="type==='password'" :class="inputClass">
       <input type="password" :placeholder="placeholder" class="cg-input__content" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" />
       <i v-if="!readonly && clearable" class="cg-base-icon cg-icon__del" @click="del"></i>
     </div>
@@ -106,8 +106,19 @@ export default {
   },
   computed: {
     inputClass () {
+      let baseClass = 'cg-input-no-label'
+      if (this.label) {
+        baseClass = 'cg-input-has-label'
+      }
       let base = 'cg-component-size__'
-      return [`${base}${this.size}`, this.clearable ? 'cg-input--clearable' : '']
+      return [`${base}${this.size}`, this.clearable ? 'cg-input--clearable' : '', baseClass, this.errorMsg !== '' ? 'cg-input--error' : '']
+    },
+    inputTextAreaClass () {
+      let baseClass = 'cg-textarea-no-label'
+      if (this.label) {
+        baseClass = 'cg-textarea-has-label'
+      }
+      return [baseClass, this.errorMsg !== '' ? 'cg-input--error' : '']
     }
   },
   methods: {
@@ -206,6 +217,10 @@ export default {
   line-height:2.5rem;
   transition: border-color .2s cubic-bezier(.645,.045,.355,1);
  }
+.cg-input--error{
+  outline: none;
+  border-color: #f70505;
+}
 .cg-input__content:focus{
   outline: none;
   border-color: #409eff;
@@ -224,10 +239,17 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.cg-input,.cg-textarea{
+.cg-input-has-label,.cg-textarea-has-label{
   padding-left:0;
   border:none;
   width:80%;
+  float:left;
+  .box-content;
+}
+.cg-input-no-label,.cg-textarea-no-label{
+  padding-left:0;
+  border:none;
+  width:100%;
   float:left;
   .box-content;
 }

@@ -1,13 +1,14 @@
 ﻿import Utils from './Utils'
+import FileConfig from './FileConfig'
 import axios from 'axios'
 var COS = require('cos-js-sdk-v5')
 export default {
   uploadFile: function (fileList, result, funcCallback, prefix, num) {
     let self = this
     // 替换成用户的 Bucket
-    let Bucket = 'image-1256119235'
+    let Bucket = FileConfig.bucket
     // TODO 这里理论上根据客户端的位置进行切换 替换成用户的 Region
-    let Region = 'ap-shanghai'
+    let Region = FileConfig.region
     if (!num) num = 1
     if (!fileList && fileList.length === 0) {
       funcCallback(result)
@@ -25,7 +26,7 @@ export default {
       getAuthorization: function (options, callback) {
         axios({
           method: 'post',
-          url: 'http://172.81.207.83:8661/scf/infc/api/getCOSAuthorization',
+          url: FileConfig.authorizationUrl,
           data: {
             method: options.Method.toLowerCase(),
             pathname: '/' + options.Key
@@ -65,7 +66,7 @@ export default {
     // 文件打包功能
     axios({
       method: 'post',
-      url: 'http://10.43.22.82:8888/pinkiepie/mFileSave/createFileGroup',
+      url: FileConfig.createFileGroupUrl,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -97,7 +98,7 @@ export default {
     let self = this
     axios({
       method: 'post',
-      url: 'http://10.43.22.82:8888/pinkiepie/mFileSave/findByGroupId',
+      url: FileConfig.findByGroupIdUrl,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -128,15 +129,15 @@ export default {
       return
     }
     // 替换成用户的 Bucket
-    var Bucket = 'image-1256119235'
+    var Bucket = FileConfig.bucket
     // TODO 这里理论上根据客户端的位置进行切换 替换成用户的 Region
-    var Region = 'ap-shanghai'
+    var Region = FileConfig.region
     // 初始化实例
     var cos = new COS({
       getAuthorization: function (options, callback) {
         axios({
           method: 'post',
-          url: 'http://172.81.207.83:8661/scf/infc/api/getCOSAuthorization',
+          url: FileConfig.authorizationUrl,
           data: {
             method: 'get',
             pathname: '/' + options.Key
