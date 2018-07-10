@@ -1,10 +1,12 @@
 /**
  * Created by ligd on 2018/7/10.
  */
-import Vue from 'vue'
 import layer from 'vue-layer'
 export default {
-  cgLayer: layer(Vue, {msgtime: 1}),
+  cgLayer: null,
+  setVue: function (v) {
+    this.cgLayer = layer(v)
+  },
   alert: function (content, options, yes) {
     return this.cgLayer.alert(content, options, yes)
   },
@@ -17,16 +19,16 @@ export default {
   tips: function (content, follow, options) {
     return this.cgLayer.tips(content, follow, options)
   },
-  iframe: function (content, area, title) {
-    return this.cgLayer.iframe({content: content, area: area, title: title})
+  iframe: function (options) {
+    return this.cgLayer.iframe(options)
   },
   open: function (options) {
-    return layer.open(options)
+    return this.cgLayer.open(options)
   },
   close: function (id) {
-    return layer.close(id)
+    return this.cgLayer.close(id)
   },
   closeAll: function (type) {
-    return layer.closeAll(type)
+    return this.cgLayer.closeAll(type)
   }
 }
