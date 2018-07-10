@@ -5,12 +5,12 @@
       <div
         v-if='label'
         class = 'cg-select__label'
-        :class = 'getContentClass'>
+        :class = 'titlestyle === 0 ? "cg-select__label_transverse" : "cg-select__label_vertical"''>
         {{ label }}
       </div>
 
       <div
-         :class="(titlestyle==0 && label) ? 'cg-select__box_transverse' : 'cg-select__box_vertical'"
+         :class="getContentClass"
         @click="showHide()" >
         <div :id="elementId"
           class = 'cg-select__value'
@@ -22,7 +22,7 @@
 
       <div class='clear'></div>
         <div v-if='showSelectDiv && showSelect'
-             :class='getContentClass'
+             :class='(titlestyle === 0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"'
              class = 'cg-select__pop'>
           <div v-if='filter' class = 'cg-select__select_pop_filter'>
             <input type = 'text' v-model='filterText' v-bind:placeholder = 'filterPlaceholder' >
@@ -166,9 +166,9 @@ export default {
   },
   computed: {
     getContentClass () {
-      let className = 'cg-select__pop_vertical'
+      let className = 'cg-select__box_vertical'
       if (this.titlestyle === 0 && this.label) {
-        className = 'cg-select__pop_transverse'
+        className = 'cg-select__box_transverse'
       }
       let errorClassName = ''
       if (this.errorMsg !== '') {

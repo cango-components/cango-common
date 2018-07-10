@@ -246,6 +246,7 @@ export default {
   float:left;
   padding-right:2%;
   text-align:right;
+  font-size:1.4rem;
   line-height:2.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
