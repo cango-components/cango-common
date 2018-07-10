@@ -1,7 +1,6 @@
 <template>
   <div v-if="stop"
     :class = 'getClassName()' class="cg-button"
-    @click = 'click'
     @click.stop = "click"
   >
     <slot> {{ label }} </slot>
@@ -43,12 +42,22 @@ export default {
       type: Function
     }
   },
+  data: function () {
+    return {
+      lastClickTime: 0
+    }
+  },
   computed: {
   },
   methods: {
     click: function () {
       if (!this.readonly && this.buttonclick) {
-        this.buttonclick()
+        let now = new Date().getTime()
+        // 半秒内连续点击只生效一次
+        if (now > this.lastClickTime + 500) {
+          this.lastClickTime = now
+          this.buttonclick()
+        }
       }
     },
     getClassName: function () {
@@ -82,7 +91,7 @@ export default {
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
-    padding: 12px 20px;
+    padding: 6px 12px;
     font-size: 14px;
     border-radius: 4px;
   }

@@ -136,7 +136,7 @@ export default {
     inpHandle: function (e) {
       this.putValue()
     },
-    // TODO 校验方法
+    // 校验方法
     valid: function () {
       if (this.required) {
         if (this.inpVal === '') {
@@ -145,7 +145,41 @@ export default {
           return this.errorMsg
         }
       }
-      // TODO 其他数据校验
+      if (this.validparam) {
+        let defaultMsg = this.validparam.errorMsg ? this.validparam.errorMsg : ''
+        if (this.validparam.min) {
+          if (this.value < this.validparam.min) {
+            this.errorMsg = defaultMsg ? defaultMsg : '数值不能小于' + this.validparam.min
+            return this.errorMsg
+          }
+        }
+        if (this.validparam.max) {
+          if (this.value > this.validparam.max) {
+            this.errorMsg = defaultMsg ? defaultMsg : '数值不能大于' + this.validparam.max
+            return this.errorMsg
+          }
+        }
+        if (this.validparam.minlength) {
+          if (this.value.length < this.validparam.minlength) {
+            this.errorMsg = defaultMsg ? defaultMsg : '最小长度为' + this.validparam.minlength
+            return this.errorMsg
+          }
+        }
+        if (this.validparam.maxlength) {
+          if (this.value.length > this.validparam.maxlength) {
+            this.errorMsg = defaultMsg ? defaultMsg : '最大长度为' + this.validparam.maxlength
+            return this.errorMsg
+          }
+        }
+        if (this.validparam.validFunc) {
+          this.errorMsg = this.validParam.validFunc(this.value)
+          if (this.errorMsg) {
+            return this.errorMsg
+          }
+        }
+      } else {
+        this.errorMsg = ''
+      }
       return this.errorMsg
     }
   }
@@ -162,14 +196,14 @@ export default {
   color: #606266;
   display: inline-block;
   font-size: inherit;
-  line-height:4rem;
+  line-height:2.5rem;
   outline: none;
   padding: 0 15px;
   border: 1px solid #dcdfe6;
   width: 100%;
 }
 .box-content{
-  line-height:4rem;
+  line-height:2.5rem;
   transition: border-color .2s cubic-bezier(.645,.045,.355,1);
  }
 .cg-input__content:focus{
@@ -185,7 +219,7 @@ export default {
   float:left;
   padding-right:2%;
   text-align:right;
-  line-height:4rem;
+  line-height:2.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

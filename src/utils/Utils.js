@@ -210,7 +210,6 @@ export default {
                 }
               }
             } else {
-              to[key] = {}
               this.mergeObject(to[key], from[key], mergeType)
             }
           } else {
