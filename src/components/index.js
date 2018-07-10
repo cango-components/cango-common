@@ -19,8 +19,10 @@ import NumberUtils from '../utils/NumberUtils'
 import StrUtils from '../utils/StrUtils'
 import Utils from '../utils/Utils'
 import FileUtils from '../utils/FileUtils'
+import Layer from '../utils/Layer'
 
 const Cg = {
+  Layer,
   Utils,
   FileUtils,
   StrUtils,
