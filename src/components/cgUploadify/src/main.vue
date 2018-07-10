@@ -3,7 +3,7 @@
     <div v-if='label' class = 'cg-uploadify__label' >
       {{ label }}
     </div>
-    <div class="cg-uploadify__content">
+    <div :class="getContentClass">
       <div v-show="fileList.length==0" class = 'cg-uploadify__upload' @click='openFile()' >
         <input :id="uniqueId" v-if='filenum == 1 && !lock' type = 'file' @change='onUpload' />
         <input :id="uniqueId" v-else-if='!lock' type = 'file' @change='onUpload' multiple='multiple' :size='filenum' />
@@ -143,19 +143,26 @@ export default {
     }
   },
   computed: {
+    getContentClass () {
+      let className = 'cg-uploadify__content'
+      let errorClassName = ''
+      if (this.errorMsg !== '') {
+        errorClassName = 'cg-uploadify__error'
+      }
+      return [className, errorClassName]
+    }
   },
   methods: {
+    blur: function () {
+      this.valid()
+    },
     getStyle: function (file) {
-      console.log('-------------------getStyle')
       if (!file['angle']) file['angle'] = 0
-      console.log({transform: file['angle']})
       return {transform: 'rotate(' + file['angle'] + 'deg)'}
     },
     left: function (file) {
       if (!file['angle']) file['angle'] = 0
       file['angle'] = (file['angle'] + 270) % 360
-      console.log('-------------------left')
-      console.log(file['angle'])
     },
     right: function (file) {
       file['angle'] = (file['angle'] + 90) % 360
@@ -199,10 +206,6 @@ export default {
           } else {
             self.showFile = this.defaultimage
           }
-          console.log('-----------------------------')
-          console.log(self.fileList)
-          console.log(self.showFile)
-          console.log('-----------------------------')
         })
       } else {
         self.fileList = []
@@ -329,4 +332,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.cg-uploadify__error{
+  outline: none;
+  border-radius: 4px;
+  border: solid 1px !important;
+  border-color: #f70505 !important;
+}
 </style>

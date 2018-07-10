@@ -3,15 +3,15 @@
     <div v-if="label" class="cg-input__label" >
       {{ label }}
     </div>
-    <div v-if="type==='text'" :class="inputClass">
-      <input class="cg-input__content" :placeholder="placeholder" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" />
+    <div v-if="type==='text'" :class="inputClass" >
+      <input @blur="blur" class="cg-input__content" :placeholder="placeholder" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" />
       <i v-if="!readonly && clearable" class="cg-base-icon cg-icon__del" @click="del"></i>
     </div>
-    <div v-if="type==='textarea'" :class="inputTextAreaClass">
-      <textarea :cols="cols" :rows="rows" :placeholder="placeholder" class="cg-input__content" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" ></textarea>
+    <div v-if="type==='textarea'" :class="inputTextAreaClass" >
+      <textarea @blur="blur" :cols="cols" :rows="rows" :placeholder="placeholder" class="cg-input__content" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" ></textarea>
     </div>
-    <div v-if="type==='password'" :class="inputClass">
-      <input type="password" :placeholder="placeholder" class="cg-input__content" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" />
+    <div v-if="type==='password'" :class="inputClass" >
+      <input @blur="blur" type="password" :placeholder="placeholder" class="cg-input__content" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" />
       <i v-if="!readonly && clearable" class="cg-base-icon cg-icon__del" @click="del"></i>
     </div>
     <div class="clear"></div>
@@ -106,22 +106,33 @@ export default {
   },
   computed: {
     inputClass () {
+      let errorClass = ''
+      if (this.errorMsg) {
+        errorClass = 'cg-input--error'
+      }
       let baseClass = 'cg-input-no-label'
       if (this.label) {
         baseClass = 'cg-input-has-label'
       }
       let base = 'cg-component-size__'
-      return [`${base}${this.size}`, this.clearable ? 'cg-input--clearable' : '', baseClass, this.errorMsg !== '' ? 'cg-input--error' : '']
+      return [`${base}${this.size}`, this.clearable ? 'cg-input--clearable' : '', baseClass, errorClass]
     },
     inputTextAreaClass () {
+      let errorClass = ''
+      if (this.errorMsg) {
+        errorClass = 'cg-input--error'
+      }
       let baseClass = 'cg-textarea-no-label'
       if (this.label) {
         baseClass = 'cg-textarea-has-label'
       }
-      return [baseClass, this.errorMsg !== '' ? 'cg-input--error' : '']
+      return [baseClass, errorClass]
     }
   },
   methods: {
+    blur: function () {
+      this.valid()
+    },
     refreshValue: function () {
       if (this.value === undefined || this.value === null) {
         this.inpVal = ''
@@ -149,34 +160,35 @@ export default {
     },
     // 校验方法
     valid: function () {
+      this.errorMsg = ''
       if (this.required) {
         if (this.inpVal === '') {
-          // TODO 错误信息，后续考虑规范报错方式
+          // 错误信息，后续考虑规范报错方式
           this.errorMsg = '不能为空'
           return this.errorMsg
         }
       }
       if (this.validparam) {
         let defaultMsg = this.validparam.errorMsg ? this.validparam.errorMsg : ''
-        if (this.validparam.min) {
+        if (this.validparam.min !== undefined && this.validparam.min !== null) {
           if (this.value < this.validparam.min) {
             this.errorMsg = defaultMsg ? defaultMsg : '数值不能小于' + this.validparam.min
             return this.errorMsg
           }
         }
-        if (this.validparam.max) {
+        if (this.validparam.max !== undefined && this.validparam.max !== null) {
           if (this.value > this.validparam.max) {
             this.errorMsg = defaultMsg ? defaultMsg : '数值不能大于' + this.validparam.max
             return this.errorMsg
           }
         }
-        if (this.validparam.minlength) {
+        if (this.validparam.minlength !== undefined && this.validparam.minlength !== null) {
           if (this.value.length < this.validparam.minlength) {
             this.errorMsg = defaultMsg ? defaultMsg : '最小长度为' + this.validparam.minlength
             return this.errorMsg
           }
         }
-        if (this.validparam.maxlength) {
+        if (this.validparam.maxlength !== undefined && this.validparam.maxlength !== null) {
           if (this.value.length > this.validparam.maxlength) {
             this.errorMsg = defaultMsg ? defaultMsg : '最大长度为' + this.validparam.maxlength
             return this.errorMsg
@@ -188,8 +200,6 @@ export default {
             return this.errorMsg
           }
         }
-      } else {
-        this.errorMsg = ''
       }
       return this.errorMsg
     }
@@ -219,7 +229,9 @@ export default {
  }
 .cg-input--error{
   outline: none;
-  border-color: #f70505;
+  border-radius: 4px;
+  border: solid 1px !important;
+  border-color: #f70505 !important;
 }
 .cg-input__content:focus{
   outline: none;

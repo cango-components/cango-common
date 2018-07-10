@@ -1,6 +1,6 @@
 <template>
   <div class = 'cg-checkbox__main'
-    :class='getClass()'
+    :class='getClass' @blur="blur"
   >
     <div v-if='label'
          :class='titlestyle==0 ? "cg-checkbox__label_transverse": "cg-checkbox__label_vertical"'
@@ -10,7 +10,7 @@
     </div>
     <div
       class = 'cg-checkbox__content_main'
-      :class='(titlestyle==0 && label) ? "cg-checkbox__content_main_transverse" : "cg-checkbox__content_main_vertical"'>
+      :class='getContentClass'>
       <div :class='showstyle==0 ? "cg-checkbox__content_checkbox_transverse" : "cg-checkbox__content_checkbox_vertical"'>
         <div v-for='(item, index) in list'
              :key='"list" + index'
@@ -109,18 +109,28 @@ export default {
     }
   },
   computed: {
-  },
-  methods: {
-    getClass: function () {
+    getClass () {
       let className = ''
-      if (this.errorMsg !== '') {
-        className += ' cg-checkbox__error'
-      }
       if (this.readonly) {
         className += ' cg-checkbox__readonly'
       }
-      console.log(className)
       return className
+    },
+    getContentClass () {
+      let className = 'cg-checkbox__content_main_vertical'
+      if (this.titlestyle === 0 && this.label) {
+        className = 'cg-checkbox__content_main_transverse'
+      }
+      let errorClassName = ''
+      if (this.errorMsg !== '') {
+        errorClassName = 'cg-checkbox__error'
+      }
+      return [className, errorClassName]
+    }
+  },
+  methods: {
+    blur: function () {
+      this.valid()
     },
     valid: function () {
       if (this.required) {
@@ -235,5 +245,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.cg-checkbox__error{
+  outline: none;
+  border-radius: 4px;
+  border: solid 1px !important;
+  border-color: #f70505 !important;
+}
 </style>

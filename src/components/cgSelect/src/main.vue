@@ -5,7 +5,7 @@
       <div
         v-if='label'
         class = 'cg-select__label'
-        :class = 'titlestyle == 0 ? "cg-select__label_transverse" : "cg-select__label_vertical"'>
+        :class = 'getContentClass'>
         {{ label }}
       </div>
 
@@ -22,7 +22,7 @@
 
       <div class='clear'></div>
         <div v-if='showSelectDiv && showSelect'
-             :class='(titlestyle==0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"'
+             :class='getContentClass'
              class = 'cg-select__pop'>
           <div v-if='filter' class = 'cg-select__select_pop_filter'>
             <input type = 'text' v-model='filterText' v-bind:placeholder = 'filterPlaceholder' >
@@ -165,6 +165,17 @@ export default {
     }
   },
   computed: {
+    getContentClass () {
+      let className = 'cg-select__pop_vertical'
+      if (this.titlestyle === 0 && this.label) {
+        className = 'cg-select__pop_transverse'
+      }
+      let errorClassName = ''
+      if (this.errorMsg !== '') {
+        errorClassName = 'cg-select__error'
+      }
+      return [className, errorClassName]
+    },
     getList: function () {
       let dataList = []
       if (this.list) {
@@ -224,12 +235,12 @@ export default {
     }
   },
   methods: {
+    blur: function () {
+      this.valid()
+    },
     getClass: function () {
       let className = ''
       this.isPhone = false
-      if (this.errorMsg !== '') {
-        className += ' cg-select__error'
-      }
       if (this.readonly) {
         className += ' cg-select__readonly'
       }
@@ -364,4 +375,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.cg-select__error{
+  outline: none;
+  border-radius: 4px;
+  border: solid 1px !important;
+  border-color: #f70505 !important;
+}
 </style>
