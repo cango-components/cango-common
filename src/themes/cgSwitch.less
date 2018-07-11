@@ -17,11 +17,12 @@
   .cg-base-box;
   .cg-base-circle;
   display: inline-block;
-  height: @base-switch-height;
-  width: @base-switch-width;
+  height:2.5rem;
+  width:6rem;
   background-color: @bg-main-color;
   transition: 0.3s;
-  box-sizing: content-box;
+  box-sizing: border-box;
+  padding:0;
   cursor: pointer;
   & > .cg-switch__btn {
     .cg-base-circle;
@@ -33,8 +34,8 @@
   }
   &.selected {
     @padding-left: @base-switch-width - @base-switch-height;
-    padding-left: @padding-left;
-    width: @base-switch-width - @padding-left;
+    width:6rem;
+    padding-left: 3.5rem;
     & > .cg-switch__btn {
       background-color: @main-color;
     }
