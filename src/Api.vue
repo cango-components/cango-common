@@ -1536,9 +1536,9 @@ export default {
                   ],
                   demo: `{
   label: "checkbox",
-  readOnly: true,
+  readOnly: false,
   titleStyle : 0,
-  showStyle : 0,
+  showStyle : 1,
   list: [
     {"id":"id1", "name":"名称1"},
     {"id":"id2", "name":"名称2"}

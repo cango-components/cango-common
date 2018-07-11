@@ -29,7 +29,7 @@
       </td>
     </tr>
     </tbody>
-    <tr class = 'cg-pageList__page' v-if="pageNum>1">
+    <tr class = 'cg-pageList__page'>
       <td :colspan="showcheckbox ? titleconfig.length+1 : titleconfig.length ">
         <div class="pages">
           <div class="prev no-cursor">上一页</div>
@@ -43,12 +43,14 @@
             <input type="text" placeholder="输入页码"/>
             <button class="goto-page">跳</button>
           </div>
-        &nbsp;&nbsp;第{{ this.page.pageNo }}页 / 共{{ this.page.totalNum }}条
+          一共 {{ this.page.totalNum }} 条记录,
+          当前 {{ this.page.pageNo }} 页
         </div>
       </td>
     </tr>
   </table>
 </template>
+
 <script>
   import Utils from '../../../utils/Utils.js'
   export default {
@@ -58,9 +60,9 @@
       'page': {
         default: function () {
           return {
-            pageSize: 1,
+            pageSize: 20,
             pageNo: 1,
-            totalNum: 0,
+            totalNum: 0
           }
         }
       },
@@ -110,14 +112,6 @@
           orderBy: this.initorder.orderBy
         },
         checkallValue: false
-      }
-    },
-    mounted(){
-      let pageNum = parseInt(this.page.totalNum/this.page.pageNo);
-      if(this.page.totalNum % this.page.pageNo){
-        this.pageNum = pageNum +1;
-      }else{
-        this.pageNum = pageNum;
       }
     },
     computed: {
@@ -226,52 +220,45 @@
     align-items: center;
     justify-content:center;
     margin: 2rem auto;
-    span,input,.goto-page{
-      display: inline-block;
-      vertical-align: middle;
-      width:2.9rem;
-      text-align: center;
-      height: 2.7rem;
-      line-height: 2.7rem;
-      overflow: hidden;
-      padding:0;
-      margin: 0 0.4rem;
-      border: 0.06rem solid #ddd;
-      font-size: 1.2rem;
-      border-radius: 0.3rem;
-      cursor: pointer;
-      color:#333;
-    }
-    .next,.prev{
-      padding: 0.6rem 1.3rem;
-      line-height: 1.5rem;
-      margin: 0 0.4rem;
-      border: 0.06rem solid #ddd;
-      font-size: 1.2rem;
-      display: flex;
-      display: -webkit-flex; /* Safari */
-      flex-direction: column;
-      border-radius: 0.3rem;
-      cursor: pointer;
-      &.no-cursor{
-        color: #ccc;
-        border: 0.06rem solid #eee;
-        cursor: default;
-      }
-    }
-
-    input{
-      width: 6rem;
+  }
+  .next,.prev{
+    padding: 0.6rem 1.3rem;
+    line-height: 1.5rem;
+    margin: 0 0.4rem;
+    border: 0.06rem solid #ddd;
+    font-size: 1.2rem;
+    display: flex;
+    display: -webkit-flex; /* Safari */
+    flex-direction: column;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    &.no-cursor{
+      color: #ccc;
+      border: 0.06rem solid #eee;
       cursor: default;
     }
-    span:hover{
-      color:#39a0ff;
-    }
-    span.current,.goto-page{
-      background:#39a0ff;
-      border: 0.06rem solid #39a0ff;
-      color: #fff;
-    }
   }
-
+  span,input,.goto-page{
+    display: inline-block;
+    vertical-align: middle;
+    width:2.9rem;
+    text-align: center;
+    height: 2.7rem;
+    line-height: 2.7rem;
+    overflow: hidden;
+    margin: 0 0.4rem;
+    border: 0.06rem solid #ddd;
+    font-size: 1.2rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+  }
+  input{
+    width: 6rem;
+    cursor: default;
+  }
+  span&.current,.goto-page{
+    background:#39a0ff;
+    border: 0.06rem solid #39a0ff;
+    color: #fff;
+  }
 </style>

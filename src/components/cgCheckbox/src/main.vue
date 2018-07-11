@@ -17,6 +17,7 @@
              @click='putValue(item)'
              :class='isChecked(item) ? "cg-checkbox__checked" : ""'
              class = 'cg-checkbox__content'>
+          <span></span>
           <slot v-bind:option='item'>
             {{ showRecordName(item) }}
           </slot>
@@ -92,12 +93,12 @@ export default {
     // 标题和内容展示方式(0:横向展示;1:竖向展示)
     'titlestyle': {
       type: Number,
-      default: 0
+      default: 1
     },
     // 选项展示方式(0:横向展示;1:竖向展示)
     'showstyle': {
       type: Number,
-      default: 0
+      default: 1
     }
   },
   created: function () {
