@@ -4,14 +4,14 @@
       {{ label }}
     </div>
     <div v-if="type==='text'" :class="inputClass" >
-      <input @blur="blur" class="cg-input__content" :placeholder="placeholder" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" />
+      <input @blur="blur" class="cg-input__content" :class="inputErrorClass" :placeholder="placeholder" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" />
       <i v-if="!readonly && clearable" class="cg-base-icon cg-icon__del" @click="del"></i>
     </div>
     <div v-if="type==='textarea'" :class="inputTextAreaClass" >
-      <textarea @blur="blur" :cols="cols" :rows="rows" :placeholder="placeholder" class="cg-input__content" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" ></textarea>
+      <textarea @blur="blur" :cols="cols" :rows="rows" :class="inputErrorClass" :placeholder="placeholder" class="cg-input__content" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" ></textarea>
     </div>
     <div v-if="type==='password'" :class="inputClass" >
-      <input @blur="blur" type="password" :placeholder="placeholder" class="cg-input__content" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" />
+      <input @blur="blur" type="password" :class="inputErrorClass" :placeholder="placeholder" class="cg-input__content" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" />
       <i v-if="!readonly && clearable" class="cg-base-icon cg-icon__del" @click="del"></i>
     </div>
     <div class="clear"></div>
@@ -105,28 +105,27 @@ export default {
     }
   },
   computed: {
-    inputClass () {
+    inputErrorClass () {
       let errorClass = ''
       if (this.errorMsg) {
         errorClass = 'cg-input--error'
       }
+      return [errorClass]
+    },
+    inputClass () {
       let baseClass = 'cg-input-no-label'
       if (this.label) {
         baseClass = 'cg-input-has-label'
       }
       let base = 'cg-component-size__'
-      return [`${base}${this.size}`, this.clearable ? 'cg-input--clearable' : '', baseClass, errorClass]
+      return [`${base}${this.size}`, this.clearable ? 'cg-input--clearable' : '', baseClass]
     },
     inputTextAreaClass () {
-      let errorClass = ''
-      if (this.errorMsg) {
-        errorClass = 'cg-input--error'
-      }
       let baseClass = 'cg-textarea-no-label'
       if (this.label) {
         baseClass = 'cg-textarea-has-label'
       }
-      return [baseClass, errorClass]
+      return [baseClass]
     }
   },
   methods: {
