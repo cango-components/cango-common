@@ -1,5 +1,5 @@
 <template>
-  <table class = 'cg-pageList__base' >
+  <table class = 'cg-pageList__base' cellpadding="0" cellspacing="0">
     <tr class = 'cg-pageList__title' >
       <th v-if='showcheckbox' class = 'cg-pageList__label cg-pageList__label_checkall' >
         <input type="checkbox" v-model="checkallValue" @change="checkall()" >

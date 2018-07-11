@@ -1,5 +1,5 @@
 <template>
-  <table class = 'cg-scollList__base' >
+  <table class = 'cg-scollList__base'  cellpadding="0" cellspacing="0">
     <tr class = 'cg-scollList__title' >
       <th v-for='(title, thIndex) in titleconfig' :key='"thTitle"+thIndex'  class = 'cg-scollList__label'>
         {{ title.label }}
