@@ -223,7 +223,7 @@ export default {
   box-sizing: border-box;
   color: #606266;
   display: inline-block;
-  font-size: inherit;
+  font-size:1.2rem;
   line-height:@lineHeight;
   outline: none;
   padding: 0 15px;
@@ -253,7 +253,7 @@ export default {
   float:left;
   padding-right:2%;
   text-align:right;
-  font-size:1.4rem;
+  font-size:1.2rem;
   line-height:@lineHeight;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -258,7 +258,7 @@ export default {
     display: -webkit-flex; /* Safari */
     align-items: center;
     justify-content:center;
-    margin: 2rem auto;
+    margin: 0.5rem auto;
     span,input,.goto-page{
       display: inline-block;
       vertical-align: middle;
@@ -301,9 +301,9 @@ export default {
       color:#39a0ff;
     }
     span.current,.goto-page{
-      background:#39a0ff;
-      border: 0.06rem solid #39a0ff;
-      color: #fff;
+      color: #409eff;
+      background: #ecf5ff;
+      border: 0.06rem solid #b3d8ff;
     }
   }
 
