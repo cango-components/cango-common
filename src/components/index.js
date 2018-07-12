@@ -19,9 +19,11 @@ import NumberUtils from '../utils/NumberUtils'
 import StrUtils from '../utils/StrUtils'
 import Utils from '../utils/Utils'
 import FileUtils from '../utils/FileUtils'
+import FileConfig from '../utils/FileConfig'
 import Layer from '../utils/Layer'
 
 const Cg = {
+  FileConfig,
   Layer,
   Utils,
   FileUtils,
@@ -30,7 +32,6 @@ const Cg = {
   NumberUtils,
   BrowseUtils,
   install (Vue) {
-    console.log(config)
     Vue.use(CgInput)
     Vue.use(CgSwitch)
     Vue.use(CgDatePicker)

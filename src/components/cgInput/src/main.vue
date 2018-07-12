@@ -80,6 +80,7 @@ export default {
           max: null,
           minlength: null,
           maxlength: null,
+          reg: null,
           validFunc: null,
           errorMsg: ''
         }
@@ -170,26 +171,32 @@ export default {
       if (this.validparam) {
         let defaultMsg = this.validparam.errorMsg ? this.validparam.errorMsg : ''
         if (this.validparam.min !== undefined && this.validparam.min !== null) {
-          if (this.value < this.validparam.min) {
+          if (this.value === null || this.value < this.validparam.min) {
             this.errorMsg = defaultMsg ? defaultMsg : '数值不能小于' + this.validparam.min
             return this.errorMsg
           }
         }
         if (this.validparam.max !== undefined && this.validparam.max !== null) {
-          if (this.value > this.validparam.max) {
+          if (this.value !== null && this.value > this.validparam.max) {
             this.errorMsg = defaultMsg ? defaultMsg : '数值不能大于' + this.validparam.max
             return this.errorMsg
           }
         }
         if (this.validparam.minlength !== undefined && this.validparam.minlength !== null) {
-          if (this.value.length < this.validparam.minlength) {
+          if (this.value === null || this.value.length < this.validparam.minlength) {
             this.errorMsg = defaultMsg ? defaultMsg : '最小长度为' + this.validparam.minlength
             return this.errorMsg
           }
         }
         if (this.validparam.maxlength !== undefined && this.validparam.maxlength !== null) {
-          if (this.value.length > this.validparam.maxlength) {
+          if (this.value !== null && this.value.length > this.validparam.maxlength) {
             this.errorMsg = defaultMsg ? defaultMsg : '最大长度为' + this.validparam.maxlength
+            return this.errorMsg
+          }
+        }
+        if (this.validparam.reg !== undefined && this.validparam.reg !== null) {
+          if (this.value !== null && !this.validparam.reg.test(this.value)) {
+            this.errorMsg = defaultMsg ? defaultMsg : '格式不正确'
             return this.errorMsg
           }
         }
