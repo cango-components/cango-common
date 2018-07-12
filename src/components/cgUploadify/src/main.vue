@@ -55,7 +55,7 @@ export default {
     // 标题
     'label': {
       type: String,
-      default: '2342'
+      default: ''
     },
     // 展示类型(file文件类型，image图片类型)
     'type': {
