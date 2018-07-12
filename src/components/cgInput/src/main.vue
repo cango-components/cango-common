@@ -208,6 +208,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  @import "../../../themes/base/base.less";
 .cg-input__content {
   -webkit-appearance: none;
   background-color: #fff;
@@ -217,14 +218,14 @@ export default {
   color: #606266;
   display: inline-block;
   font-size: inherit;
-  line-height:2.5rem;
+  line-height:@lineHeight;
   outline: none;
   padding: 0 15px;
   border: 1px solid #dcdfe6;
   width: 100%;
 }
 .box-content{
-  line-height:2.5rem;
+  line-height:@lineHeight;
   transition: border-color .2s cubic-bezier(.645,.045,.355,1);
  }
 .cg-input--error{
@@ -247,7 +248,7 @@ export default {
   padding-right:2%;
   text-align:right;
   font-size:1.4rem;
-  line-height:2.5rem;
+  line-height:@lineHeight;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

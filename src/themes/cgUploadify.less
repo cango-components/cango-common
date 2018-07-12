@@ -1,4 +1,4 @@
-
+@import './base/base.less';
 .cango-uploadify__file_icon_next:before {
   content: "\e8b3";
 }
@@ -29,14 +29,14 @@
 
 
 .cg-uploadify__content{
-  width:80%;
+  width:@rightWidth;
   float:left;
   height:15rem;
   position:relative;
 }
 .cg-uploadify__label{
-  width:20%;
-  line-height:15rem;
+  width:@leftWidth;
+  line-height:@lineHeight;
   float:left;
   text-align:right;
   padding-right:2%;

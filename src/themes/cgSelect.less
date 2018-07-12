@@ -23,8 +23,8 @@
 }
 .cg-select__label{
   font-size: 1.4rem;
-  height:2.5rem;
-  line-height:2.5rem;
+  height:@lineHeight;
+  line-height:@lineHeight;
   padding-left:1rem;
   overflow: hidden;
   text-overflow:ellipsis;
@@ -42,7 +42,7 @@
   color: #606266;
   display: inline-block;
   font-size: inherit;
-  line-height: 2.5rem;
+  line-height: @lineHeight;
   outline: none;
   padding: 0 1.5rem;
   transition: border-color .2s cubic-bezier(.645,.045,.355,1);
@@ -54,7 +54,7 @@
   border-color: #409eff;
 }
 .cg-select__label_transverse{
-  width:20%;
+  width:@leftWidth;
   text-align:right;
   float: left;
   padding-right:1.2rem;
@@ -69,7 +69,7 @@
   clear:both;
 }
 .cg-select__box_transverse{
-  width:80%;
+  width:@rightWidth;
   float: left;
 }
 .cg-select__value i{
@@ -95,9 +95,9 @@
   cursor: pointer;
 }
 .cg-select__base .cg-select__pop_transverse{
-  width:80%;
+  width:@rightWidth;
   position:absolute;
-  left:20%;
+  left:@leftWidth;
 }
 .cg-select__base .cg-select__pop_vertical{
   width:100%;
@@ -148,8 +148,6 @@
 .cg-select__pop{
   list-style: none;
   padding: 0.6rem 0;
-  margin: 0;
-  box-sizing: border-box;
   border: 0.1rem solid #e4e7ed;
   border-radius: 0.4rem;
   background-color: #fff;
@@ -169,8 +167,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   color: #606266;
-  height: 2.4rem;
-  line-height: 2.4rem;
+  height: @lineHeight;
+  line-height: @lineHeight;
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -185,8 +183,8 @@
 .cg-select__select_pop_filter input{
   width: 100%;
   padding-left:1rem;
-  height: 3.5rem;
-  line-height: 3.5rem;
+  height: @lineHeight;
+  line-height: @lineHeight;
   font-size: 1.4rem;
   border: none;
   border: 0.05rem solid #f1f2f3;

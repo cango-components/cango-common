@@ -3,14 +3,14 @@
 @base-switch-height: @current - 2*@base-switch-border-width;
 @base-switch-width: 2*@base-switch-height;
 .cg-switch__label{
-  width:20%;
+  width:@leftWidth;
   float:left;
   padding-right:2%;
   text-align:right;
-  line-height:24px;
+  line-height:2.5rem;
 }
 .cg-switch {
-  width:80%;
+  width:@rightWidth;
   float:left;
   .cg-base__box;
   .cg-base__border(@line-main-color, @base-switch-border-width);

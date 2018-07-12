@@ -72,6 +72,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  @import "../../../themes/base/base.less";
   .cg-button{
     display: inline-block;
     line-height: 1;
@@ -91,8 +92,9 @@ export default {
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
-    padding: 6px 12px;
-    font-size: 14px;
+    padding:0 2rem;
+    font-size: 1.2rem;
+    line-height: @lineHeight;
     border-radius: 4px;
   }
   .cg-button__default{}
