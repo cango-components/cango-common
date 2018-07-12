@@ -5,7 +5,7 @@
       <div
         v-if='label'
         class = 'cg-select__label'
-        :class = 'titlestyle === 0 ? "cg-select__label_transverse" : "cg-select__label_vertical"''>
+        :class = 'titlestyle === 0 ? "cg-select__label_transverse" : "cg-select__label_vertical"'>
         {{ label }}
       </div>
 
@@ -169,6 +169,13 @@ export default {
       let className = 'cg-select__box_vertical'
       if (this.titlestyle === 0 && this.label) {
         className = 'cg-select__box_transverse'
+      }
+      return [className]
+    },
+    getContentClass2 () {
+      let className = ''
+      if (this.showSelectDiv) {
+        className = 'cg-select__value_active'
       }
       let errorClassName = ''
       if (this.errorMsg !== '') {

@@ -61,11 +61,11 @@ export default {
       }
     },
     getClassName: function () {
-      let clsName = this.classname
+      let clsName = ''
       if (this.readonly) {
-        clsName += ' ' + 'cango-button__readOnly'
+        clsName = 'cango-button__readOnly'
       }
-      return clsName
+      return [this.classname, clsName]
     }
   }
 }
