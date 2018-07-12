@@ -29,21 +29,53 @@
       </td>
     </tr>
     </tbody>
-    <tr class = 'cg-pageList__page' v-if="pageNum>1">
+    <tr class = 'cg-pageList__page' v-if="page">
       <td :colspan="showcheckbox ? titleconfig.length+1 : titleconfig.length ">
-        <div class="pages">
-          <div class="prev no-cursor">上一页</div>
+        <div v-if="page" class="pages">
+          <div v-if="page.pageNo > 1" @click='toPage(page.pageNo - 1)' class="prev no-cursor">上一页</div>
           <div class="page">
-            <span class="current">2</span>
-            <span>3</span>
-            <span>4</span>
+            <template v-if="page.pageNo === 1" >
+              <span @click='toPage(1)' class="current">1</span>
+            </template>
+            <template v-if="page.pageNo === 2" >
+              <span @click='toPage(1)'>1</span>
+              <span @click='toPage(2)' class="current">2</span>
+            </template>
+            <template v-if="page.pageNo === 3" >
+              <span @click='toPage(1)'>1</span>
+              <span @click='toPage(2)'>2</span>
+              <span @click='toPage(3)' class="current">3</span>
+            </template>
+            <template v-if="page.pageNo > 3" >
+              <span @click='toPage(page.pageNo - 3)'>...</span>
+              <span @click='toPage(page.pageNo - 2)'>{{ page.pageNo - 2 }}</span>
+              <span @click='toPage(page.pageNo - 1)'>{{ page.pageNo - 1}}</span>
+              <span @click='toPage(page.pageNo)' class="current">{{ page.pageNo }}</span>
+            </template>
+            <template v-if="(totalPageNo - page.pageNo) === 1" >
+              <span @click='toPage(totalPageNo)' >{{ totalPageNo }}</span>
+            </template>
+            <template v-if="(totalPageNo - page.pageNo) === 2" >
+              <span @click='toPage(totalPageNo - 1)' >{{ totalPageNo - 1 }}</span>
+              <span @click='toPage(totalPageNo)' >{{ totalPageNo }}</span>
+            </template>
+            <template v-if="(totalPageNo - page.pageNo) === 3" >
+              <span @click='toPage(totalPageNo - 2)' >{{ totalPageNo - 2 }}</span>
+              <span @click='toPage(totalPageNo - 1)' >{{ totalPageNo - 1 }}</span>
+              <span @click='toPage(totalPageNo)' >{{ totalPageNo }}</span>
+            </template>
+            <template v-if="(totalPageNo - page.pageNo) > 3" >
+              <span @click='toPage(page.pageNo + 1)'>{{ page.pageNo + 1}}</span>
+              <span @click='toPage(page.pageNo + 2)'>{{ page.pageNo + 2 }}</span>
+              <span @click='toPage(page.pageNo + 3)'>...</span>
+            </template>
           </div>
-          <div class="next">下一页</div>
+          <div v-if="page.pageNo < totalPageNo" @click='toPage(page.pageNo + 1)' class="next">下一页</div>
           <div class="page-go">
-            <input type="text" placeholder="输入页码"/>
-            <button class="goto-page">跳</button>
+            <input type="text" v-model="inputPageNum" placeholder="输入页码"/>
+            <button class="goto-page" @click='toPage2()'>跳</button>
           </div>
-        &nbsp;&nbsp;第{{ this.page.pageNo }}页 / 共{{ this.page.totalNum }}条
+        &nbsp;&nbsp;第{{ this.page.pageNo }}页 / 共{{ this.page.totalRow }}条记录
         </div>
       </td>
     </tr>
@@ -51,18 +83,13 @@
 </template>
 <script>
 import Utils from '../../../utils/Utils.js'
+import StrUtils from '../../../utils/StrUtils.js'
 export default {
   name: 'cg-pagelist',
   props: {
-    // 分页信息
+    // 分页信息(pageSize:每页记录数;pageNo:当前第几页;totalRow:总记录数)
     'page': {
-      default: function () {
-        return {
-          pageSize: 1,
-          pageNo: 1,
-          totalNum: 0
-        }
-      }
+      default: null
     },
     // 排序展示(keyname:排序的主键;orderBy:asc/desc顺序逆序)
     'initorder': {
@@ -109,19 +136,18 @@ export default {
         keyName: this.initorder.keyName,
         orderBy: this.initorder.orderBy
       },
-      checkallValue: false
-    }
-  },
-  mounted () {
-    let pageNum = parseInt(this.page.totalNum / this.page.pageNo)
-    if (this.page.totalNum % this.page.pageNo) {
-      this.pageNum = pageNum + 1
-    } else {
-      this.pageNum = pageNum
+      checkallValue: false,
+      inputPageNum: null
     }
   },
   computed: {
-
+    totalPageNo: function () {
+      let totalPageNo = 1
+      if (this.page && this.page.totalRow > 0) {
+        totalPageNo = Math.ceil(this.page.totalRow / this.page.pageSize)
+      }
+      return totalPageNo
+    }
   },
   methods: {
     checkall: function () {
@@ -197,6 +223,13 @@ export default {
         let page = Utils.clone(this.page)
         page.pageNo = pageNo
         this.loadfunction(page, this.order)
+      }
+    },
+    toPage2: function () {
+      if (StrUtils.isNum(this.inputPageNum)) {
+        this.toPage(parseInt(this.inputPageNum))
+      } else {
+        this.inputPageNum = null
       }
     },
     isChecked: function (record) {
