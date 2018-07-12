@@ -51,7 +51,7 @@ export default {
     }
   },
   watch: {
-    value (newValue, oldValue) {
+    tabconfig (newValue, oldValue) {
       this.resize()
     }
   }

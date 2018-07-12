@@ -15,31 +15,31 @@
         <div :id="elementId"
           class = 'cg-select__value'
           :class="showSelectDiv ? 'cg-select__value_active' : ''">
-          {{ showText }}
+          {{ showText }} &nbsp;
           <i :class="showSelectDiv ? 'cg-select__icon_down' : 'cg-select__icon_up'"></i>
         </div>
       </div>
 
       <div class='clear'></div>
-        <div v-if='showSelectDiv && showSelect'
-             :class='(titlestyle === 0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"'
-             class = 'cg-select__pop'>
-          <div v-if='filter' class = 'cg-select__select_pop_filter'>
-            <input type = 'text' v-model='filterText' v-bind:placeholder = 'filterPlaceholder' >
-          </div>
-          <div v-if='(!required && selectnum == 1)' @click='putValue(emptyItem)' class = 'cg-select__pop_content' >
-            空选项
-          </div>
-          <div v-for='(item, index) in getList' :key='index' @click='putValue(item)' v-bind:class='isSelected(item) ? "cg-select__pop_selected" : ""' class = 'cg-select__pop_content'>
-            <slot v-bind:option='item' >
-              {{ showRecordName(item) }}
-            </slot>
-          </div>
-          <div v-if='selectnum != 1' @click='closeDiv()' class = 'cg-select__select_pop_close'>
-            确定
-          </div>
+      <div v-if='showSelectDiv && showSelect'
+           :class='(titlestyle === 0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"'
+           class = 'cg-select__pop'>
+        <div v-if='filter' class = 'cg-select__select_pop_filter'>
+          <input type = 'text' v-model='filterText' v-bind:placeholder = 'filterPlaceholder' >
         </div>
-        <div v-if="showSelectDiv" class="cg-select-bg"></div>
+        <div v-if='(!required && selectnum == 1)' @click.stop='putValue(emptyItem)' class = 'cg-select__pop_content' >
+          空选项
+        </div>
+        <div v-for='(item, index) in getList' :key='index' @click.stop='putValue(item)' v-bind:class='isSelected(item) ? "cg-select__pop_selected" : ""' class = 'cg-select__pop_content'>
+          <slot v-bind:option='item' >
+            {{ showRecordName(item) }}
+          </slot>
+        </div>
+        <div v-if='selectnum != 1' @click.stop='closeDiv()' class = 'cg-select__select_pop_close'>
+          确定
+        </div>
+      </div>
+      <div v-if="showSelectDiv" class="cg-select-bg"></div>
     </div>
   </div>
 </template>

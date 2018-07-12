@@ -1,5 +1,6 @@
 ﻿import Utils from './Utils'
 import FileConfig from './FileConfig'
+import cookie from './cookie.js'
 import axios from 'axios'
 var COS = require('cos-js-sdk-v5')
 export default {
@@ -61,60 +62,63 @@ export default {
     }
     let keyList = []
     for (let i = 0; i < fileList.length; i++) {
-      keyList.push(fileList[i].filePath)
+      keyList.push({filePath: fileList[i].filePath})
+    }
+    let sessionId = cookie.readCookie('sessionId')
+    let headers = {}
+    headers['Content-Type'] = 'application/json'
+    if (sessionId) {
+      headers['sessionId'] = sessionId
     }
     // 文件打包功能
     axios({
       method: 'post',
       url: FileConfig.createFileGroupUrl,
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: headers,
       data: {
-        // TODO 用户ID
-        userId: '10000',
-        entityList: [{
-          key: keyList
-        }]
+        entity: {
+          contentUD: keyList
+        }
       }
     }).then(function (response) {
-      if (response && response.data && response.data.code === 200) {
-        if (callback && response.data.result && response.data.result[0]) {
-          callback(response.data.result[0].groupId)
-        } else {
-          // TODO 失败的操作
-          console.log(response)
-        }
+      if (response && response.data && response.data.code === 0) {
+        callback(response.data.data)
       } else {
         // TODO 失败的操作
-        console.log(response)
+        alert(response.data.msg)
       }
     }).catch(function (error) {
       // TODO 失败的操作
       console.log(error)
+      alert('操作失败')
     })
   },
   getFileList: function (fileGroupId, callback) {
     let self = this
+    let sessionId = cookie.readCookie('sessionId')
+    let headers = {}
+    headers['Content-Type'] = 'application/json'
+    if (sessionId) {
+      headers['sessionId'] = sessionId
+    }
     axios({
       method: 'post',
       url: FileConfig.findByGroupIdUrl,
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: headers,
       data: {
-        imgIds: [fileGroupId]
+        id: fileGroupId
       }
     }).then(function (response) {
-      if (response && response.data && response.data.code === 200) {
-        self.getTCloudFile(response.data.result, callback)
+      if (response && response.data && response.data.code === 0) {
+        self.getTCloudFile(response.data.data.contentUD, callback)
       } else {
         // TODO 失败的操作
-        console.log(response)
+        alert(response.data.msg)
       }
     }).catch(function (error) {
       // TODO 失败的操作
       console.log(error)
+      alert('操作失败')
     })
   },
   getTCloudFile: function (list, funcCallback, num) {
