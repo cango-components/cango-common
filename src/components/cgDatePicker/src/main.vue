@@ -1,173 +1,327 @@
 <template>
-  <div class="cg-date-picker">
-    <div class="cg-date-picker__input" @click.stop="showPicker">
-      <cg-input v-model="date" :readonly="true" class="cg-date-picker__input-content"></cg-input>
+  <div class = 'cg-datepick__main'>
+    <div v-if='label' class = 'cg-datepick__label'>
+      {{ label }}
     </div>
-    <div class="cg-date-picker__picker" v-if="showFlag" @click.stop="() => {}">
-      <div class="cg-date-picker-nav">
-        <span class="nav-item nav-prev-year" @click.stop="curYear--">&lt;&lt;</span>
-        <span class="nav-item nav-prev-month" @click.stop="curMonth--">&lt;</span>
-        <span class="nav-item nav-yandm">{{curYear}}&nbsp;{{curMonth | toDou}}</span>
-        <span class="nav-item nav-next-month" @click.stop="curMonth++">&gt;</span>
-        <span class="nav-item nav-next-year" @click.stop="curYear++">&gt;&gt;</span>
-      </div>
-      <div class="cg-date-picker__header">
-        <div
-          class="cg-date-picker__header-item"
-          v-for="(item, index) in week"
-          :key="index"
-        >{{item}}</div>
-      </div>
-      <div class="cg-date-picker__content">
-        <div
-          class="cg-date-picker__content-item"
-          v-for="(item, index) in monthDays"
-          :key="index"
-          :class="[item.isLastM?'cg-date-picker__content-disabled':'', , item.val===date?'cg-date-picker__content-selected':'']"
-          @click="selectDate(item)"
-        >
-          <i class="cg-date-picker__content-i">{{item.lab}}</i>
-        </div>
-      </div>
+    <div class = 'cg-datepick__datepick'>
+      <el-date-picker
+        v-model="dataPickerOption.value"
+        :type="dataPickerOption.type"
+        :placeholder="dataPickerOption.placeholder"
+        :default-time="dataPickerOption.defaultTime"
+      >
+      </el-date-picker>
     </div>
     <div class="clear"></div>
   </div>
 </template>
 
 <script>
-import CgInput from '../../cgInput/src/main'
-import define from './define'
+import DateUtils from '../../../utils/DateUtils.js'
+import StrUtils from '../../../utils/StrUtils.js'
+import {DateTimePicker} from 'element-ui'
 export default {
-  name: 'cg-date-picker',
+  name: 'cg-datepicker',
+  components: {
+    DateTimePicker
+  },
   data () {
+    console.log(1)
     return {
-      week: define.day.week,
-      dateList: [],
-      curYear: define.year.currentY,
-      curMonth: define.month.currentM + 1,
-      curDate: 1,
-      date: '',
-      showFlag: false
+      defaultTime: {
+        default: null
+      },
+      dataPickerOption: {
+        // year/month/date/week/datetime/datetimerange/daterange
+        type: this.showtype,
+        placeholder: this.placeholder,
+        startPlaceholder: this.startPlaceholder,
+        endPlaceholder: this.endPlaceholder,
+        value: null,
+        readonly: this.readonly,
+        format: 'yyyy-MM-dd HH:mm:ss',
+        // 弹窗样式
+        align: 'left',
+        timeArrowControl: false,
+        rangeSeparator: '-',
+        unlinkPanels: '',
+        // 用处不大的配置数据
+        // large, small, mini
+        size: 'small',
+        editable: true,
+        clearable: true
+        // valueFormat: '',
+        // popperClass: '',
+        // pickerOptions: {},
+        // defaultValue: '',
+      }
     }
   },
   props: {
-    /**
-     * 后续还需要扩展
-     *  时间格式化
-     *  选择时间范围
-     */
-    value: { // 默认值
+    // 标题
+    label: {
+      default: ''
+    },
+    // 数值
+    value: {
+      default: null
+    },
+    // 默认值(timestamp,string)
+    type: {
+      type: String,
+      default: 'timestamp'
+    },
+    // 显示类型
+    showtype: {
+      type: String,
+      default: 'date'
+    },
+    defaultTimeStamp: {
+      default: null
+    },
+    // 格式化
+    format: {
+      type: String,
+      default: 'yyyy-MM-dd'
+    },
+    // placeholder
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    // startPlaceholder
+    startPlaceholder: {
+      type: String,
+      default: ''
+    },
+    // endPlaceholder
+    endPlaceholder: {
       type: String,
       default: ''
     }
   },
   created () {
-    let $this = this
-    document.querySelector('body').addEventListener('click', () => {
-      $this.showFlag = false
-    }, false)
+    console.log(1)
+    if ((this.defaultTimeStamp === null || this.defaultTimeStamp === undefined) && this.showtype === 'daterange') {
+      this.defaultTime = [0, 86399999]
+    } else {
+      this.defaultTime = this.defaultTimeStamp
+    }
+    this.setValue()
   },
   mounted () {
-    this.date = this.value
-  },
-  components: {
-    CgInput
-  },
-  filters: {
-    toDou (val, style) { // 单数变成双数
-      let type = Object.prototype.toString.call(val)
-      switch (type) {
-        case '[object String]':
-          return val.length < 2 ? '0' + val : val
-        case '[object Number]':
-          return val < 10 ? '0' + val : val
-        default:
-          return val
-      }
-    }
   },
   watch: {
-    curMonth (val) {
-      if (val < 1) {
-        this.curYear--
-        this.curMonth = 12
-      }
-      if (val > 12) {
-        this.curYear++
-        this.curMonth = 1
-      }
+    dataPickerOption: {
+      handler: function (newVal, oldVal) {
+        console.log(1)
+        this.putValue()
+      },
+      deep: true
     },
-    date (newVal, oldVal) {
-      if (newVal === oldVal) return
-      this.$emit('input', newVal)
+    value: {
+      handler: function (newVal, oldVal) {
+        this.setValue()
+      },
+      deep: true
     }
   },
   computed: {
-    monthDays () {
-      let curMonthDates = this.getMaxDate(this.curMonth)
-      let lastMonthDates = this.getMaxDate(this.curMonth - 1)
-      let result = []
-      let time = new Date(this.curTime)
-      let curDay = time.getDay()
-      // 填充上个月的天数
-      for (let i = 0; i < curDay; i++) {
-        result.unshift(Object.assign({}, lastMonthDates, {
-          val: lastMonthDates.val + (lastMonthDates.lab - i),
-          lab: lastMonthDates.lab - i,
-          isLastM: true,
-          id: curDay - i - 1
-        }))
-      }
-      // 填充本月天数
-      for (let i = 0; i < curMonthDates.lab; i++) {
-        result.push(Object.assign({}, curMonthDates, {
-          val: `${this.curYear}/${this.curMonth}/${i + 1}`,
-          lab: i + 1,
-          isLastM: false,
-          id: curDay + i
-        }))
-      }
-      return result
-    },
-    curTime () {
-      return this.curYear + '/' + this.curMonth + '/' + this.curDate
-    },
-    isLeapmonth () { // 判断当前年份是否是闰年
-      return ((this.curYear % 4 === 0) && (this.curYear % 100 !== 0)) || (this.curYear % 400 === 0)
-    },
-    monthDates () { // 获取指定年份的每个月天数
-      this.isLeapmonth ? define.month.monthDates.splice(1, 1, 29) : define.month.monthDates.splice(1, 1, 28)
-      return define.month.monthDates
-    }
   },
   methods: {
-    getMaxDate (month) { // 获取指定月份的天数
-      let max = this.monthDates[month - 1]
-      let val
-      if (month < 1) {
-        val = `${this.curYear - 1}/12/`
-        max = 31
+    putValue: function () {
+      let minAddValue = 0
+      let maxAddValue = 0
+      let startDate = (this.dataPickerOption.value) ? this.dataPickerOption.value[0] : null
+      let endDate = (this.dataPickerOption.value) ? this.dataPickerOption.value[1] : null
+      if (this.showtype === 'daterange') {
+        minAddValue += this.defaultTime[0]
+        maxAddValue += this.defaultTime[1]
+      }
+      if (this.showtype === 'daterange') {
+        if (this.dataPickerOption.value !== null) {
+          if (this.dataPickerOption.value[0]) {
+            startDate = new Date()
+            startDate.setTime(this.dataPickerOption.value[0].getTime() + minAddValue)
+          }
+          if (this.dataPickerOption.value[1]) {
+            endDate = new Date()
+            endDate.setTime(this.dataPickerOption.value[1].getTime() + maxAddValue)
+          }
+        }
+      }
+      if (this.showtype === 'datetimerange' || this.showtype === 'daterange') {
+        if (this.type === 'timestamp') {
+          if (this.dataPickerOption.value === null) {
+            this.$emit('input', null)
+          } else {
+            let minDate = (startDate) ? startDate.getTime() : null
+            let maxDate = (endDate) ? endDate.getTime() : null
+            if (this.value) {
+              let flg = false
+              if (this.value[0]) {
+                if (this.value[0] === minDate) {
+                  flg = true
+                }
+              } else if (!minDate) {
+                flg = true
+              }
+              if (flg) {
+                if (this.value[1]) {
+                  if (this.value[1] === maxDate) {
+                    return
+                  }
+                } else if (!maxDate) {
+                  return
+                }
+              }
+            }
+            this.$emit('input', [minDate, maxDate])
+          }
+        } else if (this.type === 'string') {
+          if (this.dataPickerOption.value === null) {
+            this.$emit('input', null)
+          } else {
+            let minDate = (startDate) ? DateUtils.format(startDate, this.format) : null
+            let maxDate = (endDate) ? DateUtils.format(endDate, this.format) : null
+            if (this.value) {
+              let flg = false
+              if (this.value[0]) {
+                if (this.value[0] === minDate) {
+                  flg = true
+                }
+              } else if (!minDate) {
+                flg = true
+              }
+              if (flg) {
+                if (this.value[1]) {
+                  if (this.value[1] === maxDate) {
+                    return
+                  }
+                } else if (!maxDate) {
+                  return
+                }
+              }
+            }
+            this.$emit('input', [minDate, maxDate])
+          }
+        } else if (this.type === 'date') {
+          let minDate = startDate
+          let maxDate = endDate
+          if (this.value) {
+            let flg = false
+            if (this.value[0]) {
+              if (minDate && this.value[0].getTime() === minDate.getTime()) {
+                flg = true
+              }
+            } else if (!minDate) {
+              flg = true
+            }
+            if (flg) {
+              if (this.value[1]) {
+                if (maxDate && this.value[1].getTime() === maxDate.getTime()) {
+                  return
+                }
+              } else if (!maxDate) {
+                return
+              }
+            }
+          }
+          this.$emit('input', [minDate, maxDate])
+        }
       } else {
-        val = `${this.curYear}/${this.curMonth - 1}/`
-      }
-      return {
-        val,
-        lab: max
+        if (this.type === 'timestamp') {
+          if (this.dataPickerOption.value === null) {
+            this.$emit('input', null)
+          } else {
+            if (this.value && this.value === this.dataPickerOption.value.getTime()) {
+              return
+            }
+            this.$emit('input', this.dataPickerOption.value.getTime())
+          }
+        } else if (this.type === 'string') {
+          if (this.dataPickerOption.value === null) {
+            this.$emit('input', null)
+          } else {
+            if (this.value && this.value === DateUtils.format(this.dataPickerOption.value, this.format)) {
+              return
+            }
+            this.$emit('input', DateUtils.format(this.dataPickerOption.value, this.format))
+          }
+        } else if (this.type === 'date') {
+          if (this.value && this.value.getTime() === this.dataPickerOption.value.getTime()) {
+            return
+          }
+          this.$emit('input', this.dataPickerOption.value)
+        }
       }
     },
-    selectDate (data) { // 选择日期
-      this.selected = data.val
-      this.date = data.val
-      if (data.isLastM) {
-        this.curMonth--
-      }
-    },
-    showPicker () { // 打开时间面板
-      this.showFlag = true
-      if (this.date.trim()) {
-        let date = new Date(this.date)
-        this.curYear = date.getFullYear()
-        this.curMonth = date.getMonth() + 1
+    setValue: function () {
+      if (this.showtype === 'datetimerange' || this.showtype === 'daterange') {
+        if (this.type === 'timestamp') {
+          if (this.value === null || this.value === undefined) {
+            this.dataPickerOption.value = null
+          } else {
+            let minDate = null
+            let maxDate = null
+            if (this.value[0] !== null || this.value[0] !== undefined) {
+              minDate = new Date()
+              minDate.setTime(this.value[0])
+              if (this.showtype === 'daterange') {
+                minDate.setHours(0)
+                minDate.setMinutes(0)
+                minDate.setSeconds(0)
+                minDate.setMilliseconds(0)
+              }
+            }
+            if (this.value[1] !== null || this.value[1] !== undefined) {
+              maxDate = new Date()
+              maxDate.setTime(this.value[1])
+              if (this.showtype === 'daterange') {
+                maxDate.setHours(0)
+                maxDate.setMinutes(0)
+                maxDate.setSeconds(0)
+                maxDate.setMilliseconds(0)
+              }
+            }
+            this.dataPickerOption.value = [minDate, maxDate]
+          }
+        } else if (this.type === 'string') {
+          if (this.value === null || this.value === undefined) {
+            this.dataPickerOption.value = [null, null]
+          } else {
+            let minDate = null
+            let maxDate = null
+            if (!StrUtils.isBlank(this.value[0])) {
+              minDate = DateUtils.strToDate(this.value[0])
+            }
+            if (!StrUtils.isBlank(this.value[1])) {
+              maxDate = DateUtils.strToDate(this.value[1])
+            }
+            this.dataPickerOption.value = [minDate, maxDate]
+          }
+        } else if (this.type === 'date') {
+          this.dataPickerOption.value = this.value
+        }
+      } else {
+        if (this.type === 'timestamp') {
+          if (this.value === null || this.value === undefined) {
+            this.dataPickerOption.value = null
+          } else {
+            let date = new Date()
+            date.setTime(this.value)
+            this.dataPickerOption.value = date
+          }
+        } else if (this.type === 'string') {
+          if (StrUtils.isBlank(this.value)) {
+            this.dataPickerOption.value = null
+          } else {
+            let date = DateUtils.strToDate(this.value)
+            this.dataPickerOption.value = date
+          }
+        } else if (this.type === 'date') {
+          this.dataPickerOption.value = this.value
+        }
       }
     }
   }
@@ -175,10 +329,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .cg-date-picker {
-    position: relative;
-  }
-  .cg-date-picker__picker {
-    position: absolute;
-  }
 </style>
