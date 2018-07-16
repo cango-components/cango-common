@@ -249,7 +249,7 @@ export default {
   margin-left: 5px;
 }
 .cg-input__label{
-  width:20%;
+  width:@leftWidth;
   float:left;
   padding-right:2%;
   text-align:right;
@@ -262,7 +262,7 @@ export default {
 .cg-input-has-label,.cg-textarea-has-label{
   padding-left:0;
   border:none;
-  width:80%;
+  width:@rightWidth;
   float:left;
   .box-content;
 }
