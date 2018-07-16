@@ -3,7 +3,22 @@
 /* 定义变量 */
 @base-date-picker-width: 560px;
 @base-date-picker-height: 400px;
-
+.cg-select__label{
+  width:@leftWidth;
+  font-size: 1.4rem;
+  height:@lineHeight;
+  line-height:@lineHeight;
+  padding-right:2%;
+  padding-left:1rem;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  float:left;
+}
+.cg-datepick__datepick{
+  width:@rightWidth;
+  float:left;
+}
 .cg-date-picker {
   .cg-base__radius();
   .cg-date-picker__input {
