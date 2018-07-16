@@ -12,6 +12,7 @@
       >
       </el-date-picker>
     </div>
+    <div class="clear"></div>
   </div>
 </template>
 
