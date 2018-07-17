@@ -32,7 +32,7 @@
     <tr class = 'cg-pageList__page' v-if="page">
       <td :colspan="showcheckbox ? titleconfig.length+1 : titleconfig.length ">
         <div v-if="page" class="pages">
-          <div v-if="page.pageNo > 1" @click='toPage(page.pageNo - 1)' class="prev no-cursor">上一页</div>
+          <div v-if="page.pageNo > 1" @click='toPage(page.pageNo - 1)' class="prev">上一页</div>
           <div class="page">
             <template v-if="page.pageNo === 1" >
               <span @click='toPage(1)' class="current">1</span>
