@@ -6,8 +6,7 @@
     <div  class = 'cg-tree__main'>
       <div v-for='(node, nodeIndex) in getList'
            :key='"node" + nodeIndex'
-           class = 'cg-tree__node'>
-
+           class = 'cg-tree__node' :title="showRecordName(node.record)">
         <div  :class = '(node == selectNode) ? "cg-tree__selected" : ""'   @click='treeNodeExtend(node)'>
           <span v-for="i in node.level" :key='"node" + nodeIndex + "span" + i'>&nbsp;&nbsp;</span>
           <i class='cango-uploadify__file_iconfont icon-zengjia'></i>
@@ -220,6 +219,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  .cg-tree__base{
+    max-height: 50rem;
+    overflow-y: auto;
+  }
   .cg-tree__filter input{
     -webkit-appearance: none;
     background-color: #fff;
@@ -249,6 +252,8 @@ export default {
  }
   .cg-tree__node{
     line-height: 2.5rem;
+    height:2.5rem;
+    overflow: hidden;
     font-size: 3rem;
     cursor: pointer;
   }
