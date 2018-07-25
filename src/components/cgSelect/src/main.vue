@@ -14,7 +14,7 @@
         @click="showHide()" >
         <div :id="elementId"
           class = 'cg-select__value'
-          :class="showSelectDiv ? 'cg-select__value_active' : ''">
+          :class="getContentClass2">
           {{ showText }} &nbsp;
           <i :class="showSelectDiv ? 'cg-select__icon_down' : 'cg-select__icon_up'"></i>
         </div>
