@@ -7,6 +7,10 @@
          class = 'cg-checkbox__label'
     >
       {{ label }}
+      <div class="title-tips">
+        <span>?</span>
+        <div class="title-tips-content">此标题意思为水电费了水电费了惊世毒妃</div>
+      </div>
     </div>
     <div
       class = 'cg-checkbox__content_main'

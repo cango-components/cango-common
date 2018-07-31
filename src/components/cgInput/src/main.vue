@@ -2,6 +2,10 @@
   <div>
     <div v-if="label" class="cg-input__label" >
       {{ label }}
+      <div class="title-tips">
+        <span>?</span>
+        <div class="title-tips-content">此标题意思为水电费了水电费了惊世毒妃</div>
+      </div>
     </div>
     <div v-if="type==='text'" :class="inputClass" >
       <input @blur="blur" class="cg-input__content" :class="inputErrorClass" :placeholder="placeholder" @input="inpHandle" v-model="inpVal" :maxlength="(validparam && validparam.maxlength) ? validparam.maxlength : ''" :readonly="readonly" />
@@ -251,11 +255,11 @@ export default {
 .cg-input__label{
   width:@leftWidth;
   float:left;
-  padding-right:2%;
   text-align:right;
   font-size:1.2rem;
   line-height:@lineHeight;
-  overflow: hidden;
+  position:@positionR;
+  padding-right:@paddingR;
   text-overflow: ellipsis;
   white-space: nowrap;
 }

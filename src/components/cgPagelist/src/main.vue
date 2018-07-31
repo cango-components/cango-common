@@ -75,7 +75,7 @@
             <input type="text" v-model="inputPageNum" placeholder="输入页码"/>
             <button class="goto-page" @click='toPage2()'>跳</button>
           </div>
-        &nbsp;&nbsp;第{{ this.page.pageNo }}页 / 共{{ this.page.totalRow }}条记录
+        &nbsp;&nbsp;第{{ this.page.pageNo }}页/共{{ this.page.totalRow }}条
         </div>
       </td>
     </tr>
@@ -262,25 +262,25 @@ export default {
     span,input,.goto-page{
       display: inline-block;
       vertical-align: middle;
-      width:2.9rem;
+      width:2.6rem;
       text-align: center;
-      height: 2.7rem;
-      line-height: 2.7rem;
+      height: 2.6rem;
+      line-height: 2.6rem;
       overflow: hidden;
       padding:0;
-      margin: 0 0.4rem;
+      margin: 0 0.2rem;
       border: 0.06rem solid #ddd;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       border-radius: 0.3rem;
       cursor: pointer;
       color:#333;
     }
     .next,.prev{
       padding: 0.6rem 1.3rem;
-      line-height: 1.5rem;
-      margin: 0 0.4rem;
+      line-height: 1.4rem;
+      margin: 0 0.2rem;
       border: 0.06rem solid #ddd;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       display: flex;
       display: -webkit-flex; /* Safari */
       flex-direction: column;

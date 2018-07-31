@@ -1,14 +1,17 @@
 <template>
   <div class = 'cg-select__base'
-    :class='getClass()' >
+    :class='getClass()'>
     <div class = 'cg-select__main' :class="(isPhone && showSelectDiv) ? 'cg-select-phone':''">
       <div
         v-if='label'
         class = 'cg-select__label'
         :class = 'titlestyle === 0 ? "cg-select__label_transverse" : "cg-select__label_vertical"'>
         {{ label }}
+        <div class="title-tips">
+          <span>?</span>
+          <div class="title-tips-content">此标题意思为水电费了水电费了惊世毒妃</div>
+        </div>
       </div>
-
       <div
          :class="getContentClass"
         @click="showHide()" >

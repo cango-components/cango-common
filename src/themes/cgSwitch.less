@@ -5,9 +5,10 @@
 .cg-switch__label{
   width:@leftWidth;
   float:left;
-  padding-right:2%;
   text-align:right;
-  line-height:2.5rem;
+  line-height:@lineHeight;
+  position:@positionR;
+  padding-right:@paddingR;
 }
 .cg-switch {
   width:@rightWidth;
@@ -18,7 +19,7 @@
   .cg-base-circle;
   display: inline-block;
   height:2.5rem;
-  width:6rem;
+  margin-top:0.2rem;
   background-color: @bg-main-color;
   transition: 0.3s;
   box-sizing: border-box;

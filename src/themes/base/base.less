@@ -2,6 +2,8 @@
 @lineHeight: 3rem;
 @leftWidth:15%;
 @rightWidth:80%;
+@positionR:relative;
+@paddingR:2.2rem;
 /** border */
 .cg-base__border(@color, @width: 1px) {
   border: @width solid @color;
@@ -110,4 +112,34 @@ body,div,p,ul,li,span,img,input,textarea{
   border-radius: 0.6rem;
   -webkit-box-shadow: inset 0 0 6px #ddd;
   background-color: #ddd;
+}
+.title-tips{
+  position:absolute;
+  top:0.75rem;
+  right:0.4rem;
+  font-size:0.25rem;
+  width:1.4rem;
+  height:1.4rem;
+  line-height:1.4rem;
+  text-align: center;
+  border-radius:50%;
+  border:1px solid #bbb;
+  cursor:pointer;
+}
+.title-tips .title-tips-content{
+  display: none;
+  position: absolute;
+  bottom: 2.5rem;
+  left: 1rem;
+  line-height: 1.9rem;
+  padding:0.2rem 0.3rem;
+  z-index: 50;
+  text-align: left;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #eee;
+  color: #000;
+}
+.title-tips:hover .title-tips-content{
+  display:block;
 }
