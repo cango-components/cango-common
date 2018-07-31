@@ -5,8 +5,8 @@
     </div>
     <div :class="getContentClass">
       <div v-show="fileList.length==0" class = 'cg-uploadify__upload' @click='openFile()' >
-        <input :id="uniqueId" v-if='filenum == 1 && !lock' type = 'file' @change='onUpload' />
-        <input :id="uniqueId" v-else-if='!lock' type = 'file' @change='onUpload' multiple='multiple' :size='filenum' />
+        <input :id="uniqueId" v-if='dataFileNum == 1 && !lock' type = 'file' :accept='fileAccept' @change='onUpload' />
+        <input :id="uniqueId" v-else-if='!lock' type = 'file' @change='onUpload' :accept='fileAccept' multiple='multiple'  />
         <p>上传文件</p>
       </div>
       <div v-if="type == 'image'" v-show="fileList.length>0" class='cango-uploadify__showImg' >
@@ -16,6 +16,20 @@
         <div class="openbtn"  @click='openFile()'>
          <img :src = 'showFile ? showFile : ""' class='showImg' />
         </div>
+      </div>
+      <div v-else-if="type == 'video'"  v-show="fileList.length>0" class='cango-uploadify__showfile' @click='openFile()'>
+        <ul>
+          <li v-for="(file,index) in fileList" :key="'file' + index">
+            {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a>  &nbsp; <span @click="remove(file)" >删除</span><br/>
+          </li>
+        </ul>
+      </div>
+      <div v-else-if="type == 'audio'"  v-show="fileList.length>0" class='cango-uploadify__showfile' @click='openFile()'>
+        <ul>
+          <li v-for="(file,index) in fileList" :key="'file' + index">
+            {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a>  &nbsp; <span @click="remove(file)" >删除</span><br/>
+          </li>
+        </ul>
       </div>
       <div v-else-if="type == 'file'"  v-show="fileList.length>0" class='cango-uploadify__showfile' @click='openFile()'>
         <ul>
@@ -130,10 +144,12 @@ export default {
         this.$emit('input', null)
       }
     }
+    this.resizeFileData()
   },
   data: function () {
     return {
       fileList: [],
+      dataFileNum: 0,
       lock: false,
       errorMsg: '',
       showFile: this.defaultimage,
@@ -143,6 +159,17 @@ export default {
     }
   },
   computed: {
+    fileAccept () {
+      if (this.type === 'image') {
+        return 'image/*'
+      } else if (this.type === 'audio') {
+        return 'audio/*'
+      } else if (this.type === 'video') {
+        return 'video/*'
+      } else {
+        return ''
+      }
+    },
     getContentClass () {
       let className = 'cg-uploadify__content'
       let errorClassName = ''
@@ -166,6 +193,13 @@ export default {
     },
     right: function (file) {
       file['angle'] = (file['angle'] + 90) % 360
+    },
+    resizeFileData: function () {
+      if (this.type === 'audio' || this.type === 'video') {
+        this.dataFileNum = 1
+      } else {
+        this.dataFileNum = this.filenum
+      }
     },
     valid: function () {
       if (this.required) {
@@ -221,7 +255,7 @@ export default {
       if (e && e.target && e.target.files) {
         this.lock = true
         let num = e.target.files.length + this.fileList.length
-        if (this.filenum > 1 && num > this.filenum) {
+        if (this.dataFileNum > 1 && num > this.dataFileNum) {
           // TODO 报错
           alert('选择的文件过多')
           return
@@ -236,14 +270,14 @@ export default {
         let files = e.target.files
         if (self.type === 'image' && self.maxsize > 0) {
           FileUtils.resizeFile(files, self.maxsize * 1024, function (fileList) {
-            if (self.filenum === 1) {
+            if (self.dataFileNum === 1) {
               FileUtils.uploadFile([fileList[0]], [], func, self.prefix)
             } else {
               FileUtils.uploadFile(fileList, [], func, self.prefix)
             }
           })
         } else {
-          if (self.filenum === 1) {
+          if (self.dataFileNum === 1) {
             FileUtils.uploadFile([files[0]], [], func, self.prefix)
           } else {
             FileUtils.uploadFile(files, [], func, self.prefix)
@@ -326,6 +360,13 @@ export default {
     value (newValue, oldValue) {
       // 数据发生修改以后重新加载图片或者文件
       this.reloadFile()
+    },
+    filenum (newValue, oldValue) {
+      this.resizeFileData()
+    },
+    type (newValue, oldValue) {
+      // 数据发生修改以后重新加载图片或者文件
+      this.resizeFileData()
     }
   }
 }

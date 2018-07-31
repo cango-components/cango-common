@@ -1,8 +1,8 @@
 ﻿
 export default {
   authorizationUrl: 'http://172.81.207.83:8661/scf/infc/api/getCOSAuthorization',
-  createFileGroupUrl: 'http://10.43.22.82:8888/pinkiepie/mFileSave/createFileGroup',
-  findByGroupIdUrl: 'http://10.43.22.82:8888/pinkiepie/mFileSave/findByGroupId',
+  createFileGroupUrl: 'http://localhost:8888/train/cangoFileBase/create',
+  findByGroupIdUrl: 'http://localhost:8888/train/cangoFileBase/findById',
   bucket: 'image-1256119235',
   region: 'ap-shanghai',
   setConfig: function (option) {
