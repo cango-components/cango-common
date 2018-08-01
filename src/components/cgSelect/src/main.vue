@@ -7,9 +7,9 @@
         class = 'cg-select__label'
         :class = 'titlestyle === 0 ? "cg-select__label_transverse" : "cg-select__label_vertical"'>
         {{ label }}
-        <div class="title-tips">
+        <div v-if='tip' class="title-tips">
           <span>?</span>
-          <div class="title-tips-content">此标题意思为水电费了水电费了惊世毒妃</div>
+          <div class="title-tips-content">{{ tip }}</div>
         </div>
       </div>
       <div
@@ -138,6 +138,10 @@ export default {
     'titlestyle': {
       type: Number,
       default: 0
+    },
+    // 提示信息
+    'tip': {
+      default: null
     }
   },
   created: function () {

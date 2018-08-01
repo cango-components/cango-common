@@ -2,9 +2,9 @@
   <div class = 'cg-uploadify__base' >
     <div v-if='label' class = 'cg-uploadify__label' >
       {{ label }}
-      <div class="title-tips">
+      <div v-if='tip' class="title-tips">
         <span>?</span>
-        <div class="title-tips-content">此标题意思为水电费了水电费了惊世毒妃</div>
+        <div class="title-tips-content">{{ tip }}</div>
       </div>
     </div>
     <div :class="getContentClass">
@@ -137,6 +137,10 @@ export default {
     },
     // 文件组数值
     'value': {
+      default: null
+    },
+    // 提示信息
+    'tip': {
       default: null
     }
   },

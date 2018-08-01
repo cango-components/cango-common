@@ -2,9 +2,9 @@
   <div class = 'cg-datepick__main'>
     <div v-if='label' class = 'cg-datepick__label'>
       {{ label }}
-      <div class="title-tips">
+      <div v-if='tip' class="title-tips">
         <span>?</span>
-        <div class="title-tips-content">此标题意思为水电费了水电费了惊世毒妃</div>
+        <div class="title-tips-content">{{ tip }}</div>
       </div>
     </div>
     <div class = 'cg-datepick__datepick'>
@@ -102,6 +102,10 @@ export default {
     endPlaceholder: {
       type: String,
       default: ''
+    },
+    // 提示信息
+    'tip': {
+      default: null
     }
   },
   created () {

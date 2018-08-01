@@ -2,9 +2,9 @@
   <div class="cg-switch__base">
     <div v-if='label' class = 'cg-switch__label'>
       {{ label }}
-      <div class="title-tips">
+      <div v-if='tip' class="title-tips">
         <span>?</span>
-        <div class="title-tips-content">此标题意思为水电费了水电费了惊世毒妃</div>
+        <div class="title-tips-content">{{ tip }}</div>
       </div>
     </div>
     <div class='cg-switch' :class='switchClass' @click='clickHandle' >
@@ -37,6 +37,10 @@ export default {
     value: {
       type: Boolean,
       default: false
+    },
+    // 提示信息
+    'tip': {
+      default: null
     }
   },
   data: function () {
