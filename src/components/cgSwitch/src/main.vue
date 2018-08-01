@@ -1,10 +1,10 @@
 <template>
-  <div class="cg-switch__base">
+  <div class="cg-switch__base" style="margin-top:20rem">
     <div v-if='label' class = 'cg-switch__label'>
       {{ label }}
-      <div v-if='tip' class="title-tips">
+      <div class="title-tips">
         <span>?</span>
-        <div class="title-tips-content">{{ tip }}</div>
+        <div class="title-tips-content">werwerwerwwwwcvxcv你好多市第十六届房东岁的方</div>
       </div>
     </div>
     <div class='cg-switch' :class='switchClass' @click='clickHandle' >
