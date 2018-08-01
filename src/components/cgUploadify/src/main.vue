@@ -9,7 +9,7 @@
     </div>
     <div :class="getContentClass">
       <div v-show="fileList.length==0" class = 'cg-uploadify__upload' @click='openFile()' >
-        <input :id="uniqueId" v-if='dataFileNum == 1 && !lock' type = 'file' :accept='fileAccept' @change='onUpload' />
+        <input :id="uniqueId" v-if='dataFileNum === 1 && !lock' type = 'file' :accept='fileAccept' @change='onUpload' />
         <input :id="uniqueId" v-else-if='!lock' type = 'file' @change='onUpload' :accept='fileAccept' multiple='multiple'  />
         <p>上传文件</p>
       </div>
@@ -206,7 +206,7 @@ export default {
       if (this.type === 'audio' || this.type === 'video') {
         this.dataFileNum = 1
       } else {
-        this.dataFileNum = this.filenum
+        this.dataFileNum = parseInt(this.filenum)
       }
     },
     valid: function () {
@@ -272,6 +272,10 @@ export default {
         let func = function (result) {
           // merge列表数据
           if (!self.fileList) self.fileList = []
+          console.log(self.dataFileNum)
+          if (self.dataFileNum === 1) {
+            self.fileList = []
+          }
           self.fileList = self.fileList.concat(result)
           self.resizeValue()
         }
