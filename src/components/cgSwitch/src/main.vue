@@ -1,5 +1,5 @@
 <template>
-  <div class="cg-switch__base" style="margin-top:20rem">
+  <div class="cg-switch__base">
     <div v-if='label' class = 'cg-switch__label'>
       {{ label }}
       <div class="title-tips">
