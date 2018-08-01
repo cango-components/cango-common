@@ -1,8 +1,9 @@
 ﻿
 export default {
-  authorizationUrl: 'http://172.81.207.83:8661/scf/infc/api/getCOSAuthorization',
-  createFileGroupUrl: 'http://localhost:8888/train/cangoFileBase/create',
-  findByGroupIdUrl: 'http://localhost:8888/train/cangoFileBase/findById',
+  // authorizationUrl: 'https://prd-service.999haoche.com/scf/infc/api/getCOSAuthorization',
+  authorizationUrl: 'https://dev.999haoche.com:8661/scf/infc/api/getCOSAuthorization',
+  createFileGroupUrl: 'http://10.43.29.214:8888/train/cangoFileBase/create',
+  findByGroupIdUrl: 'http://10.43.29.214:8888/train/cangoFileBase/findById',
   bucket: 'image-1256119235',
   region: 'ap-shanghai',
   setConfig: function (option) {
