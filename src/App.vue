@@ -1,11 +1,15 @@
 <template>
   <div>
     <cg-form ref = "form" >
-      <cg-datepicker
-        showtype = "daterange"
-        v-model = 'updateTime'
+      <cg-uploadify
+        id       = "id"
+        type     = "image"
+        label    = "aaaa"
+        :required = "true"
+        prefix   = "TEST"
+        v-model = "val"
       >
-      </cg-datepicker>
+      </cg-uploadify>
     </cg-form>
   </div>
 </template>
