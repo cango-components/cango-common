@@ -1,7 +1,9 @@
 <template>
   <div class = 'cg-datepick__main'>
     <div v-if='label' class = 'cg-datepick__label'>
-      {{ label }}
+      <div class="label">
+       {{ label }}
+      </div>
       <div v-if='tip' class="title-tips">
         <span>?</span>
         <div class="title-tips-content">{{ tip }}</div>

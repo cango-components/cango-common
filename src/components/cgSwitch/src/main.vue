@@ -1,7 +1,9 @@
 <template>
   <div class="cg-switch__base">
     <div v-if='label' class = 'cg-switch__label'>
-      {{ label }}
+      <div class="label">
+       {{ label }}
+      </div>
       <div v-if='tip' class="title-tips">
         <span>?</span>
         <div class="title-tips-content">{{ tip }}</div>

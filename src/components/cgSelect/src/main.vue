@@ -6,7 +6,9 @@
         v-if='label'
         class = 'cg-select__label'
         :class = 'titlestyle === 0 ? "cg-select__label_transverse" : "cg-select__label_vertical"'>
-        {{ label }}
+        <div class="label">
+          {{ label }}
+        </div>
         <div v-if='tip' class="title-tips">
           <span>?</span>
           <div class="title-tips-content">{{ tip }}</div>

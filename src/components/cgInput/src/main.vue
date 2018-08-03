@@ -1,7 +1,9 @@
 <template>
   <div>
     <div v-if="label" class="cg-input__label" >
-      {{ label }}
+      <div class="label">
+        {{ label }}
+      </div>
       <div v-if='tip' class="title-tips">
         <span>?</span>
         <div class="title-tips-content">{{ tip }}</div>
@@ -264,8 +266,11 @@ export default {
   line-height:@lineHeight;
   position:@positionR;
   padding-right:@paddingR;
+}
+.cg-input__label .label{
+  line-height:@lineHeight;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: hidden;
 }
 .cg-input-has-label,.cg-textarea-has-label{
   padding-left:0;

@@ -6,7 +6,9 @@
          :class='titlestyle==0 ? "cg-checkbox__label_transverse": "cg-checkbox__label_vertical"'
          class = 'cg-checkbox__label'
     >
-      {{ label }}
+      <div class="label">
+        {{ label }}
+      </div>
       <div v-if='tip' class="title-tips">
         <span>?</span>
         <div class="title-tips-content">{{ tip }}</div>
