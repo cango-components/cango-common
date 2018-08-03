@@ -3,7 +3,7 @@
     <cg-form ref = "form" >
       <cg-uploadify
         id       = "id"
-        type     = "image"
+        type     = "video"
         label    = ""
         :required = "true"
         prefix   = "TEST"
