@@ -1,6 +1,6 @@
 <template>
   <div class = 'cg-datepick__main'>
-    <div v-if='label' class = 'cg-datepick__label'>
+    <div v-if='label' style='text-align: right;' class = 'cg-datepick__label'>
       {{ label }}
       <div v-if='tip' class="title-tips">
         <span>?</span>
@@ -30,7 +30,6 @@ export default {
     DateTimePicker
   },
   data () {
-    console.log(1)
     return {
       defaultTime: {
         default: null
@@ -109,7 +108,6 @@ export default {
     }
   },
   created () {
-    console.log(1)
     if ((this.defaultTimeStamp === null || this.defaultTimeStamp === undefined) && this.showtype === 'daterange') {
       this.defaultTime = [0, 86399999]
     } else {

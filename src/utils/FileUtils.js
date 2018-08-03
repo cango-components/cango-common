@@ -23,6 +23,7 @@ export default {
     // 增加时间戳和数字用于排序
     let fileName = prefix + '/' + time + '-' + num + '-' + Utils.guid() + fileList[num - 1].name
     // 初始化实例
+    // 腾讯云用http协议的时候，下载视频文件会报错，所以改成强制https，目测腾讯问题
     var cos = new COS({
       Protocol: 'https:',
       getAuthorization: function (options, callback) {
@@ -138,6 +139,7 @@ export default {
     // TODO 这里理论上根据客户端的位置进行切换 替换成用户的 Region
     var Region = FileConfig.region
     // 初始化实例
+    // 腾讯云用http协议的时候，下载视频文件会报错，所以改成强制https，目测腾讯问题
     var cos = new COS({
       Protocol: 'https:',
       getAuthorization: function (options, callback) {
