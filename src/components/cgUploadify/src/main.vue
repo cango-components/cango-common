@@ -1,7 +1,9 @@
 <template>
   <div class = 'cg-uploadify__base' >
     <div v-if='label' class = 'cg-uploadify__label' >
-      {{ label }}
+      <div class="label">
+        {{ label }}
+      </div>
       <div v-if='tip' class="title-tips">
         <span>?</span>
         <div class="title-tips-content">{{ tip }}</div>
@@ -9,11 +11,11 @@
     </div>
     <div :class="getContentClass">
       <div v-show="fileList.length==0" class = 'cg-uploadify__upload' @click='openFile()' >
-        <input :id="uniqueId" v-if='dataFileNum === 1 && !lock' type = 'file' :accept='fileAccept' @change='onUpload' />
+        <input :id="uniqueId" v-if='dataFileNum == 1 && !lock' type = 'file' :accept='fileAccept' @change='onUpload' />
         <input :id="uniqueId" v-else-if='!lock' type = 'file' @change='onUpload' :accept='fileAccept' multiple='multiple'  />
         <p>上传文件</p>
       </div>
-      <div v-if="type == 'image'" v-show="fileList.length>0" class='cango-uploadify__showImg' >
+      <div v-if="type == 'image' && fileList.length"class='cango-uploadify__showImg' >
         <div class='cango-uploadify__preview' @click='openPreview()'>
           <img src='../../../assets/images/preview.png' id='showImg'/><span>预览</span>
         </div>
@@ -21,21 +23,21 @@
          <img :src = 'showFile ? showFile : ""' class='showImg' />
         </div>
       </div>
-      <div v-else-if="type == 'video'"  v-show="fileList.length>0" class='cango-uploadify__showfile' @click='openFile()'>
+      <div v-else-if="type == 'video' && fileList.length" class='cango-uploadify__showfile' >
+        <video width="100%" height="100%" controls>
+          <source  :src="fileList[0].url" type="video/mp4">
+          <source  :src="fileList[0].url" type="video/ogg">
+          您的浏览器不支持 video 标签。
+        </video>
+      </div>
+      <div v-else-if="type == 'audio' && fileList.length" class='cango-uploadify__showfile'>
         <ul>
           <li v-for="(file,index) in fileList" :key="'file' + index">
             {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a>  &nbsp; <span @click="remove(file)" >删除</span><br/>
           </li>
         </ul>
       </div>
-      <div v-else-if="type == 'audio'"  v-show="fileList.length>0" class='cango-uploadify__showfile' @click='openFile()'>
-        <ul>
-          <li v-for="(file,index) in fileList" :key="'file' + index">
-            {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a>  &nbsp; <span @click="remove(file)" >删除</span><br/>
-          </li>
-        </ul>
-      </div>
-      <div v-else-if="type == 'file'"  v-show="fileList.length>0" class='cango-uploadify__showfile' @click='openFile()'>
+      <div v-else-if="type == 'file' && fileList.length" class='cango-uploadify__showfile' @click='openFile()'>
         <ul>
           <li v-for="(file,index) in fileList" :key="'file' + index">
               {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a>  &nbsp; <span @click="remove(file)" >删除</span><br/>
@@ -206,7 +208,7 @@ export default {
       if (this.type === 'audio' || this.type === 'video') {
         this.dataFileNum = 1
       } else {
-        this.dataFileNum = parseInt(this.filenum)
+        this.dataFileNum = this.filenum
       }
     },
     valid: function () {
@@ -272,10 +274,6 @@ export default {
         let func = function (result) {
           // merge列表数据
           if (!self.fileList) self.fileList = []
-          console.log(self.dataFileNum)
-          if (self.dataFileNum === 1) {
-            self.fileList = []
-          }
           self.fileList = self.fileList.concat(result)
           self.resizeValue()
         }

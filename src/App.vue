@@ -4,7 +4,7 @@
       <cg-uploadify
         id       = "id"
         type     = "video"
-        label    = "aaaa"
+        label    = ""
         :required = "true"
         prefix   = "TEST"
         v-model = "val"
