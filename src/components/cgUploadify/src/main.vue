@@ -23,7 +23,7 @@
          <img :src = 'showFile ? showFile : ""' class='showImg' />
         </div>
       </div>
-      <div v-else-if="type == 'video' && fileList.length" class='cango-uploadify__showfile' >
+      <div v-else-if="type == 'video' && fileList.length" class='cango-uploadify__showVideo' >
         <video v-if="fileList[0] && fileList[0].url !== ''" width="100%" height="100%" controls>
           <source  :src="fileList[0].url" type="video/mp4">
           <source  :src="fileList[0].url" type="video/ogg">

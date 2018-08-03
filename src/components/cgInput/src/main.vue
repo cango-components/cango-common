@@ -271,6 +271,7 @@ export default {
   line-height:@lineHeight;
   text-overflow: ellipsis;
   overflow: hidden;
+  font-size:1.2rem;
 }
 .cg-input-has-label,.cg-textarea-has-label{
   padding-left:0;

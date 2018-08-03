@@ -3,7 +3,7 @@
     <cg-form ref = "form" >
       <cg-uploadify
         id       = "id"
-        type     = "audio"
+        type     = "image"
         label    = ""
         :required = "true"
         prefix   = "TEST"
