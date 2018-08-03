@@ -1,14 +1,9 @@
 <template>
   <div class = 'cg-datepick__main'>
-<<<<<<< HEAD
     <div v-if='label' class = 'cg-datepick__label'>
       <div class="label">
        {{ label }}
       </div>
-=======
-    <div v-if='label' style='text-align: right;' class = 'cg-datepick__label'>
-      {{ label }}
->>>>>>> 697158bc73b874c197a10c39e69beb2865307bde
       <div v-if='tip' class="title-tips">
         <span>?</span>
         <div class="title-tips-content">{{ tip }}</div>
