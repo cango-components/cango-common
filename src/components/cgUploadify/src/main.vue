@@ -30,12 +30,12 @@
           您的浏览器不支持 video 标签。
         </video>
       </div>
-      <div v-else-if="type == 'audio' && fileList.length" class='cango-uploadify__showfile'>
-        <ul>
-          <li v-for="(file,index) in fileList" :key="'file' + index">
-            {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a>  &nbsp; <span @click="remove(file)" >删除</span><br/>
-          </li>
-        </ul>
+      <div v-else-if="type == 'audio' && fileList.length" class='cango-uploadify__showAudio'>
+        <audio  v-if="fileList[0] && fileList[0].url !== ''" controls="controls" style="width:100%;">
+          <source :src="fileList[0].url" type="audio/ogg" />
+          <source :src="fileList[0].url" type="audio/mpeg" />
+          您的浏览器不支持 audio 标签。
+        </audio>
       </div>
       <div v-else-if="type == 'file' && fileList.length" class='cango-uploadify__showfile' @click='openFile()'>
         <ul>
