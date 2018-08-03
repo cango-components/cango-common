@@ -24,6 +24,7 @@ export default {
     let fileName = prefix + '/' + time + '-' + num + '-' + Utils.guid() + fileList[num - 1].name
     // 初始化实例
     var cos = new COS({
+      Protocol: 'https:',
       getAuthorization: function (options, callback) {
         axios({
           method: 'post',
@@ -138,6 +139,7 @@ export default {
     var Region = FileConfig.region
     // 初始化实例
     var cos = new COS({
+      Protocol: 'https:',
       getAuthorization: function (options, callback) {
         axios({
           method: 'post',
