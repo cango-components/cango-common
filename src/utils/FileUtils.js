@@ -41,7 +41,7 @@ export default {
             lock: true,
             text: '上传中，请等待',
             spinner: 'el-icon-loading',
-            background: 'rgba(0, 0, 0, 0.7)'
+            background: 'rgba(0, 0, 0, 0.3)'
           })
           callback(response.data.authorization)
         }).catch(function (error) {
