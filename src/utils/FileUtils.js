@@ -37,7 +37,12 @@ export default {
           }
         }).then(function (response) {
           console.log('开始上传')
-
+          Loading.service({
+            lock: true,
+            text: '上传中，请等待',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          })
           callback(response.data.authorization)
         }).catch(function (error) {
           // TODO 失败的操作
@@ -154,7 +159,8 @@ export default {
             pathname: '/' + options.Key
           }
         }).then(function (response) {
-
+          let loadingInstance = Loading.service(options)
+          loadingInstance.close()
           console.log('上传成功')
           callback(response.data.authorization)
         }).catch(function (error) {
