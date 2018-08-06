@@ -15,7 +15,7 @@
         <input :id="uniqueId" v-else-if='!lock' type = 'file' @change='onUpload' :accept='fileAccept' multiple='multiple'  />
         <p>上传文件</p>
       </div>
-      <div v-if="type == 'image' && fileList.length"class='cango-uploadify__showImg' >
+      <div v-if="type == 'image' && fileList.length" class='cango-uploadify__showImg' >
         <div class='cango-uploadify__preview' @click='openPreview()'>
           <img src='../../../assets/images/preview.png' id='showImg'/><span>预览</span>
         </div>
@@ -24,7 +24,8 @@
         </div>
       </div>
       <div v-else-if="type == 'video' && fileList.length" class='cango-uploadify__showVideo' >
-        <video v-if="fileList[0] && fileList[0].url !== ''" style="width:100%;height:100%;" controls>
+        <div class="delete"  @click="remove(fileList[0])">删除</div>
+        <video v-if="fileList[0] && fileList[0].url !== ''" style="width: 100%;height: 100%;max-height: 600px;" controls>
           <source  :src="fileList[0].url" type="video/mp4">
           <source  :src="fileList[0].url" type="video/ogg">
           您的浏览器不支持 video 标签。
@@ -36,6 +37,7 @@
           <source :src="fileList[0].url" type="audio/mpeg" />
           您的浏览器不支持 audio 标签。
         </audio>
+        <div class="delete"  @click="remove(fileList[0])">删除音频</div>
       </div>
       <div v-else-if="type == 'file' && fileList.length" class='cango-uploadify__showfile' @click='openFile()'>
         <ul>

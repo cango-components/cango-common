@@ -2,6 +2,7 @@
 import FileConfig from './FileConfig'
 import cookie from './cookie.js'
 import axios from 'axios'
+import { Loading } from 'element-ui'
 var COS = require('cos-js-sdk-v5')
 export default {
   uploadFile: function (fileList, result, funcCallback, prefix, num) {
@@ -35,6 +36,8 @@ export default {
             pathname: '/' + options.Key
           }
         }).then(function (response) {
+          console.log('开始上传')
+
           callback(response.data.authorization)
         }).catch(function (error) {
           // TODO 失败的操作
@@ -151,6 +154,8 @@ export default {
             pathname: '/' + options.Key
           }
         }).then(function (response) {
+
+          console.log('上传成功')
           callback(response.data.authorization)
         }).catch(function (error) {
           // TODO 失败的操作
