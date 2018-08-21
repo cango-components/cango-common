@@ -30,7 +30,7 @@
            :class='(titlestyle === 0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"'
            class = 'cg-select__pop'>
         <div v-if='filter' class = 'cg-select__select_pop_filter'>
-          <input type = 'text' v-model='filterText' v-bind:placeholder = 'filterPlaceholder' >
+          <input :id="filterId" type = 'text' v-model='filterText' v-bind:placeholder = 'filterPlaceholder' >
         </div>
         <div v-if='(!required && selectnum == 1)' @click.stop='putValue(emptyItem)' class = 'cg-select__pop_content' >
           空选项
@@ -153,7 +153,8 @@ export default {
     let _this = this
     document.addEventListener('click', function (e) {
       var selectId = document.getElementById(_this.elementId)
-      if (e.target === selectId) {
+      var filterId = document.getElementById(_this.filterId)
+      if (e.target === selectId || e.target === filterId) {
         _this.showSelect = true
       } else {
         if (_this.showSelectDiv) {
@@ -170,7 +171,8 @@ export default {
       errorMsg: '',
       isPhone: false,
       showSelect: true,
-      elementId: Utils.guid()
+      elementId: Utils.guid(),
+      filterId: Utils.guid()
     }
   },
   computed: {
