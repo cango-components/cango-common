@@ -46,17 +46,28 @@ export default {
     }
   },
   data: function () {
-    return {}
+    return {
+      valuein: this.value
+    }
   },
   computed: {
     switchClass () {
-      return [this.value ? 'selected' : '', this.readonly ? 'readonly' : '']
+      return [this.valuein ? 'selected' : '', this.readonly ? 'readonly' : '']
     }
   },
   methods: {
     clickHandle () {
       if (!this.readonly) {
-        this.$emit('input', !this.value)
+        this.valuein = !this.valuein
+        console.log(this.valuein)
+        this.$emit('input', this.valuein)
+      }
+    }
+  },
+  watch: {
+    value (newValue, oldValue) {
+      if (this.valuein !== newValue) {
+        this.valuein = newValue
       }
     }
   }

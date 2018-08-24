@@ -123,14 +123,13 @@ export default {
         to = []
       }
       for (let k = 0; k < from.length; k++) {
-        to.push({})
         if (hasDemo) {
-          to[k] = this.clone(demo)
+          to.push(this.clone(demo))
           // 有demo的时候以demo为准
           this.mergeObject(to[k], from[k], mergeType)
         } else {
           // 没有demo时以right为准
-          this.mergeObject(to[k], from[k], 'right')
+          to.push(this.clone(from[k]))
         }
       }
       return to
@@ -155,9 +154,12 @@ export default {
               if (this.isArray(from[key])) {
                 to[key] = []
                 for (let k = 0; k < from[key].length; k++) {
-                  to[key][k] = {}
+
+                  // 没有demo时以right为准
+                  to[key].push(this.clone(from[key][k]))
+                  // to[key][k] = {}
                   // list的时候是不会有默认数据的，所以以right为准
-                  this.mergeObject(to[key][k], from[key][k], 'right')
+                  // this.mergeObject(to[key][k], from[key][k], 'right')
                 }
               } else {
                 to[key] = {}
@@ -204,9 +206,9 @@ export default {
                   // 有demo的时候以demo为准
                   this.mergeObject(to[key][k], from[key][k], mergeType)
                 } else {
-                  to[key].push({})
+                  to[key].push(from[key][k])
                   // 没有demo时以right为准
-                  this.mergeObject(to[key][k], from[key][k], 'right')
+                  // this.mergeObject(to[key][k], from[key][k], 'right')
                 }
               }
             } else {

@@ -385,7 +385,7 @@ export default {
     }
   },
   watch: {
-    value (oldValue, newValue) {
+    value (newValue, oldValue) {
       this.valid()
     }
   }

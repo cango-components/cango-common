@@ -122,7 +122,6 @@ export default {
   watch: {
     dataPickerOption: {
       handler: function (newVal, oldVal) {
-        console.log(1)
         this.putValue()
       },
       deep: true
