@@ -11,6 +11,8 @@ export default {
     let sheetConfig = []
     if (!Utils.isArray(options)) {
       sheetConfig.push(options)
+    } else {
+      sheetConfig = options
     }
     let sheetNames = []
     let sheets = {}
@@ -45,15 +47,12 @@ export default {
       let ref = {
         '!ref': outputPos[0] + ':' + outputPos[outputPos.length - 1]
       }
-      console.log(tmpdata)
-      console.log(ref)
-      sheets[sheetNames] = Object.assign({}, tmpdata, ref)
+      sheets[sheetName] = Object.assign({}, tmpdata, ref)
     }
     let tmpWB = {
       SheetNames: sheetNames,
       Sheets: sheets
     }
-    console.log(tmpWB)
     let tmpDown = new Blob(
       [this.s2ab(XLSX.write(tmpWB, {bookType: 'xlsx', bookSST: false, type: 'binary'}))],
       {type: ''}

@@ -25,6 +25,7 @@ import Layer from '../utils/Layer'
 
 const Cg = {
   FileConfig,
+  Excel,
   Layer,
   Utils,
   FileUtils,
