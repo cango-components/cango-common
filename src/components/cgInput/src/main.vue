@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import StrUtils from '../../../utils/StrUtils.js'
 export default {
   name: 'cg-input',
   props: {
@@ -141,6 +142,9 @@ export default {
   },
   methods: {
     blur: function () {
+      // 去除左右的空格
+      this.inpVal = StrUtils.trim(this.inpVal)
+      this.putValue()
       this.valid()
     },
     refreshValue: function () {

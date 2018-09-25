@@ -19,6 +19,7 @@ import NumberUtils from '../utils/NumberUtils'
 import StrUtils from '../utils/StrUtils'
 import Utils from '../utils/Utils'
 import FileUtils from '../utils/FileUtils'
+import Excel from '../utils/Excel'
 import FileConfig from '../utils/FileConfig'
 import Layer from '../utils/Layer'
 
