@@ -158,5 +158,17 @@ export default {
     now.setDate(1)
     let nextMonth = new Date(now.setMonth(now.getMonth() + 1))
     return nextMonth
+  },
+  /* 时间戳转成时间 */
+  timestampToDate: function (timestamp) {
+    let date = new Date()
+    date.setTime(timestamp)
+    return date
+  },
+  /* 时间戳转成时间字符串 */
+  timestampToStr: function (timestamp, formatStr) {
+    let date = new Date()
+    date.setTime(timestamp)
+    return this.format(date, formatStr)
   }
 }
