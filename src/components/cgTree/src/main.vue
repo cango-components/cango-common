@@ -10,9 +10,11 @@
         <div  :class = '(node == selectNode) ? "cg-tree__selected" : ""' >
           <span v-for="i in node.level" :key='"node" + nodeIndex + "span" + i' >&nbsp;&nbsp;</span>
           <i class='cango-uploadify__file_iconfont icon-zengjia' @click='treeNodeExtend(node)'></i>
-          <span v-bind:option='node' @click="treeNodeSelect(node)">
-            {{ showRecordName(node.record) }}
-          </span>
+          <span @click="treeNodeSelect(node)">
+			<slot v-bind:option='node'>
+              {{ showRecordName(node.record) }}
+			</slot>
+		  </span>
         </div>
       </div>
     </div>
