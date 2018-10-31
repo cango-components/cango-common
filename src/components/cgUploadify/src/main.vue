@@ -146,6 +146,14 @@ export default {
     // 提示信息
     'tip': {
       default: null
+    },
+    // 文件上传成功以后的操作
+    'afterFileUpload': {
+      default: null
+    },
+    // 文件上传成功以后的操作
+    'accept': {
+      default: null
     }
   },
   created: function () {
@@ -172,6 +180,9 @@ export default {
   },
   computed: {
     fileAccept () {
+      if (this.accept) {
+        return this.accept
+      }
       if (this.type === 'image') {
         return 'image/*'
       } else if (this.type === 'audio') {
@@ -264,6 +275,9 @@ export default {
       file.errorImg = this.errorimage
     },
     onUpload: function (e) {
+      console.log("========================start")
+      this.afterFileUpload(e.target.files)
+      console.log("========================end")
       if (e && e.target && e.target.files) {
         this.lock = true
         let num = e.target.files.length + this.fileList.length
@@ -278,6 +292,9 @@ export default {
           if (!self.fileList) self.fileList = []
           self.fileList = self.fileList.concat(result)
           self.resizeValue()
+          if (self.afterFileUpload) {
+            self.afterFileUpload(e.target.files)
+          }
         }
         let files = e.target.files
         if (self.type === 'image' && self.maxsize > 0) {

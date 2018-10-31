@@ -58,16 +58,19 @@ export default {
       {type: ''}
     )
     let href = URL.createObjectURL(tmpDown)
-    var a = document.createElement('a')
+    let a = document.createElement('a')
     a.href = href
     a.download = fileName
     document.body.appendChild(a)
     a.click()
-    document.body.removeChild(a)
+    setTimeout(function () { // 延时释放
+      document.body.removeChild(a)
+      URL.revokeObjectURL(tmpDown) // 用URL.revokeObjectURL()来释放这个object URL
+    }, 200)
   },
   s2ab: function (s) {
     // 字符串转字符流
-    var buf = new ArrayBuffer(s.length)
+    let buf = new ArrayBuffer(s.length)
     var view = new Uint8Array(buf)
     for (var i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF
     return buf
@@ -81,5 +84,28 @@ export default {
       n = (n - m) / 26
     }
     return s
+  },
+  read: function (file, callback) {
+    let fileReader = new FileReader()
+    fileReader.onload = (ev) => {
+      try {
+        let data = ev.target.result
+        let workbook = XLSX.read(data, {
+          type: 'binary'
+        })
+        let sheets = {}
+        for (let sheet in workbook.Sheets) {
+          // 获得以第一列为键名的sheet数组对象
+          let sheetArray = XLSX.utils.sheet_to_json(workbook.Sheets[sheet])
+          sheets[sheet] = sheetArray
+        }
+        if (callback) {
+          callback(sheets)
+        }
+      } catch (e) {
+        console.log('文件类型不正确！')
+      }
+    }
+    fileReader.readAsBinaryString(file)
   }
 }
