@@ -154,11 +154,6 @@ export default {
     'accept': {
       default: null
     },
-    // 来源
-    'source': {
-      type: String,
-      default: null
-    }
   },
   created: function () {
     if (!StrUtils.isBlank(this.value)) {
@@ -359,17 +354,11 @@ export default {
       let self = this;
       if (self.fileList && self.fileList.length > 0) {
         self.previewShow = true;
-        if(self.source=='phone'){
-            self.$emit('previewShow',true);
-        }
       }
     },
     closePreview: function () {
       let self = this
       self.previewShow = false;
-      if(self.source=='phone'){
-        self.$emit('previewShow',false);
-      }
     },
     prev: function () {
       var self = this
