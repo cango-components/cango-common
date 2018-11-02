@@ -109,7 +109,7 @@ export default {
       uploadify: {
         id: 'uploadifyId',
         label: 'uploadify',
-        type: 'video',
+        type: 'image',
         prefix: 'Test',
         fileNum: 0,
         maxSize: 0,
