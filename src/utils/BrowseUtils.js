@@ -47,12 +47,7 @@ export default {
     return false
   },
   isWxwork: function () {
-    // 获取判断用的对象
-    var ua = this.UA()
-    if (ua.match(/MicroMessenger/i) === 'micromessenger') {
-      return true
-    }
-    return false
+    return this.UA() && this.UA().indexOf('wxwork/') > 0
   },
   // TODO
   isAndroidApp: function () {

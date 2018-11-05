@@ -356,7 +356,7 @@ export default {
       let self = this
       if (self.fileList && self.fileList.length > 0) {
         // 调用微信的预览功能
-        if (self.wx && BrowseUtils.isWxwork()) {
+        if (BrowseUtils.isWxwork() && self.wx) {
           let urls = []
           for (let i = 0; i < self.fileList.length; i++) {
             urls.push(self.fileList[i].url)
