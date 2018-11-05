@@ -21,6 +21,9 @@ export default {
       if (sheetConfig[i].sheetName) {
         sheetName = sheetConfig[i].sheetName
       }
+      if (sheetName.length > 31) {
+        sheetName = sheetName.substr(0, 31)
+      }
       let tmpdata = {}
       let keys = {}
       if (!sheetConfig[i].titleConfig) {

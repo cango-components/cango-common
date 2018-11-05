@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import BrowseUtils from '../../../utils/BrowseUtils.js'
 import Utils from '../../../utils/Utils.js'
 import StrUtils from '../../../utils/StrUtils.js'
 import FileUtils from '../../../utils/FileUtils.js'
@@ -154,6 +155,10 @@ export default {
     'accept': {
       default: null
     },
+    // 微信接口
+    'wx': {
+      default: null
+    }
   },
   created: function () {
     if (!StrUtils.isBlank(this.value)) {
@@ -274,9 +279,6 @@ export default {
       file.errorImg = this.errorimage
     },
     onUpload: function (e) {
-      console.log("========================start")
-      this.afterFileUpload(e.target.files)
-      console.log("========================end")
       if (e && e.target && e.target.files) {
         this.lock = true
         let num = e.target.files.length + this.fileList.length
@@ -351,9 +353,23 @@ export default {
       upload.click()
     },
     openPreview: function () {
-      let self = this;
+      let self = this
       if (self.fileList && self.fileList.length > 0) {
-        self.previewShow = true;
+        // 调用微信的预览功能
+        if (self.wx && BrowseUtils.isWxwork()) {
+          let urls = []
+          for (let i = 0; i < self.fileList.length; i++) {
+            urls.push(self.fileList[i].url)
+          }
+          self.wx.previewImage({
+            // 当前显示图片的http链接
+            current: urls[0],
+            // 需要预览的图片http链接列表
+            urls: urls
+          })
+        } else {
+          self.previewShow = true
+        }
       }
     },
     closePreview: function () {

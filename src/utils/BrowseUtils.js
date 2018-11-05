@@ -46,8 +46,12 @@ export default {
   isWechat: function () {
     return false
   },
-  // TODO
   isWxwork: function () {
+    // 获取判断用的对象
+    var ua = this.UA()
+    if (ua.match(/MicroMessenger/i) === 'micromessenger') {
+      return true
+    }
     return false
   },
   // TODO
