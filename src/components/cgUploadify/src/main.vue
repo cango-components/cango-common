@@ -279,19 +279,26 @@ export default {
       file.errorImg = this.errorimage
     },
     onUpload: function (e) {
+      var self = this
+      let exitsFileNum = (self.fileList) ? self.fileList.length : 0
       if (e && e.target && e.target.files) {
         this.lock = true
         let num = e.target.files.length + this.fileList.length
-        if (this.dataFileNum > 1 && num > this.dataFileNum) {
+        if (this.dataFileNum > 1 && num > this.dataFileNum + exitsFileNum) {
           // TODO 报错
           alert('选择的文件过多')
           return
         }
-        var self = this
         let func = function (result) {
           // merge列表数据
           if (!self.fileList) self.fileList = []
-          self.fileList = self.fileList.concat(result)
+          if (self.dataFileNum === 1) {
+            // 只能上传一个文件的时候，先清空
+            self.fileList = []
+            self.fileList = self.fileList.concat(result)
+          } else {
+            self.fileList = self.fileList.concat(result)
+          }
           self.resizeValue()
           if (self.afterFileUpload) {
             self.afterFileUpload(e.target.files)
@@ -356,7 +363,7 @@ export default {
       let self = this
       if (self.fileList && self.fileList.length > 0) {
         // 调用微信的预览功能
-        if (self.wx && BrowseUtils.isWxwork()) {
+        if (BrowseUtils.isWxwork() && self.wx) {
           let urls = []
           for (let i = 0; i < self.fileList.length; i++) {
             urls.push(self.fileList[i].url)
