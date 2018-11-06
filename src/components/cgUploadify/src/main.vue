@@ -292,11 +292,11 @@ export default {
         let func = function (result) {
           // merge列表数据
           if (!self.fileList) self.fileList = []
-          if (self.dataFileNum > 1) {
-            self.fileList = self.fileList.concat(result)
-          } else {
+          if (self.dataFileNum === 1) {
             // 只能上传一个文件的时候，先清空
             self.fileList = []
+            self.fileList = self.fileList.concat(result)
+          } else {
             self.fileList = self.fileList.concat(result)
           }
           self.resizeValue()
