@@ -263,7 +263,8 @@ export default {
           // 加锁防止异步错乱
           self.lock = false
           if (self.fileList && self.fileList.length > 0) {
-            self.showFile = self.fileList[self.fileList.length - 1].url
+            // 调整成首图，方便查看，后续如果要调整，可以加参数
+            self.showFile = self.fileList[0].url
           } else {
             self.showFile = this.defaultimage
           }
@@ -334,7 +335,8 @@ export default {
     resizeValue: function () {
       var self = this
       if (self.fileList && self.fileList.length > 0) {
-        self.showFile = self.fileList[self.fileList.length - 1].url
+        // 调整成首图，方便查看，后续如果要调整，可以加参数
+        self.showFile = self.fileList[0].url
         if (self.previewNum >= self.fileList.length) {
           self.previewNum = self.fileList.length - 1
         }
