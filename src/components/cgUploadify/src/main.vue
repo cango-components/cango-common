@@ -364,6 +364,7 @@ export default {
     openPreview: function () {
       let self = this
       if (self.fileList && self.fileList.length > 0) {
+        console.log(self.fileList)
         // 调用微信的预览功能
         if (BrowseUtils.isWxwork() && self.wx) {
           let urls = []

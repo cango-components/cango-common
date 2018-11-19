@@ -47,6 +47,7 @@ export default {
     return false
   },
   isWxwork: function () {
+    console.log(this.UA())
     return this.UA() && this.UA().indexOf('wxwork/') > 0
   },
   // TODO
