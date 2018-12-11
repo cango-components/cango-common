@@ -56,6 +56,11 @@
         v-model = "data.uploadify"
       >
       </cg-uploadify>
+      <cg-editor
+        editContent="<b>你好</b><b>你好</b><b>你好</b><b>你好"
+        :readOnly="true"
+        @changeEdit="changeEdit"
+      ></cg-editor>
     </cg-form>
 
   </div>
@@ -124,6 +129,9 @@ export default {
     submit: function () {
       let error = this.$refs['form'].valid()
       console.log(error)
+    },
+    changeEdit(data){
+
     }
   }
 }

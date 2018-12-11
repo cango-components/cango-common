@@ -57,6 +57,14 @@
         >
         </cg-tree>
       </div>
+      <div v-if="showEditor" >
+        <cg-editor
+          :editContent="editor.editContent"
+          :readOnly="editor.readOnly"
+          @changeEdit="changeEdit"
+        >
+        </cg-editor>
+      </div>
       <div v-if="showTab" >
         <cg-tab
           :tabconfig="tab.tabConfig"
@@ -230,6 +238,7 @@ export default {
       showScolllist: false,
       showTab: false,
       showTree: false,
+      showEditor: false,
       showUploadify: false,
       showSwitch: false,
       showInput: false,
@@ -279,6 +288,10 @@ export default {
         filter: false,
         filterIgnore: true,
         filterPlaceholder: '请选择'
+      },
+      editor:{
+        editContent:'<b>您好</b>',
+        readOnly:false
       },
       tab: {
         tabConfig: []
@@ -2108,14 +2121,44 @@ export default {
               child: [
                 {
                   name: '<cg-form></cg-form>',
-                  param: [
-                  ],
+                  param: [],
                   demo: `// this.$refs["form"].valid();`,
-                  template: `
-<cg-form ref = "form" >
-</cg-form>
-`,
+                  template: `<cg-form ref = "form" >
+</cg-form>`,
                   detail: 'FROM组件'
+                }
+              ]
+            },
+            {
+              name: 'EDITOR',
+              child: [
+                {
+                  name: '<cg-editor></cg-editor>',
+                  param: [{
+                    name: 'editContent',
+                    type: 'String',
+                    default: 'editContent',
+                    detail: '填写内容'
+                  },
+                    {
+                      name: 'readOnly',
+                      type: 'Boolean',
+                      default: 'readOnly',
+                      detail: '判断是否可以修改'
+                    },
+                  ],
+                  demo: `{
+  editContent: "<b>您好</b>",
+  readOnly: "false"
+ }`,
+                  template: `
+<cg-editor
+  :editContent="editContent"
+  :readOnly="readOnly"
+  @changeEdit="changeEdit"
+></cg-editor>
+`,
+                  detail: 'EDITOR组件'
                 }
               ]
             }
@@ -2151,6 +2194,9 @@ export default {
       } else if (type === 'TREE') {
         this.showTree = true
         Utils.mergeObject(this.tree, eval('(' + data + ')'), 'outer')
+      }else if (type === 'EDITOR') {
+        this.showEditor = true
+        Utils.mergeObject(this.editor, eval('(' + data + ')'), 'outer')
       } else if (type === 'UPLOADIFY') {
         this.showUploadify = true
         Utils.mergeObject(this.uploadify, eval('(' + data + ')'), 'outer')
@@ -2171,6 +2217,7 @@ export default {
       this.showScolllist = false
       this.showTab = false
       this.showTree = false
+      this.showEditor = false
       this.showUploadify = false
       this.showSwitch = false
       this.showInput = false

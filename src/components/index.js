@@ -1,6 +1,7 @@
 import config from '../config'
 
 import CgInput from './cgInput'
+import CgEditor from './CgEditor'
 import CgSwitch from './cgSwitch'
 import CgCustom from '../libs/image-clip'
 import CgButton from './cgButton'
@@ -47,6 +48,7 @@ const Cg = {
     Vue.use(CgForm)
     Vue.use(CgUploadify)
     Vue.use(CgCustom)
+    Vue.use(CgEditor)
     // config.forEach(item => {
     //   Vue.use(CgInput)
     //   Vue.use(CgSwitch)
