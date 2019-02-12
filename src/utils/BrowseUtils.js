@@ -48,7 +48,8 @@ export default {
   },
   isWxwork: function () {
     console.log(this.UA())
-    return this.UA() && this.UA().indexOf('wxwork/') > 0
+    console.log("new data")
+    return this.UA() && this.UA().indexOf('micromessenger/') > 0
   },
   // TODO
   isAndroidApp: function () {
