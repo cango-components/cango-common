@@ -48,7 +48,8 @@ export default {
       let outputPos = Object.keys(tmpdata)
       // 设置填充区域
       let ref = {
-        '!ref': outputPos[0] + ':' + outputPos[outputPos.length - 1]
+        '!ref': outputPos[0] + ':' + outputPos[outputPos.length - 1],
+        '!merges': sheetConfig[i].merges
       }
       sheets[sheetName] = Object.assign({}, tmpdata, ref)
     }

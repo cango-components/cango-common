@@ -13,15 +13,15 @@ export default {
     '&': 'amp',
     '\'': '#39'
   },
-  /* 删除字符串两边空白 */
+  /* TODO 对于字符串类型要做判断 删除字符串两边空白 */
   trim: function (str) {
     return str.replace(/^\s+|\s+$/gm, '')
   },
-  /* 删除字符串左边空白 */
+  /* TODO 对于字符串类型要做判断 删除字符串左边空白 */
   ltrim: function (str) {
     return str.replace(/^\s+/, '')
   },
-  /* 删除字符串右边空白 */
+  /* TODO 对于字符串类型要做判断 删除字符串右边空白 */
   rtrim: function (str) {
     return str.replace(/\s+$/, '')
   },

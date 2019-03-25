@@ -197,7 +197,7 @@ export default {
           }
         }
         if (this.validparam.minlength !== undefined && this.validparam.minlength !== null) {
-          if (this.value === null || this.value.length < this.validparam.minlength) {
+          if (this.value !== null && this.value.length < this.validparam.minlength) {
             this.errorMsg = defaultMsg ? defaultMsg : '最小长度为' + this.validparam.minlength
             return this.errorMsg
           }
