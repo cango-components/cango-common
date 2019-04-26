@@ -1,6 +1,6 @@
 <template>
   <div class = 'cg-select__base'
-    :class='getClass()'>
+    :class='getClass()' ref="selects">
     <div class = 'cg-select__main' :class="(isPhone && showSelectDiv) ? 'cg-select-phone':''">
       <div
         v-if='label'
@@ -27,8 +27,8 @@
 
       <div class='clear'></div>
       <div v-if='showSelectDiv && showSelect'
-           :class='(titlestyle === 0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"'
-           class = 'cg-select__pop'>
+           :class='[choicePosition,(titlestyle === 0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"]'
+           class = 'cg-select__pop' ref="options">
         <div v-if='filter' class = 'cg-select__select_pop_filter'>
           <input :id="filterId" type = 'text' v-model='filterText' v-bind:placeholder = 'filterPlaceholder' >
         </div>
@@ -163,6 +163,12 @@ export default {
         _this.showSelect = false
       }
     }, false)
+    //元素距离顶部
+    this.selectTop = parseInt(_this.$refs.selects.getBoundingClientRect().top)
+    this.windowHeight = parseInt(document.documentElement.clientHeight || document.body.clientHeight)
+    window.onscroll = function(){
+      _this.selectTop = parseInt(_this.$refs.selects.getBoundingClientRect().top)
+    }
   },
   data: function () {
     return {
@@ -172,10 +178,20 @@ export default {
       isPhone: false,
       showSelect: true,
       elementId: Utils.guid(),
-      filterId: Utils.guid()
+      filterId: Utils.guid(),
+      selectTop:0,
+      optionHeight:0,
+      windowHeight:0
     }
   },
   computed: {
+    choicePosition(){
+      if(this.showSelectDiv){
+        let docheight = this.optionHeight + this.selectTop + this.$refs.selects.offsetHeight
+        console.log(docheight , this.windowHeight);
+        return docheight >= this.windowHeight ? 'top-start' : 'bottom-start'
+      }
+    },
     getContentClass () {
       let className = 'cg-select__box_vertical'
       if (this.titlestyle === 0 && this.label) {
@@ -312,6 +328,11 @@ export default {
         return
       }
       this.showSelectDiv = !this.showSelectDiv
+      if(this.showSelectDiv){
+        setTimeout(()=>{
+          this.optionHeight =this.$refs.options.offsetHeight
+        },500)
+      }
     },
     isSelected: function (item) {
       if (this.value == null || this.value === undefined) {

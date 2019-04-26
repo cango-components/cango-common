@@ -19,14 +19,18 @@
       <td v-if='showcheckbox' class = 'cg-pageList__check' >
         <input type='checkbox' @click='check(record)' :checked = 'isChecked(record)'>
       </td>
-      <td v-for='(title, recTitleIndex) in titleconfig'
-          :key='"recTitle"+recTitleIndex'
-          class = 'cg-pageList__record'
-          @click='rowClick(record)' >
-        <slot v-bind:option='{record: record, title: title}' >
-          {{ showRecordName(record, title) }}
-        </slot>
-      </td>
+      <template v-for='(title, recTitleIndex) in titleconfig'>
+        <td v-if="showSpan[recordIndex][recTitleIndex].isShow"
+            :colspan = "showSpan[recordIndex][recTitleIndex].colspan"
+            :rowspan = "showSpan[recordIndex][recTitleIndex].rowspan"
+            :key='"recTitle"+recTitleIndex'
+            class = 'cg-pageList__record'
+            @click='rowClick(record)' >
+          <slot v-bind:option='{record: record, title: title}' >
+            {{ showRecordName(record, title) }}
+          </slot>
+        </td>
+      </template>
     </tr>
     </tbody>
     <tr class = 'cg-pageList__page' v-if="page">
@@ -91,6 +95,10 @@ export default {
     'page': {
       default: null
     },
+    // 计算cowspan和rowspan
+    'spanmethod': {
+      default: null
+    },
     // 排序展示(keyname:排序的主键;orderBy:asc/desc顺序逆序)
     'initorder': {
       default: function () {
@@ -147,9 +155,57 @@ export default {
         totalPageNo = Math.ceil(this.page.totalRow / this.page.pageSize)
       }
       return totalPageNo
+    },
+    showSpan: function () {
+      let self = this
+      let show = {}
+      if (self.list) {
+        for (let i = 0; i < self.list.length; i++) {
+          if (!show[i]) {
+            show[i] = {}
+          }
+          for (let k = 0; k < self.titleconfig.length; k++) {
+            if (!show[i][k]) {
+              show[i][k] = {}
+              show[i][k].isShow = true
+              let spanRule = self.objectSpanMethod(self.list[i], i, k)
+              show[i][k].colspan = spanRule.colspan
+              show[i][k].rowspan = spanRule.rowspan
+              for (let m = 1; m <= spanRule.rowspan; m++) {
+                for (let n = 1; n <= spanRule.colspan; n++) {
+                  if (m > 1 || n > 1) {
+                    if (!show[i + m - 1]) {
+                      show[i + m - 1] = {}
+                    }
+                    if (!show[i + m - 1][k + n - 1]) {
+                      show[i + m - 1][k + n - 1] = {}
+                    }
+                    show[i + m - 1][k + n - 1].isShow = false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      console.log(show)
+      return show
     }
   },
   methods: {
+    objectSpanMethod: function (row, rowIndex, columnIndex) {
+      let result = null
+      if (this.spanmethod) {
+        result = this.spanmethod(row, rowIndex, columnIndex)
+      }
+      if (!result) {
+        result = {
+          colspan: 1,
+          rowspan: 1
+        }
+      }
+      return result
+    },
     checkall: function () {
       let value = []
       if (this.checkallValue) {
