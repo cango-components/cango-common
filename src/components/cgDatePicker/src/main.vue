@@ -13,6 +13,7 @@
       <el-date-picker
         v-model="dataPickerOption.value"
         :type="dataPickerOption.type"
+        :readonly="dataPickerOption.readonly"
         :placeholder="dataPickerOption.placeholder"
         :default-time="dataPickerOption.defaultTime"
       >
