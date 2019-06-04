@@ -107,7 +107,12 @@ export default {
     // 提示信息
     'tip': {
       default: null
-    }
+    },
+    // 是否readonly
+    'readonly': {
+      type: Boolean,
+      default: false
+    },
   },
   created () {
     if ((this.defaultTimeStamp === null || this.defaultTimeStamp === undefined) && this.showtype === 'daterange') {

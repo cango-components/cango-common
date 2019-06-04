@@ -154,7 +154,11 @@ export default {
     document.addEventListener('click', function (e) {
       var selectId = document.getElementById(_this.elementId)
       var filterId = document.getElementById(_this.filterId)
-      if (e.target === selectId || e.target === filterId) {
+      // 不需要监听下拉箭头
+      if (e.target === selectId) {
+        return
+      }
+      if (e.target === filterId) {
         _this.showSelect = true
       } else {
         if (_this.showSelectDiv) {

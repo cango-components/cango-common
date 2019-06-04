@@ -1,7 +1,7 @@
 ﻿
 export default {
   // authorizationUrl: 'https://prd-service.999haoche.com/scf/infc/api/getCOSAuthorization',
-  authorizationUrl: 'https://dev.999haoche.com:8661/scf/infc/api/getCOSAuthorization',
+  authorizationUrl: 'https://backstage.999haoche.com/scf/infc/api/getCOSAuthorization',
   createFileGroupUrl: 'https://test-train-service.999haoche.com:8888/train/cangoFileBase/create',
   findByGroupIdUrl: 'https://test-train-service.999haoche.com:8888/train/cangoFileBase/findById',
   bucket: 'image-1256119235',
