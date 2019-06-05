@@ -1,6 +1,5 @@
 <template>
-  <div class = 'cg-select__base'
-    :class='getClass()' ref="selects">
+  <div class = 'cg-select__base' :class='getClass()' ref="selects">
     <div class = 'cg-select__main' :class="(isPhone && showSelectDiv) ? 'cg-select-phone':''">
       <div
         v-if='label'
@@ -15,18 +14,18 @@
         </div>
       </div>
       <div
-         :class="getContentClass"
-        @click="showHide()" >
-        <div :id="elementId"
+         :class="getContentClass" @click="showHide" >
+        <div
+          :id="elementId"
           class = 'cg-select__value'
           :class="getContentClass2">
           {{ showText }} &nbsp;
-          <i :class="showSelectDiv ? 'cg-select__icon_down' : 'cg-select__icon_up'"></i>
         </div>
+        <i :class="showSelectDiv ? 'cg-select__icon_down' : 'cg-select__icon_up'" ref="arrowId"></i>
       </div>
 
       <div class='clear'></div>
-      <div v-if='showSelectDiv && showSelect'
+      <div v-show='showSelectDiv && showSelect'
            :class='[choicePosition,(titlestyle === 0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"]'
            class = 'cg-select__pop' ref="options">
         <div v-if='filter' class = 'cg-select__select_pop_filter'>
@@ -154,15 +153,12 @@ export default {
     document.addEventListener('click', function (e) {
       var selectId = document.getElementById(_this.elementId)
       var filterId = document.getElementById(_this.filterId)
-      // 不需要监听下拉箭头
-      if (e.target === selectId) {
-        return
-      }
-      if (e.target === filterId) {
+      if (e.target === selectId || e.target === filterId || e.target === _this.$refs.arrowId) {
         _this.showSelect = true
       } else {
         if (_this.showSelectDiv) {
           _this.showHide()
+          return
         }
         _this.showSelect = false
       }
@@ -192,7 +188,6 @@ export default {
     choicePosition(){
       if(this.showSelectDiv){
         let docheight = this.optionHeight + this.selectTop + this.$refs.selects.offsetHeight
-        console.log(docheight , this.windowHeight);
         return docheight >= this.windowHeight ? 'top-start' : 'bottom-start'
       }
     },
