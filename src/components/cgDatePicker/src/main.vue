@@ -137,6 +137,12 @@ export default {
         this.setValue()
       },
       deep: true
+    },
+    readonly: {
+      handler: function (newVal, oldVal) {
+        this.dataPickerOption.readonly = newVal
+      },
+      deep: true
     }
   },
   computed: {
