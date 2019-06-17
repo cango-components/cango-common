@@ -283,6 +283,9 @@ export default {
     },
     toPage2: function () {
       if (StrUtils.isNum(this.inputPageNum)) {
+        if (this.inputPageNum < 1) {
+          this.inputPageNum = 1
+        }
         this.toPage(parseInt(this.inputPageNum))
       } else {
         this.inputPageNum = null

@@ -29,7 +29,7 @@
            :class='[choicePosition,(titlestyle === 0 && label) ? "cg-select__pop_transverse" : "cg-select__pop_vertical"]'
            class = 'cg-select__pop' ref="options">
         <div v-if='filter' class = 'cg-select__select_pop_filter'>
-          <input :id="filterId" type = 'text' v-model='filterText' v-bind:placeholder = 'filterPlaceholder' >
+          <input :id="filterId" type = 'text' v-model='filterText' v-bind:placeholder = 'filterplaceholder' >
         </div>
         <div v-if='(!required && selectnum == 1)' @click.stop='putValue(emptyItem)' class = 'cg-select__pop_content' >
           空选项
