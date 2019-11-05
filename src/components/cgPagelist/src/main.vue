@@ -286,7 +286,11 @@ export default {
         if (this.inputPageNum < 1) {
           this.inputPageNum = 1
         }
-        this.toPage(parseInt(this.inputPageNum))
+        if (this.inputPageNum > this.totalPageNo) {
+          this.inputPageNum = this.totalPageNo
+        }
+        this.inputPageNum = parseInt(this.inputPageNum)
+        this.toPage(this.inputPageNum)
       } else {
         this.inputPageNum = null
       }

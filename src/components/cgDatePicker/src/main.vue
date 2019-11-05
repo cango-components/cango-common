@@ -15,6 +15,8 @@
         :type="dataPickerOption.type"
         :readonly="dataPickerOption.readonly"
         :placeholder="dataPickerOption.placeholder"
+        :start-placeholder="dataPickerOption.startPlaceholder"
+        :end-placeholder="dataPickerOption.endPlaceholder"
         :default-time="dataPickerOption.defaultTime"
       >
       </el-date-picker>

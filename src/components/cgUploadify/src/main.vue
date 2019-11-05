@@ -151,6 +151,10 @@ export default {
     'afterFileUpload': {
       default: null
     },
+    // 文件上传成功以前的操作
+    'beforeFileUpload': {
+      default: null
+    },
     // 文件上传成功以后的操作
     'accept': {
       default: null
@@ -303,6 +307,11 @@ export default {
           self.resizeValue()
           if (self.afterFileUpload) {
             self.afterFileUpload(e.target.files)
+          }
+        }
+        if (self.beforeFileUpload) {
+          if (!self.beforeFileUpload(e.target.files)) {
+            return
           }
         }
         let files = e.target.files
