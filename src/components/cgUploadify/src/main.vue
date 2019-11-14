@@ -40,11 +40,13 @@
         <div class="delete" v-if='!readonly && candelete'  @click="remove(fileList[0])">删除音频</div>
       </div>
       <div v-else-if="type == 'file' && fileList.length" class='cango-uploadify__showfile' @click='openFile()'>
-        <ul>
-          <li v-for="(file,index) in fileList" :key="'file' + index">
+        <slot v-bind:option='fileList' >
+          <ul>
+            <li v-for="(file,index) in fileList" :key="'file' + index">
               {{ file.filePath }}&nbsp; <a :href="file.url" target="_blank">下载</a>  &nbsp; <span @click="remove(file)" >删除</span><br/>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </slot>
       </div>
       <div v-if='previewShow' class='cango-uploadify__background'  @click='closePreview()'></div>
       <v-touch tag="div"  v-if='previewShow' class = 'cango-uploadify__main'  v-on:swipeleft="prev()" v-on:swiperight="next()">
@@ -152,7 +154,7 @@ export default {
       default: null
     },
     // 文件上传成功以前的操作
-    'beforeFileUpload': {
+    'beforefileupload': {
       default: null
     },
     // 文件上传成功以后的操作
@@ -162,7 +164,7 @@ export default {
     // 微信接口
     'wx': {
       default: null
-    }
+    },
   },
   created: function () {
     if (!StrUtils.isBlank(this.value)) {
@@ -284,12 +286,14 @@ export default {
       file.errorImg = this.errorimage
     },
     onUpload: function (e) {
+      console.log('onUpload')
       var self = this
       let exitsFileNum = (self.fileList) ? self.fileList.length : 0
       if (e && e.target && e.target.files) {
         this.lock = true
         let num = e.target.files.length + this.fileList.length
         if (this.dataFileNum > 1 && num > this.dataFileNum + exitsFileNum) {
+          this.lock = false
           // TODO 报错
           alert('选择的文件过多')
           return
@@ -309,8 +313,11 @@ export default {
             self.afterFileUpload(e.target.files)
           }
         }
-        if (self.beforeFileUpload) {
-          if (!self.beforeFileUpload(e.target.files)) {
+        if (self.beforefileupload) {
+          if (!self.beforefileupload(e.target.files, self.fileList)) {
+            setTimeout(function () {
+              self.lock = false
+            }, 0)
             return
           }
         }

@@ -39,7 +39,12 @@ export default {
       if (sheetConfig[i].data) {
         for (let k = 0; k < sheetConfig[i].data.length; k++) {
           for (let key in keys) {
-            let v = Utils.getRecordValue(sheetConfig[i].data[k], key, '')
+            let v = ''
+            if (sheetConfig[i].directValue) {
+              v = (sheetConfig[i].data[k][key] !== undefined) ? sheetConfig[i].data[k][key] : ''
+            } else {
+              v = Utils.getRecordValue(sheetConfig[i].data[k], key, '')
+            }
             tmpdata[this.getCharCol(keys[key]) + (2 + k)] = {v: v}
           }
         }

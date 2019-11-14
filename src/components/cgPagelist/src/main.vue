@@ -188,7 +188,6 @@ export default {
           }
         }
       }
-      console.log(show)
       return show
     }
   },
