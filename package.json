@@ -11,7 +11,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "cos-js-sdk-v5": "^0.4.7",
+    "cos-js-sdk-v5": "^1.4.6",
     "vue": "^2.5.2",
     "vue-touch": "^2.0.0-beta.4"
   },
